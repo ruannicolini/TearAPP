@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">TearAPP</string>
 
-    <string name="hello_world">Hello world!</string>
+    <string name="erroLogin">Login inválido!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_principal">Principal</string>
+    <string name="title_activity_cronometria1">Cronometria1</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>

@@ -16,6 +16,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Principal"
+            android:label="@string/title_activity_principal" >
+        </activity>
+        <activity
+            android:name=".Cronometria"
+            android:label="@string/title_activity_cronometria1" >
+        </activity>
     </application>
 
 </manifest>

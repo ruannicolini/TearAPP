@@ -1,0 +1,227 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="tela.tearapp.Cronometria"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <!-- CRONOMETRISTA-->
+        <TextView
+            android:layout_width="281dp"
+            android:layout_height="wrap_content"
+            android:text="CRONOMETRISTA"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+            <EditText
+                android:id="@+id/EditIdCronometria"
+                android:layout_width="45dp"
+                android:layout_height="38dp"
+                android:layout_gravity="center"
+                android:editable="false"
+                android:background="#e4e4e4"
+                android:gravity="center"
+                android:text="5"
+                />
+            <EditText
+                android:id="@+id/EditCronometria"
+                android:layout_width="200dp"
+                android:layout_height="38dp"
+                android:layout_gravity="center"
+                android:editable="false"
+                android:background="#e4e4e4"
+                android:text="RUAN"
+                />
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_more_horiz_white_24dp"
+                />
+
+        </LinearLayout>
+
+        <!-- OPERADOR-->
+        <TextView
+            android:layout_width="281dp"
+            android:layout_height="wrap_content"
+            android:text="OPERADOR"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+            <EditText
+                android:id="@+id/EditIdOperador"
+                android:layout_width="45dp"
+                android:layout_height="38dp"
+                android:layout_gravity="center"
+                android:editable="false"
+                android:background="#e4e4e4"
+                android:gravity="center"
+                android:text="8"
+                />
+            <EditText
+                android:id="@+id/EditOperador"
+                android:layout_width="200dp"
+                android:layout_height="38dp"
+                android:layout_gravity="center"
+                android:editable="false"
+                android:background="#e4e4e4"
+                android:text="SILVÂNIA"
+                />
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_more_horiz_white_24dp"
+                />
+
+        </LinearLayout>
+
+        <!-- PRODUTO-->
+        <TextView
+            android:layout_width="281dp"
+            android:layout_height="wrap_content"
+            android:text="PRODUTO"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+            <EditText
+                android:id="@+id/EditIdProduto"
+                android:layout_width="45dp"
+                android:layout_height="38dp"
+                android:layout_gravity="center"
+                android:editable="false"
+                android:background="#e4e4e4"
+                android:gravity="center"
+                android:text="100"
+                />
+            <EditText
+                android:id="@+id/EditProduto"
+                android:layout_width="200dp"
+                android:layout_height="38dp"
+                android:layout_gravity="center"
+                android:editable="false"
+                android:background="#e4e4e4"
+                android:text="CAMISA BRASIL"
+                />
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_more_horiz_white_24dp"
+                />
+
+        </LinearLayout>
+
+        <!-- OPERAÇÃO-->
+        <TextView
+            android:layout_width="281dp"
+            android:layout_height="wrap_content"
+            android:text="OPERAÇÃO"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+            <EditText
+                android:id="@+id/EditIdOperacao"
+                android:layout_width="45dp"
+                android:layout_height="38dp"
+                android:layout_gravity="center"
+                android:editable="false"
+                android:background="#e4e4e4"
+                android:gravity="center"
+                android:text="105"
+                />
+            <EditText
+                android:id="@+id/EditOperacao"
+                android:layout_width="200dp"
+                android:layout_height="38dp"
+                android:layout_gravity="center"
+                android:editable="false"
+                android:background="#e4e4e4"
+                android:text="PREGAR GOLA FRENTE"
+                />
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_more_horiz_white_24dp"
+                />
+
+        </LinearLayout>
+
+        <!-- TECIDO-->
+        <TextView
+            android:layout_width="281dp"
+            android:layout_height="wrap_content"
+            android:text="TECIDO"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+            <EditText
+                android:id="@+id/EditIdTecido"
+                android:layout_width="45dp"
+                android:layout_height="38dp"
+                android:layout_gravity="center"
+                android:editable="false"
+                android:background="#e4e4e4"
+                android:gravity="center"
+                android:text="12"
+                />
+            <EditText
+                android:id="@+id/EditTecido"
+                android:layout_width="200dp"
+                android:layout_height="38dp"
+                android:layout_gravity="center"
+                android:editable="false"
+                android:background="#e4e4e4"
+                android:text="ALGODÃO"
+                />
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_more_horiz_white_24dp"
+                />
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="287dp"
+            android:layout_height="60dp"
+            android:text=">>"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:textSize="20dp"/>
+    </LinearLayout>
+</ScrollView>

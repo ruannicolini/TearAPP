@@ -1,0 +1,40 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="tela.tearapp.Principal"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <Button
+        android:id="@+id/btnCronometria"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:text="CRONOMETRIA"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:textSize="18sp"
+        android:onClick="chamaCronometria"
+        />
+
+    <Button
+        android:id="@+id/btnDados"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:text="DADOS"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:textSize="18sp"
+        />
+
+    <Button
+        android:id="@+id/btnConfig"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:text="CONFIGURAÇOES"
+        android:layout_gravity="center_horizontal"
+        android:textSize="18sp"
+        />
+
+</LinearLayout>

@@ -1,11 +1,18 @@
 package tela.tearapp;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class Login extends Activity {
+    private String login;
+    private String senha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,5 +40,68 @@ public class Login extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public void logar(View view){
+        EditText etLogin = (EditText) findViewById(R.id.EditLogin);
+        setLogin(etLogin.getText().toString());
+
+        EditText etSenha = (EditText) findViewById(R.id.EditSenha);
+        setSenha(etSenha.getText().toString());
+
+
+        //Tirar depois
+
+        Intent intent = new Intent(this, Principal.class);
+        startActivity(intent);
+
+        //Chama Activity Principal
+        if(veirificaLogin(login, senha) == true){
+            Context contexto = getApplicationContext();
+            String texto = "Logou!!";
+            int duracao = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(contexto, texto, duracao);
+            toast.show();
+
+            //Chama Activity Principal
+            Intent inte = new Intent(this, Principal.class);
+
+            startActivity(inte);
+
+        }else{
+            Context contexto = getApplicationContext();
+            String texto = getString(R.string.erroLogin);
+            int duracao = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(contexto, texto, duracao);
+            toast.show();
+
+        }
+
+    }
+
+    public boolean veirificaLogin(String login, String senha){
+        if(login.equals("r") && senha.equals("r")){
+            return true;
+        }else {
+            return false;
+        }
     }
 }

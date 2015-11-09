@@ -56,6 +56,8 @@
         android:paddingRight="75dp"
         android:paddingLeft="75dp"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp" />
+        android:paddingBottom="10dp"
+        android:onClick="logar"
+        />
 
 </LinearLayout>
