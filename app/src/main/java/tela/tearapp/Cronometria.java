@@ -3,6 +3,7 @@ package tela.tearapp;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,7 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 
-public class Cronometria extends Activity {
+public class Cronometria extends FragmentActivity {
 
 
     @Override
