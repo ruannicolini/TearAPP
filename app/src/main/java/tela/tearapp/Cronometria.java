@@ -14,8 +14,14 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
+import java.util.Vector;
+
+import dao.CronometristaJDBCDao;
+import domain.Cronometrista;
+
 public class Cronometria extends FragmentActivity {
 
+    CronometristaJDBCDao cronometristaDao = new CronometristaJDBCDao();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,5 +73,21 @@ public class Cronometria extends FragmentActivity {
 
         FrameLayout fl = (FrameLayout) findViewById(R.id.frameLayoutCronometria);
         fl.setVisibility(View.VISIBLE);
+    }
+
+    public void buscaCronometrista1(View view){
+        Vector<Cronometrista> cronometristas = new Vector();
+        System.out.println("Entrou");
+
+
+         cronometristas = cronometristaDao.obterCronometristas();
+/*
+        if(cronometristaDao != null){
+            System.out.println("Deu certo");
+        }else{
+            System.out.println("Não deu.");
+        }
+        */
+
     }
 }

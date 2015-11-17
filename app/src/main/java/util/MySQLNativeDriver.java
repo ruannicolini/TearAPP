@@ -28,7 +28,7 @@ public class MySQLNativeDriver extends SQLDriver implements DriverInterface{
     
     public MySQLNativeDriver(String nomeBanco, String usuario, String senha){
         super(nomeBanco, usuario, senha);
-        this.ip = "localhost";
+        this.ip = "localhost"; //
         this.porta = "3306";        
     }
     

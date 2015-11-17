@@ -11,9 +11,6 @@ import java.util.Vector;
 
 
 public interface CronometristaDao {
-    public void inserirCronometrista(Cronometrista c) throws  SQLException;
-    public void alterarCronometrista(Cronometrista c) throws  SQLException;
-    public void excluirCronometrista(Cronometrista c) throws  SQLException;
     public Vector<Cronometrista> obterCronometristas() throws SQLException;
-    public Vector<Cronometrista> obterCronometristasPorNomeOrdem(String nome, boolean crescente) throws SQLException;
+    public Cronometrista obterCronometrista(final long id) throws SQLException;
 }
