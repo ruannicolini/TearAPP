@@ -7,9 +7,12 @@ import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ListView;
 
 public class Cronometria extends FragmentActivity {
 
@@ -19,12 +22,10 @@ public class Cronometria extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cronometria);
 
-        String[] palavras = new String[]{"Ruan", "Raih","Ronan","Raihssa","Ramon"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, palavras);
-
-
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -51,6 +52,20 @@ public class Cronometria extends FragmentActivity {
     public void buscaCronometrista(View view){
         EditText EditIdCronometrista = (EditText) findViewById(R.id.EditIdCronometria);
 
+        String[] palavras = new String[]{"Ruan", "Raih","Ronan","Raihssa","Ramon"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, palavras);
 
+        ListView lv = (ListView) findViewById(R.id.listViewCronometria);
+        lv.setAdapter(adapter);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> lv, View view, int position, long id) {
+
+            }
+        });
+
+        FrameLayout fl = (FrameLayout) findViewById(R.id.frameLayoutCronometria);
+        fl.setVisibility(View.VISIBLE);
     }
 }
