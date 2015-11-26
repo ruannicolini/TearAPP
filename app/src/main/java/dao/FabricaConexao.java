@@ -15,7 +15,7 @@ import java.sql.*;
  */
 public class FabricaConexao {
     public static Conexao obterConexao() {
-       DriverInterface driver = new MySQLNativeDriver("u739430712_tear", "u739430712_user", "@Rn102313", "mysql.hostinger.com.br", "3306"); //31.170.164.142
+       DriverInterface driver = new MySQLNativeDriver("balay", "root", "root", "10.0.2.2", "3306");
        return driver.obterConexao(); 
     }
 }

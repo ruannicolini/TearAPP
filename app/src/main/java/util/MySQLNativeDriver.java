@@ -33,11 +33,12 @@ public class MySQLNativeDriver extends SQLDriver implements DriverInterface{
     }
     
     public Conexao obterConexao() {
+        Conexao conexao = null;
         try {
             String url; 
             url = "jdbc:mysql://" + this.ip + ":" + this.porta + "/" + this.nomeBanco;
             Class.forName("com.mysql.jdbc.Driver");
-            Conexao conexao = new Conexao();
+            conexao = new Conexao();
             Log.i("MYSQL", "Tentando conectar ..."); 
             conexao.setConnection(DriverManager.getConnection(url, this.usuario, this.senha));
             Log.i("MYSQL", "Conectado."); 
@@ -47,6 +48,6 @@ public class MySQLNativeDriver extends SQLDriver implements DriverInterface{
         }catch(SQLException erro){
         	Log.e("MYSQL","Erro: "+erro); 
         }
-		return null; 
+        return conexao;
     }
 }

@@ -14,6 +14,11 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Scanner;
 import java.util.Vector;
 
 import dao.CronometristaJDBCDao;
@@ -27,7 +32,6 @@ public class Cronometria extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cronometria);
-
 
     }
 
@@ -56,38 +60,39 @@ public class Cronometria extends FragmentActivity {
     }
 
     public void buscaCronometrista(View view){
-        EditText EditIdCronometrista = (EditText) findViewById(R.id.EditIdCronometria);
+        final EditText editIdCronometrista = (EditText) findViewById(R.id.EditIdCronometria);
+        final EditText editCronometrista = (EditText) findViewById(R.id.EditCronometria);
 
-        String[] palavras = new String[]{"Ruan", "Raih","Ronan","Raihssa","Ramon"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, palavras);
-
-        ListView lv = (ListView) findViewById(R.id.listViewCronometria);
-        lv.setAdapter(adapter);
-
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> lv, View view, int position, long id) {
-
-            }
-        });
-
-        FrameLayout fl = (FrameLayout) findViewById(R.id.frameLayoutCronometria);
-        fl.setVisibility(View.VISIBLE);
-    }
-
-    public void buscaCronometrista1(View view){
         Vector<Cronometrista> cronometristas = new Vector();
         System.out.println("Entrou");
+        cronometristas = cronometristaDao.obterCronometristas();
 
-
-         cronometristas = cronometristaDao.obterCronometristas();
-/*
         if(cronometristaDao != null){
             System.out.println("Deu certo");
-        }else{
+
+            ArrayAdapter<Cronometrista> adapter = new ArrayAdapter<Cronometrista>(this, android.R.layout.simple_list_item_1, cronometristas);
+            ListView lv = (ListView) findViewById(R.id.listViewCronometria);
+            lv.setAdapter(adapter);
+
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> lv, View view, int position, long id) {
+                    Cronometrista o = (Cronometrista)lv.getItemAtPosition(position);
+                    String idC = String.valueOf(o.getIdCronometrista());
+                    String nomeC = o.getNome();
+                    editIdCronometrista.setText (idC);
+                    editCronometrista.setText(nomeC);
+                    
+                    FrameLayout fl = (FrameLayout) findViewById(R.id.frameLayoutCronometria);
+                    fl.setVisibility(View.GONE);
+                }
+            });
+
+            FrameLayout fl = (FrameLayout) findViewById(R.id.frameLayoutCronometria);
+            fl.setVisibility(View.VISIBLE);
+        }else {
             System.out.println("Não deu.");
         }
-        */
 
     }
 }

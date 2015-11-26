@@ -9,15 +9,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-
-
         <!-- CRONOMETRISTA-->
             <TextView
                 android:layout_width="281dp"
@@ -55,7 +50,7 @@
                     android:layout_width="40dp"
                     android:layout_height="50dp"
                     android:src="@drawable/ic_more_horiz_white_24dp"
-                    android:onClick="buscaCronometrista1"
+                    android:onClick="buscaCronometrista"
                     />
 
             </LinearLayout>

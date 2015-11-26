@@ -29,6 +29,11 @@ public class Cronometrista {
     }
 
 
+    @Override
+    public String toString() {
+        return this.getNome();
+    }
+
     public Cronometrista() {
         super();
     }
