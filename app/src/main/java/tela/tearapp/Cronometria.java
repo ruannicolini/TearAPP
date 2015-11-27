@@ -69,7 +69,10 @@ public class Cronometria extends FragmentActivity {
 
         if(cronometristaDao != null){
             //Adapter
-            final ArrayAdapter<Cronometrista> adapter = new ArrayAdapter<Cronometrista>(this,android.R.layout.simple_list_item_1,cronometristas);
+            //final ArrayAdapter<Cronometrista> adapter = new ArrayAdapter<Cronometrista>(this,android.R.layout.simple_list_item_1,cronometristas);
+            final ArrayAdapter<Cronometrista> adapter = new ArrayAdapter<Cronometrista>(this,R.layout.item_consulta,cronometristas);
+
+
             ListView lv = (ListView) findViewById(R.id.listViewCronometria);
             lv.setAdapter(adapter);
 

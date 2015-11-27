@@ -256,6 +256,7 @@
                     android:textSize="18sp"
                     android:hint="Pesquisa"
                     android:gravity="top"
+                    android:textColor="#ffffff"
                     >
                     <requestFocus />
                 </EditText>
@@ -265,7 +266,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:textColor="#edba2e"
                 />
             </LinearLayout>
 
