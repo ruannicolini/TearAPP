@@ -8,6 +8,7 @@
     android:paddingStart="?android:attr/listPreferredItemPaddingStart"
     android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
     android:minHeight="?android:attr/listPreferredItemHeightSmall"
-    android:textColor="#edba2e"
-    />
+    android:textColor="#D2691E"
+    android:typeface="serif"
+    android:text="TESTANDO" />
 
