@@ -236,7 +236,7 @@
             android:layout_width="match_parent"
             android:layout_gravity="center_horizontal|center_vertical"
             android:layout_height="match_parent"
-
+            android:orientation="vertical"
             android:background="#353535"
             android:visibility="gone"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
@@ -247,29 +247,27 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center">
-            </LinearLayout>
+                android:orientation="vertical">
+                <EditText
+                    android:id="@+id/editPesq"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:textSize="18sp"
+                    android:hint="Pesquisa"
+                    android:gravity="top"
+                    >
+                    <requestFocus />
+                </EditText>
 
-            <EditText
-                android:id="@+id/editPesq"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:textSize="18sp"
-                android:hint="Pesquisa"
-                android:gravity="top"
-                >
-                <requestFocus />
-            </EditText>
-
-            <ListView
+                <ListView
                 android:id="@+id/listViewCronometria"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textColor="#edba2e"
                 />
+            </LinearLayout>
 
         </FrameLayout>
 
