@@ -2,8 +2,11 @@ package tela.tearapp;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +16,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -34,7 +38,6 @@ public class Cronometria extends FragmentActivity {
         setContentView(R.layout.activity_cronometria);
 
     }
-
 
 
     @Override
@@ -60,20 +63,17 @@ public class Cronometria extends FragmentActivity {
     }
 
     public void buscaCronometrista(View view){
-        final EditText editIdCronometrista = (EditText) findViewById(R.id.EditIdCronometria);
-        final EditText editCronometrista = (EditText) findViewById(R.id.EditCronometria);
-
+        final EditText editIdCronometrista = (EditText)findViewById(R.id.EditIdCronometria), editCronometrista = (EditText)findViewById(R.id.EditCronometria);
         Vector<Cronometrista> cronometristas = new Vector();
-        System.out.println("Entrou");
         cronometristas = cronometristaDao.obterCronometristas();
 
         if(cronometristaDao != null){
-            System.out.println("Deu certo");
-
-            ArrayAdapter<Cronometrista> adapter = new ArrayAdapter<Cronometrista>(this, android.R.layout.simple_list_item_1, cronometristas);
+            //Adapter
+            final ArrayAdapter<Cronometrista> adapter = new ArrayAdapter<Cronometrista>(this,android.R.layout.simple_list_item_1,cronometristas);
             ListView lv = (ListView) findViewById(R.id.listViewCronometria);
             lv.setAdapter(adapter);
 
+            //Comportamento do Click em um item da Lista
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> lv, View view, int position, long id) {
@@ -82,16 +82,32 @@ public class Cronometria extends FragmentActivity {
                     String nomeC = o.getNome();
                     editIdCronometrista.setText (idC);
                     editCronometrista.setText(nomeC);
-                    
+
                     FrameLayout fl = (FrameLayout) findViewById(R.id.frameLayoutCronometria);
                     fl.setVisibility(View.GONE);
                 }
             });
 
+            //Deixa o FrameLayout Visivel
             FrameLayout fl = (FrameLayout) findViewById(R.id.frameLayoutCronometria);
             fl.setVisibility(View.VISIBLE);
+
+            // Adiciona um TextWatcher
+            EditText filter = (EditText) findViewById(R.id.editPesq);
+            filter.addTextChangedListener(new TextWatcher() {
+                public void afterTextChanged(Editable s) { }
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    // Aplica o filtro no Adapter
+                    adapter.getFilter().filter(s.toString());
+                }
+            });
         }else {
-            System.out.println("Não deu.");
+            Context contexto = getApplicationContext();
+            String texto = getString(R.string.ConsultaNull);
+            int duracao = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(contexto, texto, duracao);
+            toast.show();
         }
 
     }

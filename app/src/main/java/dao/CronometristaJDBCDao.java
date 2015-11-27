@@ -32,13 +32,11 @@ public class CronometristaJDBCDao implements CronometristaDao {
 					 pstmt = conexao.prepareStatement(sql);
 					 ResultSet res = pstmt.executeQuery();
 
-
 					 while (res.next())
 					 {
 						 Cronometrista c = new Cronometrista();
 						 c.setIdCronometrista(res.getInt("idCronometrista"));
 						 c.setNome(res.getString("nome"));
-
 						 vetCronom.addElement(c);
 					 }
 					 conexao.close();
@@ -49,8 +47,6 @@ public class CronometristaJDBCDao implements CronometristaDao {
 
 			 }
 		 };
-
-
 
 		 t1.start();
 		 try {

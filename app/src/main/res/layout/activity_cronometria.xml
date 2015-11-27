@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-        <!-- CRONOMETRISTA-->
+            <!-- CRONOMETRISTA-->
             <TextView
                 android:layout_width="281dp"
                 android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
                     android:editable="false"
                     android:background="#e4e4e4"
                     android:gravity="center"
-                    android:text="5"
+                    android:textSize="16sp"
                     />
                 <EditText
                     android:id="@+id/EditCronometria"
@@ -44,7 +44,7 @@
                     android:layout_gravity="center"
                     android:editable="false"
                     android:background="#e4e4e4"
-                    android:text="RUAN"
+                    android:textSize="16sp"
                     />
                 <ImageButton
                     android:layout_width="40dp"
@@ -244,13 +244,33 @@
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_marginBottom="@dimen/activity_horizontal_margin"
             >
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/editPesq"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:textSize="18sp"
+                android:hint="Pesquisa"
+                android:gravity="top"
+                >
+                <requestFocus />
+            </EditText>
+
             <ListView
                 android:id="@+id/listViewCronometria"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:textAlignment="center"
-
+                android:textColor="#edba2e"
                 />
+
         </FrameLayout>
 
     </FrameLayout>
