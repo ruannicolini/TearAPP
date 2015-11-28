@@ -1,9 +1,11 @@
 package domain;
 
+import java.io.Serializable;
+
 /**
  * Created by Ruan on 27/11/2015.
  */
-public class Cronometragem {
+public class Cronometragem implements Serializable {
     private Cronometrista cronometrista;
     private Grupo grupo;
     private Operador operador;
@@ -12,6 +14,12 @@ public class Cronometragem {
     private Operacao operacao;
 
     public Cronometragem() {
+        this.cronometrista = new Cronometrista();
+        this.grupo = new Grupo();
+        this.operador = new Operador();
+        this.produto = new Produto();
+        this.tecido = new Tecido();
+        this.operacao = new Operacao();
     }
 
     public Operador getOperador() {

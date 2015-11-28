@@ -7,4 +7,7 @@
     <string name="title_activity_cronometria1">Cronometria</string>
     <string name="ConsultaNull">Não há registros!</string>
     <string name="GrupoNull">Selecione um Grupo</string>
+    <string name="title_activity_cronometria2">Cronometria2</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>

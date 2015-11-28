@@ -3,6 +3,7 @@ package tela.tearapp;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
@@ -391,7 +392,26 @@ public class Cronometria extends FragmentActivity {
 
     }
 
-    public void chamaCronometria2(){
+    public void chamaCronometria2(View view){
 
+        System.out.println("Cronometrista = " + cronometragem.getCronometrista().getNome());
+        System.out.println("Grupo = " + cronometragem.getGrupo().getDescricao());
+        System.out.println("Operador = " + cronometragem.getOperador().getNome());
+        System.out.println("Operação = " + cronometragem.getOperacao());
+        System.out.println("Tecido = " + cronometragem.getTecido().getDescricao());
+
+        //Passa Os dados obtidos pra Activity/tela Cronometria2
+        Intent intent = new Intent(getApplicationContext(), Cronometria2.class);
+        Bundle args = new Bundle();
+
+        args.putString("cronometrista", String.valueOf(cronometragem.getCronometrista().getIdCronometrista()));
+        args.putString("grupo", String.valueOf(cronometragem.getGrupo().getIdGrupo()));
+        args.putString("operador", String.valueOf(cronometragem.getOperador().getIdOperador()));
+        args.putString("operacao", String.valueOf(cronometragem.getOperacao().getIdOperacao()));
+        args.putString("tecido", String.valueOf(cronometragem.getTecido().getIdTecido()));
+
+        //args.putSerializable("cronometragem", cronometragem);
+        intent.putExtra("args_tela1", args);
+        startActivity(intent);
     }
 }
