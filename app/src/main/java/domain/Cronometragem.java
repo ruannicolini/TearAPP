@@ -8,6 +8,7 @@ public class Cronometragem {
     private Grupo grupo;
     private Operador operador;
     private Produto produto;
+    private Tecido tecido;
 
     public Cronometragem() {
     }
@@ -42,5 +43,13 @@ public class Cronometragem {
 
     public void setProduto(Produto produto) {
         this.produto = produto;
+    }
+
+    public Tecido getTecido() {
+        return tecido;
+    }
+
+    public void setTecido(Tecido tecido) {
+        this.tecido = tecido;
     }
 }
