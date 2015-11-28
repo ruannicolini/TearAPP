@@ -7,7 +7,7 @@
     android:weightSum="1">
 
     <TextView
-        android:id="@+id/stopwatch_view"
+        android:id="@+id/textViewCronometro"
         android:layout_width="fill_parent"
         android:layout_height="90dp"
         android:background="@drawable/stopwatch_background"
@@ -46,16 +46,16 @@
         android:paddingRight="10dp">
 
         <Button
-            android:id="@+id/btn_start"
+            android:id="@+id/btn_Iniciar"
             style="?android:borderlessButtonStyle"
             android:layout_width="0sp"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:layout_weight="1"
             android:background="@drawable/btn_start_states"
-            android:onClick="onSWatchStart"
             android:text="@string/btn_start"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:onClick="iniciarCronometro"/>
 
         <Button
             android:id="@+id/btn_lap"
@@ -67,9 +67,9 @@
             android:layout_weight="1"
             android:background="@drawable/btn_reset_states"
             android:enabled="false"
-            android:onClick="onSWatchLap"
             android:text="@string/btn_lap"
-            android:textColor="@android:color/darker_gray" />
+            android:textColor="@android:color/darker_gray"
+            android:onClick="lapCronometro"/>
 
     </LinearLayout>
 
