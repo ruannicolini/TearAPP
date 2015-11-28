@@ -19,7 +19,7 @@
         android:id="@+id/lapView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/linearLayout"
+        android:layout_below="@+id/textViewCronometro"
         android:layout_marginBottom="5dp"
         android:fillViewport="true"
         >
@@ -38,12 +38,14 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:layout_marginBottom="50dp"
+        android:layout_below="@+id/lapView"
+        android:gravity="center">
 
         <Button
             android:id="@+id/btn_Iniciar"
@@ -70,7 +72,24 @@
             android:text="@string/btn_lap"
             android:textColor="@android:color/darker_gray"
             android:onClick="lapCronometro"/>
+    </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/teste"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+        <Button
+            android:layout_width="287dp"
+            android:layout_height="60dp"
+            android:text="FINALIZAR CRONOMETRIA"
+
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:textSize="20dp"
+            android:onClick="chamaCronometria2"/>
     </LinearLayout>
 
 

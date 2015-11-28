@@ -13,6 +13,10 @@ public class FormataTempo {
         segundos=(tempoCentesimo/=10)%60;
         minutos=(tempoCentesimo/=60)%60;
 
+        //centesimos = tempoCentesimo%100;
+        //segundos=((tempoCentesimo*100)*1000)%60;
+        //minutos=(tempoCentesimo/=60)%60;
+
         //format output
         formatedSeconds=Integer.toString(segundos/10)+
                 Integer.toString(segundos%10);
