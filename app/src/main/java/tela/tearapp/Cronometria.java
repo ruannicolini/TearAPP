@@ -390,4 +390,8 @@ public class Cronometria extends FragmentActivity {
         }
 
     }
+
+    public void chamaCronometria2(){
+
+    }
 }
