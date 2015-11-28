@@ -8,6 +8,10 @@
     <string name="ConsultaNull">Não há registros!</string>
     <string name="GrupoNull">Selecione um Grupo</string>
     <string name="title_activity_cronometria2">Cronometria2</string>
+    <string name="display_stopwatch">00:00.0</string>
 
-    <string name="hello_world">Hello world!</string>
+    <string name="btn_start">Iniciar</string>
+    <string name="btn_reset">Reset</string>
+    <string name="btn_stop">Parar</string>
+    <string name="btn_lap">Lap</string>
 </resources>
