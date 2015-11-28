@@ -30,6 +30,9 @@
         <activity
             android:name=".Cronometria2"
             android:label="@string/title_activity_cronometria2" >
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

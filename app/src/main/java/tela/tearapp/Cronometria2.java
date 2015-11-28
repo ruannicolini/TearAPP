@@ -54,7 +54,7 @@ public class Cronometria2 extends Activity {
         }
 
         btnInicio = (Button) findViewById(R.id.btn_Iniciar);
-        btnInicio = (Button) findViewById(R.id.btn_lap);
+        btnLap = (Button) findViewById(R.id.btn_lap);
         textViewCronometro = (TextView) findViewById(R.id.textViewCronometro);
         textViewCronometro.setTextSize(55);
     }
