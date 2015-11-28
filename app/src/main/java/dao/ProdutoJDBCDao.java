@@ -6,48 +6,46 @@
 package dao;
 
 
-import domain.Cronometrista;
-import util.*;
-
-import java.sql.*;
-import java.util.*;
-
 import android.util.Log;
 
-public class CronometristaJDBCDao implements CronometristaDao {
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Vector;
+
+import domain.Cronometrista;
+import domain.Produto;
+import util.Conexao;
+
+public class ProdutoJDBCDao implements ProdutoDao {
 
 
-     public Vector<Cronometrista> obterCronometristas() {
+     public Vector<Produto> obterProdutos() {
 		 System.out.println("Entrou!");
 		 final Vector vetCronom = new Vector();
 
-
 		 Thread t1 = new Thread(){
 			 public void run(){
-				 String sql = "select * from Cronometrista";
-
+				 String sql = "select * from Produto";
 				 Conexao conexao = FabricaConexao.obterConexao();
 				 PreparedStatement pstmt;
 				 try {
 					 pstmt = conexao.prepareStatement(sql);
 					 ResultSet res = pstmt.executeQuery();
 
-					 while (res.next())
-					 {
-						 Cronometrista c = new Cronometrista();
-						 c.setIdCronometrista(res.getInt("idCronometrista"));
-						 c.setNome(res.getString("nome"));
-						 vetCronom.addElement(c);
+					 while (res.next()) {
+						 Produto p = new Produto();
+						 p.setIdProduto(res.getInt("idProduto"));
+						 p.setDescricao(res.getString("descricao"));
+						 vetCronom.addElement(p);
 					 }
 					 conexao.close();
 				 } catch (SQLException e) {
 					 // TODO Auto-generated catch block
 					 e.printStackTrace();
 				 }
-
 			 }
 		 };
-
 		 t1.start();
 		 try {
 			 t1.join();
@@ -55,17 +53,15 @@ public class CronometristaJDBCDao implements CronometristaDao {
 			 // TODO Auto-generated catch block
 			 e.printStackTrace();
 		 }
-
-
-		 return vetCronom;
+		return vetCronom;
 	 }
 
-    public Cronometrista obterCronometrista(final long id) {
+    public Produto obterProduto(final long id) {
     	final Vector vetCronom = new Vector();
-        final Cronometrista c = new Cronometrista();
+        final Produto p = new Produto();
         Thread t1 = new Thread(){
 			public void run(){
-				 String sql = " SELECT * FROM Cronometrista WHERE idCronometrista = " + id;
+				 String sql = " SELECT * FROM Produto WHERE idProduto = " + id;
 		         Log.i("SQL", sql); 
 		         Conexao conexao = FabricaConexao.obterConexao();
 		         
@@ -74,20 +70,16 @@ public class CronometristaJDBCDao implements CronometristaDao {
 				try {
 					pstmt = conexao.prepareStatement(sql);
 					ResultSet res = pstmt.executeQuery();
-
-			         
-			        if (res.next())
-			        {
-			            c.setIdCronometrista(res.getInt("idCronometrista"));
-			            c.setNome(res.getString("nome"));
-			            vetCronom.addElement(c);
+					if (res.next()) {
+			            p.setIdProduto(res.getInt("idProduto"));
+						p.setDescricao(res.getString("descricao"));
+			            vetCronom.addElement(p);
 			        }
 			         conexao.close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-		         
 			}
         };
         t1.start();
@@ -97,6 +89,6 @@ public class CronometristaJDBCDao implements CronometristaDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        return c;
+        return p;
     }
 }

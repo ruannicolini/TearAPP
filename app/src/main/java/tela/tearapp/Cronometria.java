@@ -28,13 +28,19 @@ import java.util.Vector;
 
 import dao.CronometristaJDBCDao;
 import dao.GrupoJDBCDao;
+import dao.OperadorJDBCDao;
+import dao.ProdutoJDBCDao;
 import domain.Cronometragem;
 import domain.Cronometrista;
 import domain.Grupo;
+import domain.Operador;
+import domain.Produto;
 
 public class Cronometria extends FragmentActivity {
 
     CronometristaJDBCDao cronometristaDao = new CronometristaJDBCDao();
+    OperadorJDBCDao operadorDao = new OperadorJDBCDao();
+    ProdutoJDBCDao produtoDao = new ProdutoJDBCDao();
     GrupoJDBCDao grupoDao = new GrupoJDBCDao();
     Cronometragem cronometragem = new Cronometragem();
 
@@ -42,7 +48,6 @@ public class Cronometria extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cronometria);
-
     }
 
 
@@ -68,6 +73,113 @@ public class Cronometria extends FragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void buscaProduto(View view) throws SQLException {
+        final EditText editIdGrupo = (EditText)findViewById(R.id.EditIdProduto), editGrupo = (EditText)findViewById(R.id.EditProduto);
+        Vector<Produto> produtos = new Vector();
+        produtos = produtoDao.obterProdutos();
+
+        if(produtos != null){
+            //Adapter
+            final ArrayAdapter<Produto> adapter = new ArrayAdapter<Produto>(this,R.layout.item_consulta,produtos);
+            ListView lv = (ListView) findViewById(R.id.listViewCronometria);
+            lv.setAdapter(adapter);
+
+            //Comportamento do Click em um item da Lista
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> lv, View view, int position, long id) {
+                    Produto p = (Produto)lv.getItemAtPosition(position);
+                    editIdGrupo.setText (String.valueOf(p.getIdProduto()));
+                    editGrupo.setText(p.getDescricao());
+                    FrameLayout fl = (FrameLayout) findViewById(R.id.frameLayoutCronometria);
+                    fl.setVisibility(View.GONE);
+
+                    //Set cronometragem
+                    cronometragem.setProduto(p);
+                }
+            });
+
+            //Deixa o FrameLayout Visivel
+            FrameLayout fl = (FrameLayout) findViewById(R.id.frameLayoutCronometria);
+            fl.setVisibility(View.VISIBLE);
+
+            // Adiciona um TextWatcher
+            EditText filter = (EditText) findViewById(R.id.editPesq);
+            filter.addTextChangedListener(new TextWatcher() {
+                public void afterTextChanged(Editable s) { }
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    // Aplica o filtro no Adapter
+                    adapter.getFilter().filter(s.toString());
+                }
+            });
+        }else {
+            Context contexto = getApplicationContext();
+            String texto = getString(R.string.ConsultaNull);
+            int duracao = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(contexto, texto, duracao);
+            toast.show();
+        }
+
+    }
+
+    public void buscaOperador(View view) throws SQLException {
+        final EditText editIdOperador = (EditText)findViewById(R.id.EditIdOperador), editOperador = (EditText)findViewById(R.id.EditOperador);
+        Vector<Operador> operadores = new Vector();
+        if(cronometragem.getGrupo() != null){
+            operadores = operadorDao.obterOperadoresGrupo(cronometragem.getGrupo());
+            if(operadores != null){
+                //Adapter
+                final ArrayAdapter<Operador> adapter = new ArrayAdapter<Operador>(this,R.layout.item_consulta,operadores);
+                ListView lv = (ListView) findViewById(R.id.listViewCronometria);
+                lv.setAdapter(adapter);
+
+                //Comportamento do Click em um item da Lista
+                lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> lv, View view, int position, long id) {
+                        Operador o = (Operador)lv.getItemAtPosition(position);
+                        String idO = String.valueOf(o.getIdOperador());
+                        String nomeO = o.getNome();
+                        editIdOperador.setText (idO);
+                        editOperador.setText(nomeO);
+                        FrameLayout fl = (FrameLayout) findViewById(R.id.frameLayoutCronometria);
+                        fl.setVisibility(View.GONE);
+                        //Set Operador
+                        cronometragem.setOperador(o);
+                    }
+                });
+
+                //Deixa o FrameLayout Visivel
+                FrameLayout fl = (FrameLayout) findViewById(R.id.frameLayoutCronometria);
+                fl.setVisibility(View.VISIBLE);
+
+                // Adiciona um TextWatcher
+                EditText filter = (EditText) findViewById(R.id.editPesq);
+                filter.addTextChangedListener(new TextWatcher() {
+                    public void afterTextChanged(Editable s) { }
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        // Aplica o filtro no Adapter
+                        adapter.getFilter().filter(s.toString());
+                    }
+                });
+            }else {
+                Context contexto = getApplicationContext();
+                String texto = getString(R.string.ConsultaNull);
+                int duracao = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(contexto, texto, duracao);
+                toast.show();
+            }
+
+        }else{
+            Context contexto = getApplicationContext();
+            String texto = getString(R.string.GrupoNull);
+            int duracao = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(contexto, texto, duracao);
+            toast.show();
+        }
+    }
 
     public void buscaGrupo(View view) throws SQLException {
         final EditText editIdGrupo = (EditText)findViewById(R.id.EditIdGrupo), editGrupo = (EditText)findViewById(R.id.EditGrupo);
@@ -85,13 +197,15 @@ public class Cronometria extends FragmentActivity {
                 @Override
                 public void onItemClick(AdapterView<?> lv, View view, int position, long id) {
                     Grupo o = (Grupo)lv.getItemAtPosition(position);
-                    String idG = String.valueOf(o.getCod());
+                    String idG = String.valueOf(o.getIdGrupo());
                     String nomeG = o.getDescricao();
                     editIdGrupo.setText (idG);
                     editGrupo.setText(nomeG);
-
                     FrameLayout fl = (FrameLayout) findViewById(R.id.frameLayoutCronometria);
                     fl.setVisibility(View.GONE);
+
+                    //Set cronometragem
+                    cronometragem.setGrupo(o);
                 }
             });
 
@@ -139,9 +253,11 @@ public class Cronometria extends FragmentActivity {
                     String nomeC = o.getNome();
                     editIdCronometrista.setText (idC);
                     editCronometrista.setText(nomeC);
-
                     FrameLayout fl = (FrameLayout) findViewById(R.id.frameLayoutCronometria);
                     fl.setVisibility(View.GONE);
+
+                    //Set Cronometrista
+                    cronometragem.setCronometrista(o);
                 }
             });
 

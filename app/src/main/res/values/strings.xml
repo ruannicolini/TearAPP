@@ -6,5 +6,5 @@
     <string name="title_activity_principal">Menu</string>
     <string name="title_activity_cronometria1">Cronometria</string>
     <string name="ConsultaNull">Não há registros!</string>
-
+    <string name="GrupoNull">Selecione um Grupo</string>
 </resources>

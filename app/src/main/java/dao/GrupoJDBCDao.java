@@ -70,14 +70,10 @@ public class GrupoJDBCDao implements GrupoDao{
 				String sql = " SELECT * FROM Grupo WHERE idGrupo  = " + id;
 				Log.i("SQL", sql);
 				Conexao conexao = FabricaConexao.obterConexao();
-
-
 				PreparedStatement pstmt;
 				try {
 					pstmt = conexao.prepareStatement(sql);
 					ResultSet res = pstmt.executeQuery();
-
-
 					if (res.next())
 					{
 						g.setCod(res.getInt("idGrupo"));
@@ -89,7 +85,6 @@ public class GrupoJDBCDao implements GrupoDao{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
 			}
 		};
 		t1.start();
