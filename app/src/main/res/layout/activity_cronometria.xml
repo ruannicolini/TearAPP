@@ -203,7 +203,6 @@
                     android:editable="false"
                     android:background="#e4e4e4"
                     android:gravity="center"
-                    android:text="105"
                     android:textSize="16sp"
                     />
                 <EditText
@@ -213,13 +212,13 @@
                     android:layout_gravity="center"
                     android:editable="false"
                     android:background="#e4e4e4"
-                    android:text="PREGAR GOLA FRENTE"
                     android:textSize="16sp"
                     />
                 <ImageButton
                     android:layout_width="40dp"
                     android:layout_height="50dp"
                     android:src="@drawable/ic_more_horiz_white_24dp"
+                    android:onClick="buscaOperacao"
                     />
 
             </LinearLayout>

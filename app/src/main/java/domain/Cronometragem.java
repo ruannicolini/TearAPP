@@ -9,6 +9,7 @@ public class Cronometragem {
     private Operador operador;
     private Produto produto;
     private Tecido tecido;
+    private Operacao operacao;
 
     public Cronometragem() {
     }
@@ -51,5 +52,13 @@ public class Cronometragem {
 
     public void setTecido(Tecido tecido) {
         this.tecido = tecido;
+    }
+
+    public Operacao getOperacao() {
+        return operacao;
+    }
+
+    public void setOperacao(Operacao operacao) {
+        this.operacao = operacao;
     }
 }

@@ -28,12 +28,14 @@ import java.util.Vector;
 
 import dao.CronometristaJDBCDao;
 import dao.GrupoJDBCDao;
+import dao.OperacaoJDBCDao;
 import dao.OperadorJDBCDao;
 import dao.ProdutoJDBCDao;
 import dao.TecidoJDBCDao;
 import domain.Cronometragem;
 import domain.Cronometrista;
 import domain.Grupo;
+import domain.Operacao;
 import domain.Operador;
 import domain.Produto;
 import domain.Tecido;
@@ -42,6 +44,7 @@ public class Cronometria extends FragmentActivity {
 
     CronometristaJDBCDao cronometristaDao = new CronometristaJDBCDao();
     OperadorJDBCDao operadorDao = new OperadorJDBCDao();
+    OperacaoJDBCDao operacaoDao = new OperacaoJDBCDao();
     TecidoJDBCDao tecidoDao = new TecidoJDBCDao();
     ProdutoJDBCDao produtoDao = new ProdutoJDBCDao();
     GrupoJDBCDao grupoDao = new GrupoJDBCDao();
@@ -74,6 +77,56 @@ public class Cronometria extends FragmentActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void buscaOperacao(View view) throws SQLException {
+        final EditText editIdOperacao = (EditText)findViewById(R.id.EditIdOperacao), editOperacao = (EditText)findViewById(R.id.EditOperacao);
+        Vector<Operacao> operacoes = new Vector();
+        operacoes = operacaoDao.obterOperacoes();
+
+        if(operacoes != null){
+            //Adapter
+            final ArrayAdapter<Operacao> adapter = new ArrayAdapter<Operacao>(this,R.layout.item_consulta,operacoes);
+            ListView lv = (ListView) findViewById(R.id.listViewCronometria);
+            lv.setAdapter(adapter);
+
+            //Comportamento do Click em um item da Lista
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> lv, View view, int position, long id) {
+                    Operacao o = (Operacao)lv.getItemAtPosition(position);
+                    editOperacao.setText(o.getAcao() + " " + o.getParte() + " " + o.getFase());
+                    editIdOperacao.setText(String.valueOf(o.getIdOperacao()));
+                    FrameLayout fl = (FrameLayout) findViewById(R.id.frameLayoutCronometria);
+                    fl.setVisibility(View.GONE);
+
+                    //Set Operação
+                    cronometragem.setOperacao(o);
+                }
+            });
+
+            //Deixa o FrameLayout Visivel
+            FrameLayout fl = (FrameLayout) findViewById(R.id.frameLayoutCronometria);
+            fl.setVisibility(View.VISIBLE);
+
+            // Adiciona um TextWatcher
+            EditText filter = (EditText) findViewById(R.id.editPesq);
+            filter.addTextChangedListener(new TextWatcher() {
+                public void afterTextChanged(Editable s) { }
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    // Aplica o filtro no Adapter
+                    adapter.getFilter().filter(s.toString());
+                }
+            });
+        }else {
+            Context contexto = getApplicationContext();
+            String texto = getString(R.string.ConsultaNull);
+            int duracao = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(contexto, texto, duracao);
+            toast.show();
+        }
+
     }
 
     public void buscaTecido(View view) throws SQLException {
