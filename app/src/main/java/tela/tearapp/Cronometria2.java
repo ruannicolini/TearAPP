@@ -27,19 +27,23 @@ public class Cronometria2 extends Activity {
     Cronometragem cronometragem = new Cronometragem();
     List<Batida> batidas = new ArrayList();
 
+    //Componentes
     private Button btnInicio;
     private Button btnLap;
     private TextView textViewCronometro;
+
+    //Tempo
     private Timer timer;
     private LayoutTransition transition;
     private LinearLayout linearLayout;
 
-    //Tempo
-    private int currentTime = 0;
-    private int lapTime = 0;
-    private int lapCounter=0;
-    private boolean lapViewExists;
-    private boolean isButtonStartPressed = false;
+    //Aux
+    private int tempoCorrenteVisor = 0; // Tempo que aparece no TextViewCronometro
+    private int tempoLap = 0; // Tempo da Batida
+    private int contaLap = 0; // Conta quantas batidas foram feitas
+    private boolean Status_lap; // Verifica se ja teve Alguma Batida
+    private boolean btnIniciarPressionado = false; //Verifica o Status do botão para Alterar o comportamento. BtnIniciar == btnParar   ----   BtnLap ==BtnReset
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,27 +87,27 @@ public class Cronometria2 extends Activity {
 
     public void resetCronometro() {
         timer.cancel();
-        currentTime = 0;
-        lapTime = 0;
-        lapCounter=0;
-        textViewCronometro.setText(FormataTempo.mostrarTempo(currentTime));
+        tempoCorrenteVisor = 0;
+        tempoLap = 0;
+        contaLap = 0;
+        textViewCronometro.setText(FormataTempo.mostrarTempo(tempoCorrenteVisor));
         btnLap.setEnabled(false);
         btnLap.setText(R.string.btn_lap);
         btnLap.setBackgroundResource(R.drawable.btn_reset_states);
 
-        if (lapViewExists) {
+        if (Status_lap) {
             linearLayout.setLayoutTransition(null);
             linearLayout.removeAllViews();
-            lapViewExists = false;
+            Status_lap = false;
         }
     }
 
     public void lapCronometro(View view) {
-        if(!isButtonStartPressed){
+        if(btnIniciarPressionado == false){
             resetCronometro();
         }else {
-            lapViewExists = true;
-            lapCounter++;
+            Status_lap = true;
+            contaLap++;
 
             transition = new LayoutTransition();
             transition.setAnimator(LayoutTransition.CHANGE_APPEARING,null);
@@ -125,9 +129,9 @@ public class Cronometria2 extends Activity {
 
             imageView.requestFocus();
 
-            lapDisplay.setText(String.format("Lap %d: %s", lapCounter, FormataTempo.mostrarTempo(lapTime)));
+            lapDisplay.setText(String.format("Lap %d: %s", contaLap, FormataTempo.mostrarTempo(tempoLap)));
             imageView.setImageResource(R.drawable.divider);
-            lapTime = 0;
+            tempoLap = 0;
         }
     }
 
@@ -138,15 +142,15 @@ public class Cronometria2 extends Activity {
         btnLap.setBackgroundResource(R.drawable.btn_lap_states);
         btnLap.setText(R.string.btn_reset);
 
-        isButtonStartPressed = false;
+        btnIniciarPressionado = false;
         timer.cancel();
     }
 
     public void iniciarCronometro(View view) {
-        if (isButtonStartPressed) {
+        if (btnIniciarPressionado == true) {
             pararCronometro();
         } else {
-            isButtonStartPressed = true;
+            btnIniciarPressionado = true;
 
             btnInicio.setBackgroundResource(R.drawable.btn_stop_states);
             btnInicio.setText(R.string.btn_stop);
@@ -161,11 +165,11 @@ public class Cronometria2 extends Activity {
                 public void run() {
                     runOnUiThread(new Runnable() {
                         public void run() {
-                            currentTime += 1;
-                            lapTime += 1;
+                            tempoCorrenteVisor += 1;
+                            tempoLap += 1;
 
                             // Alteração textViewCronometro
-                            textViewCronometro.setText(FormataTempo.mostrarTempo(currentTime));
+                            textViewCronometro.setText(FormataTempo.mostrarTempo(tempoCorrenteVisor));
                         }
                     });
                 }
