@@ -182,4 +182,10 @@ public class Cronometria2 extends Activity {
         }
     }
 
+    public void chamaCronometria3(View view){
+        //Passa Os dados obtidos pra Activity/tela Cronometria3
+        Intent intent = new Intent(getApplicationContext(), Cronometria3.class);
+        startActivity(intent);
+    }
+
 }

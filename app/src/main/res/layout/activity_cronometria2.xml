@@ -92,7 +92,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:textSize="20dp"
-            android:onClick="chamaCronometria2"/>
+            android:onClick="chamaCronometria3"/>
     </LinearLayout>
 
 
