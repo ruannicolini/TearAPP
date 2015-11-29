@@ -1,24 +1,22 @@
 package tela.tearapp;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
-public class Cronometria3 extends Activity {
+public class Cronometria4 extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cronometria3);
+        setContentView(R.layout.activity_cronometria4);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_cronometria3, menu);
+        getMenuInflater().inflate(R.menu.menu_cronometria4, menu);
         return true;
     }
 
@@ -35,11 +33,5 @@ public class Cronometria3 extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void chamaCronometria4(View view){
-        //Passa Os dados obtidos pra Activity/tela Cronometria4
-        Intent intent = new Intent(getApplicationContext(), Cronometria4.class);
-        startActivity(intent);
     }
 }

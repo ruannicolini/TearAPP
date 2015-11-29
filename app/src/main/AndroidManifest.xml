@@ -38,6 +38,10 @@
             android:name=".Cronometria3"
             android:label="@string/title_activity_cronometria3" >
         </activity>
+        <activity
+            android:name=".Cronometria4"
+            android:label="@string/title_activity_cronometria4" >
+        </activity>
     </application>
 
 </manifest>
