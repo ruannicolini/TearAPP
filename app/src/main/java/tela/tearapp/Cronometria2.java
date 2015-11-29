@@ -90,7 +90,7 @@ public class Cronometria2 extends Activity {
         tempoCorrenteVisor = 0;
         tempoLap = 0;
         contaLap = 0;
-        textViewCronometro.setText(FormataTempo.mostrarTempo(tempoCorrenteVisor));
+        textViewCronometro.setText(FormataTempo.mostrarTempo(tempoCorrenteVisor, null));
         btnLap.setEnabled(false);
         btnLap.setText(R.string.btn_lap);
         btnLap.setBackgroundResource(R.drawable.btn_reset_states);
@@ -98,6 +98,7 @@ public class Cronometria2 extends Activity {
         if (Status_lap) {
             linearLayout.setLayoutTransition(null);
             linearLayout.removeAllViews();
+            batidas.clear();
             Status_lap = false;
         }
     }
@@ -122,16 +123,20 @@ public class Cronometria2 extends Activity {
 
             lapDisplay.setGravity(Gravity.CENTER);
             lapDisplay.setTextColor(Color.WHITE);
-            lapDisplay.setTextSize(30);
+            lapDisplay.setTextSize(20);
 
             linearLayout.addView(lapDisplay);
             linearLayout.addView(imageView);
 
             imageView.requestFocus();
 
-            lapDisplay.setText(String.format("Lap %d: %s", contaLap, FormataTempo.mostrarTempo(tempoLap)));
+            Batida batida = new Batida();
+            batida.setUtilizar(true);
+
+            lapDisplay.setText(String.format("Lap %d: %s", contaLap, FormataTempo.mostrarTempo(tempoLap, batida)));
             imageView.setImageResource(R.drawable.divider);
             tempoLap = 0;
+            batidas.add(batida);
         }
     }
 
@@ -169,7 +174,7 @@ public class Cronometria2 extends Activity {
                             tempoLap += 1;
 
                             // Alteração textViewCronometro
-                            textViewCronometro.setText(FormataTempo.mostrarTempo(tempoCorrenteVisor));
+                            textViewCronometro.setText(FormataTempo.mostrarTempo(tempoCorrenteVisor, null));
                         }
                     });
                 }

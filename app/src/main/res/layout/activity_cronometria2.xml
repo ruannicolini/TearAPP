@@ -18,17 +18,22 @@
     <ScrollView
         android:id="@+id/lapView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:layout_below="@+id/textViewCronometro"
         android:layout_marginBottom="5dp"
-        android:fillViewport="true"
-        >
+        android:fillViewport="true">
 
         <LinearLayout
             android:id="@+id/layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </ListView>
 
         </LinearLayout>
 
@@ -43,9 +48,8 @@
         android:orientation="horizontal"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:layout_marginBottom="50dp"
-        android:layout_below="@+id/lapView"
-        android:gravity="center">
+        android:layout_above="@+id/teste"
+        >
 
         <Button
             android:id="@+id/btn_Iniciar"
@@ -84,8 +88,7 @@
         <Button
             android:layout_width="287dp"
             android:layout_height="60dp"
-            android:text="FINALIZAR CRONOMETRIA"
-
+            android:text=">>"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:textSize="20dp"
