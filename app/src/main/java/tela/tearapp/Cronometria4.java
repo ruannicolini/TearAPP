@@ -5,6 +5,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import domain.Batida;
+import domain.TipoRecurso;
+
 public class Cronometria4 extends Activity {
 
     @Override

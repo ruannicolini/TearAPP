@@ -1,6 +1,8 @@
 package domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Ruan on 27/11/2015.
@@ -12,6 +14,8 @@ public class Cronometragem implements Serializable {
     private Produto produto;
     private Tecido tecido;
     private Operacao operacao;
+    private List<Batida> batidas = new ArrayList();
+    private List<TipoRecurso> recursos = new ArrayList();
 
     public Cronometragem() {
         this.cronometrista = new Cronometrista();
@@ -68,5 +72,21 @@ public class Cronometragem implements Serializable {
 
     public void setOperacao(Operacao operacao) {
         this.operacao = operacao;
+    }
+
+    public List<Batida> getBatidas() {
+        return batidas;
+    }
+
+    public void setBatidas(List<Batida> batidas) {
+        this.batidas = batidas;
+    }
+
+    public List<TipoRecurso> getRecursos() {
+        return recursos;
+    }
+
+    public void setRecursos(List<TipoRecurso> recursos) {
+        this.recursos = recursos;
     }
 }
