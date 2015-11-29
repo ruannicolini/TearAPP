@@ -37,20 +37,16 @@
     </LinearLayout>
 
     <!-- Lista de Recursos -->
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/linearLayoutTituloBotao"
-        android:layout_above="@+id/LinearLayoutBotoes"
-        android:background="@drawable/background">
-
-        <ListView
+    <ListView
+            android:id="@+id/listViewRecurso"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:layout_below="@+id/linearLayoutTituloBotao"
+            android:layout_above="@+id/LinearLayoutBotoes"
+            android:background="#f6f6f6">
 
-
-        </ListView>
-    </ScrollView>
+    ></ListView>
 
     <!-- Botoes -->
     <LinearLayout
@@ -86,15 +82,13 @@
     </LinearLayout>
 
     <!-- Frame de Pesquisa Tipo Recurso-->
-    <!-- android:layout_gravity="center_horizontal|center_vertical" -->
     <FrameLayout
             android:id="@+id/frameLayoutCronometria"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:background="#d6d6d6"
-            android:visibility="gone"
-            >
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -118,6 +112,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
+                    android:scrollbars="vertical"
                     />
             </LinearLayout>
 

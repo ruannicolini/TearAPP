@@ -14,8 +14,8 @@ public class Cronometragem implements Serializable {
     private Produto produto;
     private Tecido tecido;
     private Operacao operacao;
-    private List<Batida> batidas = new ArrayList();
-    private List<TipoRecurso> recursos = new ArrayList();
+    private ArrayList<Batida> batidas;
+    private ArrayList<TipoRecurso> recursos;
 
     public Cronometragem() {
         this.cronometrista = new Cronometrista();
@@ -24,6 +24,8 @@ public class Cronometragem implements Serializable {
         this.produto = new Produto();
         this.tecido = new Tecido();
         this.operacao = new Operacao();
+        this.batidas = new ArrayList();
+        this.recursos = new ArrayList();
     }
 
     public Operador getOperador() {
@@ -78,15 +80,15 @@ public class Cronometragem implements Serializable {
         return batidas;
     }
 
-    public void setBatidas(List<Batida> batidas) {
+    public void setBatidas(ArrayList<Batida> batidas) {
         this.batidas = batidas;
     }
 
-    public List<TipoRecurso> getRecursos() {
+    public ArrayList<TipoRecurso> getRecursos() {
         return recursos;
     }
 
-    public void setRecursos(List<TipoRecurso> recursos) {
+    public void setRecursos(ArrayList<TipoRecurso> recursos) {
         this.recursos = recursos;
     }
 }

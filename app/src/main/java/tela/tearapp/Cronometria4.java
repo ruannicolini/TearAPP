@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import baseAdapter.TipoRecursoAdapter;
 import dao.TipoRecursoDao;
 import dao.TipoRecursoJDBCDao;
 import domain.Batida;
@@ -29,13 +30,44 @@ import domain.TipoRecurso;
 
 public class Cronometria4 extends Activity {
 
-    final Cronometragem cronometragem = new Cronometragem();
     final TipoRecursoJDBCDao tipoRecursoDao = new TipoRecursoJDBCDao();
+    final Cronometragem cronometragem = new Cronometragem();
+
+    //VAR realacionadas a Lista de Recursos usados na cronometragem
+    Vector<TipoRecurso> aux = new Vector();
+    ArrayAdapter<TipoRecurso> adapterRecurso = null;
+    ListView lvRecurso = null;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cronometria4);
+
+        //Seta Adapter LVRECURSO
+        aux = toArrayList(cronometragem.getRecursos());
+        adapterRecurso = new ArrayAdapter<TipoRecurso>(this,R.layout.item_consulta,aux);
+        lvRecurso = (ListView) findViewById(R.id.listViewRecurso);
+        lvRecurso.setAdapter(adapterRecurso);
+
+
+        //Comportamento do Click em um item da Lista
+        lvRecurso.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> lv, View view, int position, long id) {
+                TipoRecurso recurso = (TipoRecurso) lv.getItemAtPosition(position);
+
+                //dialog verifica se que excluir recurso
+
+                //Remove Recurso
+                cronometragem.getRecursos().remove(recurso);
+                aux.remove(recurso);
+                adapterRecurso.notifyDataSetChanged();
+                //lvRecurso.refreshDrawableState();
+            }
+        });
+
     }
 
     @Override
@@ -71,19 +103,21 @@ public class Cronometria4 extends Activity {
             ListView lv = (ListView) findViewById(R.id.listViewCronometria);
             lv.setAdapter(adapter);
 
+
             //Comportamento do Click em um item da Lista
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> lv, View view, int position, long id) {
-                    TipoRecurso o = (TipoRecurso)lv.getItemAtPosition(position);
+                    TipoRecurso o = (TipoRecurso) lv.getItemAtPosition(position);
 
-                    //FAZER AQUI A PARTE DE MOSTRAR O RECURSO ESCOLHIDO NO LISTVIEW
-
+                    //Esconde o FrameLayoutCronometria
                     FrameLayout fl = (FrameLayout) findViewById(R.id.frameLayoutCronometria);
                     fl.setVisibility(View.GONE);
 
-                    //Add o Tipo de Recurso no arrayList do Objeto Cronometragem
+                    //Add o Tipo de Recurso no arrayList do Objeto Cronometragem e na ListView
                     cronometragem.getRecursos().add(o);
+                    aux.add(o);
+                    adapterRecurso.notifyDataSetChanged();
                 }
             });
 
@@ -111,4 +145,9 @@ public class Cronometria4 extends Activity {
 
 
     }
+
+    public static Vector toArrayList(ArrayList al) {
+        return new Vector(al);
+    }
+
 }
