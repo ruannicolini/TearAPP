@@ -9,6 +9,8 @@
     android:orientation="vertical"
     tools:context="tela.tearapp.Cronometria4">
 
+
+
     <!-- Titulo e Botão ADD Recurso -->
     <LinearLayout
         android:id="@+id/linearLayoutTituloBotao"
@@ -24,11 +26,12 @@
             android:text="RECURSOS"
             android:textSize="25sp"
             android:gravity="center_vertical" />
-        <ImageButton
+        <Button
             android:layout_width="40dp"
             android:layout_height="50dp"
+            android:clickable="true"
             android:src="@drawable/ic_more_horiz_white_24dp"
-            android:onClick="AdicionaRecurso"
+            android:onClick="buscaRecurso"
             />
 
     </LinearLayout>
@@ -67,7 +70,7 @@
             android:textSize="16sp"
             android:textColor="#ffffff"
             android:text="CANCELAR"
-            android:onClick="cancelarCronometria"
+            android:onClick="buscaRecurso"
             />
         <Button
             android:id="@+id/btnConcluir"
@@ -77,9 +80,47 @@
             android:textSize="16sp"
             android:textColor="#ffffff"
             android:text="CONCLUIR"
-            android:onClick="concluirCronometria"
+            android:onClick="buscaRecurso"
             />
 
     </LinearLayout>
+
+    <!-- Frame de Pesquisa Tipo Recurso-->
+    <!-- android:layout_gravity="center_horizontal|center_vertical" -->
+    <FrameLayout
+            android:id="@+id/frameLayoutCronometria"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="#d6d6d6"
+            android:visibility="gone"
+            >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <EditText
+                    android:id="@+id/editPesq"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:textSize="18sp"
+                    android:hint="Pesquisa"
+                    android:gravity="top"
+                    android:textColor="#ffffff"
+                    >
+                    <requestFocus />
+                </EditText>
+
+                <ListView
+                    android:id="@+id/listViewCronometria"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    />
+            </LinearLayout>
+
+    </FrameLayout>
 
 </RelativeLayout>

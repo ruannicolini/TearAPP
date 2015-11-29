@@ -27,7 +27,7 @@ public class TipoRecursoJDBCDao implements TipoRecursoDao{
 
 		Thread t1 = new Thread(){
 			public void run(){
-				String sql = "select * from tipo_recurso";
+				String sql = "SELECT * FROM tipo_recurso";
 
 				Conexao conexao = FabricaConexao.obterConexao();
 				PreparedStatement pstmt;
@@ -38,7 +38,7 @@ public class TipoRecursoJDBCDao implements TipoRecursoDao{
 					while (res.next())
 					{
 						TipoRecurso tr = new TipoRecurso ();
-						tr.setIdTipoRecurso(res.getInt("idTipoRecurso"));
+						tr.setIdTipoRecurso(res.getInt("idtipo_recurso"));
 						tr.setDescricao(res.getString("descricao"));
 						vetGrupos.addElement(tr);
 					}
