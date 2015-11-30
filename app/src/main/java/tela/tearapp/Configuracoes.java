@@ -39,7 +39,7 @@ public class Configuracoes extends Activity {
     public void cancelar(View view){
         finish();
     }
-    
+
     public void salvar(View view){
 
     }
