@@ -1,7 +1,9 @@
 package tela.tearapp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -29,7 +31,6 @@ import domain.Grupo;
 import domain.TipoRecurso;
 
 public class Cronometria4 extends Activity {
-
     final TipoRecursoJDBCDao tipoRecursoDao = new TipoRecursoJDBCDao();
     final Cronometragem cronometragem = new Cronometragem();
 
@@ -37,8 +38,7 @@ public class Cronometria4 extends Activity {
     Vector<TipoRecurso> aux = new Vector();
     ArrayAdapter<TipoRecurso> adapterRecurso = null;
     ListView lvRecurso = null;
-
-
+    //=======================================================
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,15 +56,12 @@ public class Cronometria4 extends Activity {
         lvRecurso.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> lv, View view, int position, long id) {
-                TipoRecurso recurso = (TipoRecurso) lv.getItemAtPosition(position);
-
-                //dialog verifica se que excluir recurso
-
+                final TipoRecurso recurso = (TipoRecurso) lv.getItemAtPosition(position);
                 //Remove Recurso
                 cronometragem.getRecursos().remove(recurso);
                 aux.remove(recurso);
                 adapterRecurso.notifyDataSetChanged();
-                //lvRecurso.refreshDrawableState();
+
             }
         });
 
