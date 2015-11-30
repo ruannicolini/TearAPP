@@ -5,13 +5,51 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import dao.ConfiguracoesFileDao;
 
 public class Configuracoes extends Activity {
+
+    ConfiguracoesFileDao confDao = new ConfiguracoesFileDao();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuracoes);
+        ArrayList<String> lista = null;
+        try {
+            lista = confDao.LerConfiguracoes(this);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //Ip Server
+        EditText editTextIP = (EditText) findViewById(R.id.EditIpServidor);
+        editTextIP.setText(lista.get(0));
+
+        // BD Name
+        EditText editTextNomeBD = (EditText) findViewById(R.id.EditBDNome);
+        editTextNomeBD.setText(lista.get(1));
+
+        //BD User
+        EditText editTextUserBD = (EditText) findViewById(R.id.EditBDUser);
+        editTextUserBD.setText(lista.get(2));
+
+        //BD Senha
+        EditText editTextSenhaBD = (EditText) findViewById(R.id.EditBDSenha);
+        editTextSenhaBD.setText(lista.get(3));
+
+        //Porta
+        EditText editTextPorta = (EditText) findViewById(R.id.EditPorta);
+        editTextPorta.setText(lista.get(4));
+
+
     }
 
     @Override
@@ -40,7 +78,16 @@ public class Configuracoes extends Activity {
         finish();
     }
 
-    public void salvar(View view){
+    public void salvar(View view) {
+        try {
+            confDao.gravarConfiguracoes(this, "", "", "", "", "");
+        }catch (IOException e){
+            System.out.println(e.getMessage());
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
 
     }
 }

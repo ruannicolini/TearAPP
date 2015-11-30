@@ -1,0 +1,5 @@
+ip server
+nomeDB
+UsuárioBD
+1234567890
+3380
