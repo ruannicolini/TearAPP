@@ -1,5 +1,5 @@
-ip server
-nomeDB
-UsuárioBD
-1234567890
-3380
+10.0.2.2
+balay
+root
+root
+3306

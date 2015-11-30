@@ -16,6 +16,7 @@ import dao.ConfiguracoesFileDao;
 public class Configuracoes extends Activity {
 
     ConfiguracoesFileDao confDao = new ConfiguracoesFileDao();
+    EditText editTextIP, editTextNomeBD, editTextUserBD, editTextSenhaBD, editTextPorta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,23 +31,23 @@ public class Configuracoes extends Activity {
             e.printStackTrace();
         }
         //Ip Server
-        EditText editTextIP = (EditText) findViewById(R.id.EditIpServidor);
+        editTextIP = (EditText) findViewById(R.id.EditIpServidor);
         editTextIP.setText(lista.get(0));
 
         // BD Name
-        EditText editTextNomeBD = (EditText) findViewById(R.id.EditBDNome);
+        editTextNomeBD = (EditText) findViewById(R.id.EditBDNome);
         editTextNomeBD.setText(lista.get(1));
 
         //BD User
-        EditText editTextUserBD = (EditText) findViewById(R.id.EditBDUser);
+        editTextUserBD = (EditText) findViewById(R.id.EditBDUser);
         editTextUserBD.setText(lista.get(2));
 
         //BD Senha
-        EditText editTextSenhaBD = (EditText) findViewById(R.id.EditBDSenha);
+        editTextSenhaBD = (EditText) findViewById(R.id.EditBDSenha);
         editTextSenhaBD.setText(lista.get(3));
 
         //Porta
-        EditText editTextPorta = (EditText) findViewById(R.id.EditPorta);
+        editTextPorta = (EditText) findViewById(R.id.EditPorta);
         editTextPorta.setText(lista.get(4));
 
 
@@ -80,7 +81,8 @@ public class Configuracoes extends Activity {
 
     public void salvar(View view) {
         try {
-            confDao.gravarConfiguracoes(this, "", "", "", "", "");
+            confDao.gravarConfiguracoes(this, editTextIP.getText().toString(), editTextNomeBD.getText().toString(),
+                    editTextUserBD.getText().toString(), editTextSenhaBD.getText().toString(), editTextPorta.getText().toString());
         }catch (IOException e){
             System.out.println(e.getMessage());
         }catch (SQLException e){
