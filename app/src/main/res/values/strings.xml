@@ -16,4 +16,7 @@
     <string name="btn_lap">Lap</string>
     <string name="title_activity_cronometria3">Cronometria</string>
     <string name="title_activity_cronometria4">Cronometria</string>
+    <string name="title_activity_configuracoes">Configuracoes</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>

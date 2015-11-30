@@ -1,24 +1,22 @@
 package tela.tearapp;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
-public class Principal extends Activity {
+public class Configuracoes extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_principal);
+        setContentView(R.layout.activity_configuracoes);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_principal, menu);
+        getMenuInflater().inflate(R.menu.menu_configuracoes, menu);
         return true;
     }
 
@@ -35,17 +33,5 @@ public class Principal extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void chamaCronometria(View view){
-        //Chama Activity Cronometria
-        Intent intent = new Intent(this, Cronometria.class);
-        startActivity(intent);
-    }
-
-    public void chamaConfiguracoes(View view){
-
-        Intent intent = new Intent(this, Configuracoes.class);
-        startActivity(intent);
     }
 }

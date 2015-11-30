@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 
@@ -111,10 +112,21 @@ public class Cronometria4 extends Activity {
                     FrameLayout fl = (FrameLayout) findViewById(R.id.frameLayoutCronometria);
                     fl.setVisibility(View.GONE);
 
-                    //Add o Tipo de Recurso no arrayList do Objeto Cronometragem e na ListView
-                    cronometragem.getRecursos().add(o);
-                    aux.add(o);
-                    adapterRecurso.notifyDataSetChanged();
+                    if(aux.equals(o) == false){
+                        //Add o Tipo de Recurso no arrayList do Objeto Cronometragem e na ListView
+                        cronometragem.getRecursos().add(o);
+                        aux.add(o);
+                        adapterRecurso.notifyDataSetChanged();
+                    }else{
+                        Context contexto = getApplicationContext();
+                        String texto = "Recurso já incluso.";
+                        int duracao = Toast.LENGTH_SHORT;
+                        Toast toast = Toast.makeText(contexto, texto, duracao);
+                        toast.show();
+
+                    }
+
+
                 }
             });
 
