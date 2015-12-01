@@ -398,7 +398,7 @@ public class Cronometria extends FragmentActivity {
         Intent intent = new Intent(this, Cronometria2.class);
         Bundle args = new Bundle();
 
-        Toast.makeText(this, "Cronometragem: " + cronometragem.getCronometrista().getNome(), Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Cronometragem: " + cronometragem.getCronometrista().getNome(), Toast.LENGTH_LONG).show();
         args.putSerializable("cronometragem", cronometragem);
         intent.putExtras(args);
         startActivity(intent);

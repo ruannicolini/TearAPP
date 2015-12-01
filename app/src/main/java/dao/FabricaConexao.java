@@ -15,7 +15,6 @@ import java.util.ArrayList;
  * @author Giovany
  */
 public class FabricaConexao {
-        private ConfiguracoesFileDao confDao = new ConfiguracoesFileDao();
 
     public static Conexao obterConexao() {
        DriverInterface driver = new MySQLNativeDriver("balay", "root", "root", "10.0.2.2", "3306");

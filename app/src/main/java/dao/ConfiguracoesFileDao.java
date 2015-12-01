@@ -22,7 +22,7 @@ public class ConfiguracoesFileDao implements ConfiguracoesDao {
     public ArrayList<String> LerConfiguracoes(Context context) throws SQLException, IOException {
         AssetManager assetManager = context.getResources().getAssets();
         InputStream inputStream;
-        ArrayList<String> linhas=null;
+        ArrayList<String> linhas = null;
 
         inputStream = assetManager.open("conf.txt");
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
