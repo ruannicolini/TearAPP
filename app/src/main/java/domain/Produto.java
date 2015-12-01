@@ -1,11 +1,12 @@
 package domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Ruan on 27/11/2015.
  */
-public class Produto {
+public class Produto implements Serializable {
     private int idProduto;
     private String descricao;
     private Date data;

@@ -23,6 +23,9 @@
         <activity
             android:name=".Principal"
             android:label="@string/title_activity_principal" >
+            <intent-filter>
+                <action android:name="android.intent.action.PRINCIPAL" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".Cronometria"

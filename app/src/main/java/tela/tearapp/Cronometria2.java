@@ -51,9 +51,9 @@ public class Cronometria2 extends Activity {
         setContentView(R.layout.activity_cronometria2);
 
         // Recebe Parametros da Activity Cronometria
-        Bundle params = getIntent().getBundleExtra("args_tela1");
+        Bundle params = getIntent().getExtras();
         if(params != null){
-            //cronometragem = (Cronometragem) params.getSerializable("cronometragem");
+            cronometragem = (Cronometragem) params.getSerializable("cronometragem");
             System.out.println("Chegou na Cronometria2");
         }
 

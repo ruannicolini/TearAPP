@@ -1,9 +1,11 @@
 package domain;
 
+import java.io.Serializable;
+
 /**
  * Created by Ruan on 27/11/2015.
  */
-public class Operacao {
+public class Operacao implements Serializable {
     private int idOperacao;
     private String descricao;
     private int idAcao;

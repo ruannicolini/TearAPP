@@ -1,9 +1,11 @@
 package domain;
 
+import java.io.Serializable;
+
 /**
  * Created by Ruan on 27/11/2015.
  */
-public class Grupo {
+public class Grupo implements Serializable {
     private int idGrupo;
     private String descricao;
 

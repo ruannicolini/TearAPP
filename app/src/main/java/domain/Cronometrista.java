@@ -1,9 +1,11 @@
 package domain;
 
+import java.io.Serializable;
+
 /**
  * Created by Ruan on 05/11/2015.
  */
-public class Cronometrista {
+public class Cronometrista implements Serializable{
     private String nome;
     private int idCronometrista;
 

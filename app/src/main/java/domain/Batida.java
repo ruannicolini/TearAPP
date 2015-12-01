@@ -1,9 +1,11 @@
 package domain;
 
+import java.io.Serializable;
+
 /**
  * Created by Ruan on 28/11/2015.
  */
-public class Batida {
+public class Batida implements Serializable {
     private int idBatida;
     private Cronometragem cronometragem;
     private int minutos;

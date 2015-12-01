@@ -394,24 +394,13 @@ public class Cronometria extends FragmentActivity {
 
     public void chamaCronometria2(View view){
 
-        System.out.println("Cronometrista = " + cronometragem.getCronometrista().getNome());
-        System.out.println("Grupo = " + cronometragem.getGrupo().getDescricao());
-        System.out.println("Operador = " + cronometragem.getOperador().getNome());
-        System.out.println("Operação = " + cronometragem.getOperacao());
-        System.out.println("Tecido = " + cronometragem.getTecido().getDescricao());
-
         //Passa Os dados obtidos pra Activity/tela Cronometria2
-        Intent intent = new Intent(getApplicationContext(), Cronometria2.class);
+        Intent intent = new Intent(this, Cronometria2.class);
         Bundle args = new Bundle();
 
-        args.putString("cronometrista", String.valueOf(cronometragem.getCronometrista().getIdCronometrista()));
-        args.putString("grupo", String.valueOf(cronometragem.getGrupo().getIdGrupo()));
-        args.putString("operador", String.valueOf(cronometragem.getOperador().getIdOperador()));
-        args.putString("operacao", String.valueOf(cronometragem.getOperacao().getIdOperacao()));
-        args.putString("tecido", String.valueOf(cronometragem.getTecido().getIdTecido()));
-
-        //args.putSerializable("cronometragem", cronometragem);
-        intent.putExtra("args_tela1", args);
+        Toast.makeText(this, "Cronometragem: " + cronometragem.getCronometrista().getNome(), Toast.LENGTH_LONG).show();
+        args.putSerializable("cronometragem", cronometragem);
+        intent.putExtras(args);
         startActivity(intent);
     }
 }

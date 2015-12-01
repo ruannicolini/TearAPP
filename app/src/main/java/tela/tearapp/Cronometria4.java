@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -152,6 +153,17 @@ public class Cronometria4 extends Activity {
             toast.show();
         }
 
+
+    }
+
+    public void salvarCronometragem(View view){
+
+    }
+
+    public void cancelarCronometragem(View view){
+        Intent returnBtn = new Intent("android.intent.action.MAIN");
+        //Intent returnBtn = new Intent(getApplicationContext(), Principal.class);
+        startActivity(returnBtn);
 
     }
 

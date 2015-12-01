@@ -1,9 +1,11 @@
 package domain;
 
+import java.io.Serializable;
+
 /**
  * Created by Ruan on 27/11/2015.
  */
-public class Tecido {
+public class Tecido implements Serializable {
     private int idTecido;
     private String descricao;
 

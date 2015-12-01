@@ -1,9 +1,11 @@
 package domain;
 
+import java.io.Serializable;
+
 /**
  * Created by Ruan on 29/11/2015.
  */
-public class TipoRecurso {
+public class TipoRecurso implements Serializable {
     private int idTipoRecurso;
     private String Descricao;
 
