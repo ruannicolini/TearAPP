@@ -30,6 +30,7 @@
                 android:editable="true"
                 android:background="#e4e4e4"
                 android:textSize="16sp"
+                android:inputType="number"
                 />
 
         <!-- NUMERO DE PEÇAS -->
@@ -48,6 +49,7 @@
             android:editable="true"
             android:background="#e4e4e4"
             android:textSize="16sp"
+            android:inputType="number"
             />
 
         <!-- COMPRIMENTO -->
@@ -66,6 +68,7 @@
             android:editable="true"
             android:background="#e4e4e4"
             android:textSize="16sp"
+            android:inputType="numberDecimal"
             />
 
         <!-- TOLERÂNCIA -->
@@ -84,6 +87,7 @@
             android:editable="true"
             android:background="#e4e4e4"
             android:textSize="16sp"
+            android:inputType="number"
             />
 
         <!-- DATA -->
@@ -99,16 +103,18 @@
             android:layout_width="285dp"
             android:layout_height="38dp"
             android:layout_gravity="center"
-            android:editable="true"
+            android:editable="false"
             android:background="#e4e4e4"
             android:textSize="16sp"
             />
+        <!--
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="hj"
             android:id="@+id/btnData"
             android:onClick="selecionarData"/>
+            -->
 
         <!-- REFERÊNCIA -->
         <TextView
@@ -144,6 +150,7 @@
             android:editable="true"
             android:background="#e4e4e4"
             android:textSize="16sp"
+            android:inputType="number"
             />
 
         <Button
