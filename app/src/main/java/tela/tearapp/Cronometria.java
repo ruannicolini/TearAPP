@@ -44,17 +44,24 @@ import domain.Tecido;
 public class Cronometria extends FragmentActivity {
 
     CronometristaJDBCDao cronometristaDao = new CronometristaJDBCDao();
-    OperadorJDBCDao operadorDao = new OperadorJDBCDao();
-    OperacaoJDBCDao operacaoDao = new OperacaoJDBCDao();
-    TecidoJDBCDao tecidoDao = new TecidoJDBCDao();
-    ProdutoJDBCDao produtoDao = new ProdutoJDBCDao();
-    GrupoJDBCDao grupoDao = new GrupoJDBCDao();
-    Cronometragem cronometragem = new Cronometragem();
+    OperadorJDBCDao operadorDao;
+    OperacaoJDBCDao operacaoDao;
+    TecidoJDBCDao tecidoDao;
+    ProdutoJDBCDao produtoDao;
+    GrupoJDBCDao grupoDao;
+    Cronometragem cronometragem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cronometria);
+
+        operadorDao = new OperadorJDBCDao();
+        operacaoDao = new OperacaoJDBCDao();
+        tecidoDao = new TecidoJDBCDao();
+        produtoDao = new ProdutoJDBCDao();
+        grupoDao = new GrupoJDBCDao();
+        cronometragem = new Cronometragem();
     }
 
 
@@ -393,14 +400,23 @@ public class Cronometria extends FragmentActivity {
     }
 
     public void chamaCronometria2(View view){
+        if((cronometragem.getCronometrista() == null)||(cronometragem.getGrupo() == null)||(cronometragem.getOperador() == null)||(cronometragem.getProduto() == null)||(cronometragem.getOperacao() == null)||(cronometragem.getTecido() == null)) {
+            Context contexto = getApplicationContext();
+            String texto = "Preencha todos os campos.";
+            int duracao = Toast.LENGTH_SHORT;
 
-        //Passa Os dados obtidos pra Activity/tela Cronometria2
-        Intent intent = new Intent(this, Cronometria2.class);
-        Bundle args = new Bundle();
+            Toast toast = Toast.makeText(contexto, texto, duracao);
+            toast.show();
+        }else{
+            //Passa Os dados obtidos pra Activity/tela Cronometria2
+            Intent intent = new Intent(this, Cronometria2.class);
+            Bundle args = new Bundle();
 
-        //Toast.makeText(this, "Cronometragem: " + cronometragem.getCronometrista().getNome(), Toast.LENGTH_LONG).show();
-        args.putSerializable("cronometragem", cronometragem);
-        intent.putExtras(args);
-        startActivity(intent);
+            //Toast.makeText(this, "Cronometragem: " + cronometragem.getCronometrista().getNome(), Toast.LENGTH_LONG).show();
+            args.putSerializable("cronometragem", cronometragem);
+            intent.putExtras(args);
+            startActivity(intent);
+
+        }
     }
 }

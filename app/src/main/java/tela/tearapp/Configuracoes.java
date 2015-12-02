@@ -15,7 +15,7 @@ import dao.ConfiguracoesFileDao;
 
 public class Configuracoes extends Activity {
 
-    ConfiguracoesFileDao confDao = new ConfiguracoesFileDao();
+    ConfiguracoesFileDao confDao;
     EditText editTextIP, editTextNomeBD, editTextUserBD, editTextSenhaBD, editTextPorta;
 
     @Override
@@ -23,6 +23,8 @@ public class Configuracoes extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuracoes);
         ArrayList<String> lista = null;
+        confDao = new ConfiguracoesFileDao();
+
         try {
             lista = confDao.LerConfiguracoes(this);
         } catch (SQLException e) {
@@ -49,7 +51,6 @@ public class Configuracoes extends Activity {
         //Porta
         editTextPorta = (EditText) findViewById(R.id.EditPorta);
         editTextPorta.setText(lista.get(4));
-
 
     }
 

@@ -18,14 +18,17 @@ public class Cronometragem implements Serializable {
     private ArrayList<TipoRecurso> recursos;
 
     public Cronometragem() {
-        this.cronometrista = new Cronometrista();
-        this.grupo = new Grupo();
-        this.operador = new Operador();
-        this.produto = new Produto();
-        this.tecido = new Tecido();
-        this.operacao = new Operacao();
-        this.batidas = new ArrayList();
-        this.recursos = new ArrayList();
+    }
+
+    public Cronometragem(Cronometrista cronometrista, Grupo grupo, Operador operador, Produto produto, Tecido tecido, Operacao operacao, ArrayList<Batida> batidas, ArrayList<TipoRecurso> recursos) {
+        this.cronometrista = cronometrista;
+        this.grupo = grupo;
+        this.operador = operador;
+        this.produto = produto;
+        this.tecido = tecido;
+        this.operacao = operacao;
+        this.batidas = batidas;
+        this.recursos = recursos;
     }
 
     public Operador getOperador() {

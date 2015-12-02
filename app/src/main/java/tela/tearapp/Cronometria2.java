@@ -24,8 +24,8 @@ import domain.Cronometragem;
 import util.FormataTempo;
 
 public class Cronometria2 extends Activity {
-    Cronometragem cronometragem = new Cronometragem();
-    List<Batida> batidas = new ArrayList();
+    Cronometragem cronometragem;
+    List<Batida> batidas;
 
     //Componentes
     private Button btnInicio;
@@ -49,6 +49,9 @@ public class Cronometria2 extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cronometria2);
+
+        cronometragem = new Cronometragem();
+        batidas = new ArrayList();
 
         // Recebe Parametros da Activity Cronometria
         Bundle params = getIntent().getExtras();

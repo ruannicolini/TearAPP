@@ -33,19 +33,23 @@ import domain.Grupo;
 import domain.TipoRecurso;
 
 public class Cronometria4 extends Activity {
-    final TipoRecursoJDBCDao tipoRecursoDao = new TipoRecursoJDBCDao();
-    final Cronometragem cronometragem = new Cronometragem();
+    TipoRecursoJDBCDao tipoRecursoDao;
+    Cronometragem cronometragem;
 
     //VAR realacionadas a Lista de Recursos usados na cronometragem
-    Vector<TipoRecurso> aux = new Vector();
-    ArrayAdapter<TipoRecurso> adapterRecurso = null;
-    ListView lvRecurso = null;
+    Vector<TipoRecurso> aux;
+    ArrayAdapter<TipoRecurso> adapterRecurso;
+    ListView lvRecurso;
     //=======================================================
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cronometria4);
+
+        tipoRecursoDao = new TipoRecursoJDBCDao();
+        cronometragem = new Cronometragem();
+        aux = new Vector();
 
         //Seta Adapter LVRECURSO
         aux = toArrayList(cronometragem.getRecursos());
