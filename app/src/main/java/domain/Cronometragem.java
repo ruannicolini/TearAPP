@@ -2,6 +2,7 @@ package domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,18 +18,15 @@ public class Cronometragem implements Serializable {
     private ArrayList<Batida> batidas;
     private ArrayList<TipoRecurso> recursos;
 
-    public Cronometragem() {
-    }
+    private int ritmo;
+    private int tolerancia;
+    private int numPecas;
+    private int numOcorrencia;
+    private float comprimentoProduto;
+    private String referencia;
+    private Date dataCronometragem;
 
-    public Cronometragem(Cronometrista cronometrista, Grupo grupo, Operador operador, Produto produto, Tecido tecido, Operacao operacao, ArrayList<Batida> batidas, ArrayList<TipoRecurso> recursos) {
-        this.cronometrista = cronometrista;
-        this.grupo = grupo;
-        this.operador = operador;
-        this.produto = produto;
-        this.tecido = tecido;
-        this.operacao = operacao;
-        this.batidas = batidas;
-        this.recursos = recursos;
+    public Cronometragem() {
     }
 
     public Operador getOperador() {
@@ -93,5 +91,61 @@ public class Cronometragem implements Serializable {
 
     public void setRecursos(ArrayList<TipoRecurso> recursos) {
         this.recursos = recursos;
+    }
+
+    public int getRitmo() {
+        return ritmo;
+    }
+
+    public void setRitmo(int ritmo) {
+        this.ritmo = ritmo;
+    }
+
+    public int getTolerancia() {
+        return tolerancia;
+    }
+
+    public void setTolerancia(int tolerancia) {
+        this.tolerancia = tolerancia;
+    }
+
+    public int getNumPecas() {
+        return numPecas;
+    }
+
+    public void setNumPecas(int numPecas) {
+        this.numPecas = numPecas;
+    }
+
+    public int getNumOcorrencia() {
+        return numOcorrencia;
+    }
+
+    public void setNumOcorrencia(int numOcorrencia) {
+        this.numOcorrencia = numOcorrencia;
+    }
+
+    public float getComprimentoProduto() {
+        return comprimentoProduto;
+    }
+
+    public void setComprimentoProduto(float comprimentoProduto) {
+        this.comprimentoProduto = comprimentoProduto;
+    }
+
+    public String getReferencia() {
+        return referencia;
+    }
+
+    public void setReferencia(String referencia) {
+        this.referencia = referencia;
+    }
+
+    public Date getDataCronometragem() {
+        return dataCronometragem;
+    }
+
+    public void setDataCronometragem(Date dataCronometragem) {
+        this.dataCronometragem = dataCronometragem;
     }
 }

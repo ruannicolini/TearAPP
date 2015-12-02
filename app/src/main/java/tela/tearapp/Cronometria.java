@@ -400,14 +400,15 @@ public class Cronometria extends FragmentActivity {
     }
 
     public void chamaCronometria2(View view){
-        if((cronometragem.getCronometrista() == null)||(cronometragem.getGrupo() == null)||(cronometragem.getOperador() == null)||(cronometragem.getProduto() == null)||(cronometragem.getOperacao() == null)||(cronometragem.getTecido() == null)) {
+       /* if((cronometragem.getCronometrista() == null)||(cronometragem.getGrupo() == null)||(cronometragem.getOperador() == null)||(cronometragem.getProduto() == null)||(cronometragem.getOperacao() == null)||(cronometragem.getTecido() == null)) {
             Context contexto = getApplicationContext();
             String texto = "Preencha todos os campos.";
             int duracao = Toast.LENGTH_SHORT;
 
             Toast toast = Toast.makeText(contexto, texto, duracao);
             toast.show();
-        }else{
+
+        }else{ */
             //Passa Os dados obtidos pra Activity/tela Cronometria2
             Intent intent = new Intent(this, Cronometria2.class);
             Bundle args = new Bundle();
@@ -416,7 +417,7 @@ public class Cronometria extends FragmentActivity {
             args.putSerializable("cronometragem", cronometragem);
             intent.putExtras(args);
             startActivity(intent);
+        //}
 
-        }
     }
 }

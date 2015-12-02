@@ -2,6 +2,9 @@ package tela.tearapp;
 
 import android.animation.LayoutTransition;
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,9 +13,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +30,7 @@ import util.FormataTempo;
 
 public class Cronometria2 extends Activity {
     Cronometragem cronometragem;
-    List<Batida> batidas;
+    ArrayList<Batida> batidas;
 
     //Componentes
     private Button btnInicio;
@@ -51,7 +56,7 @@ public class Cronometria2 extends Activity {
         setContentView(R.layout.activity_cronometria2);
 
         cronometragem = new Cronometragem();
-        batidas = new ArrayList();
+        batidas = null;
 
         // Recebe Parametros da Activity Cronometria
         Bundle params = getIntent().getExtras();
@@ -102,6 +107,7 @@ public class Cronometria2 extends Activity {
             linearLayout.setLayoutTransition(null);
             linearLayout.removeAllViews();
             batidas.clear();
+            batidas = null;
             Status_lap = false;
         }
     }
@@ -110,6 +116,9 @@ public class Cronometria2 extends Activity {
         if(btnIniciarPressionado == false){
             resetCronometro();
         }else {
+            if(batidas ==null){
+                batidas = new ArrayList<>();
+            }
             Status_lap = true;
             contaLap++;
 
@@ -158,6 +167,7 @@ public class Cronometria2 extends Activity {
         if (btnIniciarPressionado == true) {
             pararCronometro();
         } else {
+
             btnIniciarPressionado = true;
 
             btnInicio.setBackgroundResource(R.drawable.btn_stop_states);
@@ -186,9 +196,26 @@ public class Cronometria2 extends Activity {
     }
 
     public void chamaCronometria3(View view){
-        //Passa Os dados obtidos pra Activity/tela Cronometria3
-        Intent intent = new Intent(getApplicationContext(), Cronometria3.class);
-        startActivity(intent);
+        cronometragem.setBatidas(batidas);
+
+        if(cronometragem.getBatidas() != null) {
+            //Passa Os dados obtidos pra Activity/tela Cronometria3
+            Intent intent = new Intent(getApplicationContext(), Cronometria3.class);
+            Bundle args = new Bundle();
+            args.putSerializable("cronometragem", cronometragem);
+            intent.putExtras(args);
+            startActivity(intent);
+        }else{
+            Context contexto = getApplicationContext();
+            String texto = "Nenhum  LAP realizado.";
+            int duracao = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(contexto, texto, duracao);
+            toast.show();
+
+        }
     }
+
+
 
 }
