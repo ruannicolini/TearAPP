@@ -74,11 +74,13 @@ public class Cronometria3 extends Activity {
         TextView editNumOcorrencia = (TextView) findViewById(R.id.EditNumOcorrencia);
         TextView editData = (TextView) findViewById(R.id.EditData);
 
+
         if((!editRitmo.getText().toString().equals(""))
                 ||(!editNumPecas.getText().toString().equals(""))
                 ||(!editComprimento.getText().toString().equals(""))
                 ||(!editTolerancia.getText().toString().equals(""))
                 ||(!editNumOcorrencia.getText().toString().equals(""))){
+
             cronometragem.setRitmo(Integer.parseInt(editRitmo.getText().toString()));
             cronometragem.setNumPecas(Integer.parseInt(editNumPecas.getText().toString()));
             cronometragem.setComprimentoProduto(Float.parseFloat(editComprimento.getText().toString()));
@@ -93,14 +95,13 @@ public class Cronometria3 extends Activity {
             args.putSerializable("cronometragem", cronometragem);
             intent.putExtras(args);
             startActivity(intent);
+
         }else{
             Context contexto = getApplicationContext();
             String texto = "Informe todos os campos";
             int duracao = Toast.LENGTH_SHORT;
-
             Toast toast = Toast.makeText(contexto, texto, duracao);
             toast.show();
-
         }
 
     }
