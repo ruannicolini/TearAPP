@@ -168,6 +168,12 @@ public class Cronometria4 extends Activity {
     public void salvarCronometragem(View view){
         try {
             cronometragemDao.inserirCronometragem(cronometragem);
+            Context contexto = getApplicationContext();
+            int duracao = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(contexto, "Cronometria Enviada com sucesso", duracao);
+            toast.show();
+            Intent returnBtn = new Intent("android.intent.action.MAIN");
+            startActivity(returnBtn);
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
