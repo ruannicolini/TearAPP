@@ -27,6 +27,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.Vector;
 
+import dao.CronometragemJDBCDao;
 import dao.CronometristaJDBCDao;
 import dao.GrupoJDBCDao;
 import dao.OperacaoJDBCDao;
@@ -399,7 +400,9 @@ public class Cronometria extends FragmentActivity {
 
     }
 
-    public void chamaCronometria2(View view){
+    public void chamaCronometria2(View view) throws SQLException {
+        CronometragemJDBCDao c = new CronometragemJDBCDao();
+
        /* if((cronometragem.getCronometrista() == null)||(cronometragem.getGrupo() == null)||(cronometragem.getOperador() == null)||(cronometragem.getProduto() == null)||(cronometragem.getOperacao() == null)||(cronometragem.getTecido() == null)) {
             Context contexto = getApplicationContext();
             String texto = "Preencha todos os campos.";
@@ -408,7 +411,8 @@ public class Cronometria extends FragmentActivity {
             Toast toast = Toast.makeText(contexto, texto, duracao);
             toast.show();
 
-        }else{ */
+        }else{
+        */
             //Passa Os dados obtidos pra Activity/tela Cronometria2
             Intent intent = new Intent(this, Cronometria2.class);
             Bundle args = new Bundle();
@@ -418,6 +422,7 @@ public class Cronometria extends FragmentActivity {
             intent.putExtras(args);
             startActivity(intent);
         //}
+
 
     }
 }

@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Vector;
 
 import baseAdapter.TipoRecursoAdapter;
+import dao.CronometragemJDBCDao;
 import dao.TipoRecursoDao;
 import dao.TipoRecursoJDBCDao;
 import domain.Batida;
@@ -34,6 +35,7 @@ import domain.TipoRecurso;
 
 public class Cronometria4 extends Activity {
     TipoRecursoJDBCDao tipoRecursoDao;
+    CronometragemJDBCDao cronometragemDao;
     Cronometragem cronometragem;
 
     //VAR realacionadas a Lista de Recursos usados na cronometragem
@@ -48,6 +50,7 @@ public class Cronometria4 extends Activity {
 
         tipoRecursoDao = new TipoRecursoJDBCDao();
         cronometragem = new Cronometragem();
+        cronometragemDao = new CronometragemJDBCDao();
 
         // Recebe Parametros da Activity Cronometria
         Bundle params = getIntent().getExtras();
@@ -163,6 +166,11 @@ public class Cronometria4 extends Activity {
     }
 
     public void salvarCronometragem(View view){
+        try {
+            cronometragemDao.inserirCronometragem(cronometragem);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
 
     }
 

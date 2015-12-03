@@ -1,9 +1,14 @@
 package dao;
 
+import android.util.Log;
+
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
 
 import domain.Cronometragem;
+import domain.Grupo;
 import util.Conexao;
 
 /**
@@ -72,7 +77,53 @@ public class CronometragemJDBCDao implements CronometragemDao {
     }
 
     @Override
-    public int buscaIdParametro(String tipo) throws SQLException {
-        return 0;
+    public int buscaIdParametro(final String parametroNome) throws SQLException {
+        final int id =0;
+        final Vector vetId = new Vector();
+        Thread t1 = new Thread(){
+            public void run(){
+
+                //Busca ID
+                String sql = "select * from parametros where parametros.parametro = ?";
+                Log.i("SQL", sql);
+                Conexao conexao = FabricaConexao.obterConexao();
+                PreparedStatement pstmt = null;
+
+                try {
+                    pstmt = conexao.prepareStatement(sql);
+                    pstmt.setString(1, parametroNome );
+                    ResultSet res = pstmt.executeQuery();
+                    if (res.next()) {
+                        vetId.addElement(  (res.getInt("valor"))    );
+                    }
+
+                    //Altera Valor do Parametro pro proximo ID
+                    String sqlUpdate =  " UPDATE parametros SET " +
+                            " valor = ? " +
+                            " WHERE parametro = ?";
+                    PreparedStatement pstmtUpdate;
+
+                    pstmtUpdate = conexao.prepareStatement(sqlUpdate);
+                    pstmtUpdate.setInt(1, ((int) vetId.get(0))+1 );
+                    pstmtUpdate.setString(2, parametroNome );
+                    pstmtUpdate.executeUpdate();
+
+
+                    conexao.close();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                    System.out.println(e.getMessage());
+                }
+            }
+        };
+        t1.start();
+        try {
+            t1.join();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return (int) vetId.get(0);
     }
 }
