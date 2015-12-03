@@ -32,4 +32,18 @@ public class TipoRecurso implements Serializable {
     public String toString() {
         return this.getDescricao();
     }
+
+    @Override public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+        if (getClass() != o.getClass()) {
+            return false;
+        }
+        TipoRecurso rec = (TipoRecurso)o;
+        if (this.idTipoRecurso != rec.getIdTipoRecurso()) {
+            return false;
+        }
+        return true;
+    }
 }

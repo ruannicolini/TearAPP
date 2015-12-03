@@ -37,7 +37,6 @@ public class Cronometria4 extends Activity {
     Cronometragem cronometragem;
 
     //VAR realacionadas a Lista de Recursos usados na cronometragem
-    Vector<TipoRecurso> aux;
     ArrayAdapter<TipoRecurso> adapterRecurso;
     ListView lvRecurso;
     //=======================================================
@@ -48,7 +47,6 @@ public class Cronometria4 extends Activity {
         setContentView(R.layout.activity_cronometria4);
 
         tipoRecursoDao = new TipoRecursoJDBCDao();
-        aux = new Vector();
         cronometragem = new Cronometragem();
 
         // Recebe Parametros da Activity Cronometria
@@ -60,9 +58,7 @@ public class Cronometria4 extends Activity {
 
         cronometragem.setRecursos(new ArrayList<TipoRecurso>());
         //Seta Adapter LVRECURSO
-        aux = toArrayList(cronometragem.getRecursos());
-        aux.addAll(cronometragem.getRecursos());
-        adapterRecurso = new ArrayAdapter<TipoRecurso>(this,R.layout.item_consulta,aux);
+        adapterRecurso = new ArrayAdapter<TipoRecurso>(this,R.layout.item_consulta, cronometragem.getRecursos());
         lvRecurso = (ListView) findViewById(R.id.listViewRecurso);
         lvRecurso.setAdapter(adapterRecurso);
 
@@ -74,9 +70,7 @@ public class Cronometria4 extends Activity {
                 final TipoRecurso recurso = (TipoRecurso) lv.getItemAtPosition(position);
                 //Remove Recurso
                 cronometragem.getRecursos().remove(recurso);
-                aux.remove(recurso);
                 adapterRecurso.notifyDataSetChanged();
-
             }
         });
 
@@ -121,24 +115,25 @@ public class Cronometria4 extends Activity {
                 @Override
                 public void onItemClick(AdapterView<?> lv, View view, int position, long id) {
                     TipoRecurso o = (TipoRecurso) lv.getItemAtPosition(position);
+                    ArrayList<TipoRecurso> auxiliar  = new ArrayList();
 
                     //Esconde o FrameLayoutCronometria
                     FrameLayout fl = (FrameLayout) findViewById(R.id.frameLayoutCronometria);
                     fl.setVisibility(View.GONE);
 
-                    //if(aux.equals(o) == false){
+                    auxiliar = cronometragem.getRecursos();
+                    if(cronometragem.getRecursos().contains(o) == false){
                         //Add o Tipo de Recurso no arrayList do Objeto Cronometragem e na ListView
                         cronometragem.getRecursos().add(o);
-                        aux.add(o);
                         adapterRecurso.notifyDataSetChanged();
-                    //}else{
-                      //  Context contexto = getApplicationContext();
-                        //String texto = "Recurso já incluso.";
-                        //int duracao = Toast.LENGTH_SHORT;
-                        //Toast toast = Toast.makeText(contexto, texto, duracao);
-                        //toast.show();
+                    }else{
+                        Context contexto = getApplicationContext();
+                        String texto = "Recurso já incluso.";
+                        int duracao = Toast.LENGTH_SHORT;
+                        Toast toast = Toast.makeText(contexto, texto, duracao);
+                        toast.show();
 
-                    //}
+                    }
 
 
                 }
