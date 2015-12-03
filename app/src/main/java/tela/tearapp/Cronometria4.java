@@ -115,13 +115,11 @@ public class Cronometria4 extends Activity {
                 @Override
                 public void onItemClick(AdapterView<?> lv, View view, int position, long id) {
                     TipoRecurso o = (TipoRecurso) lv.getItemAtPosition(position);
-                    ArrayList<TipoRecurso> auxiliar  = new ArrayList();
 
                     //Esconde o FrameLayoutCronometria
                     FrameLayout fl = (FrameLayout) findViewById(R.id.frameLayoutCronometria);
                     fl.setVisibility(View.GONE);
 
-                    auxiliar = cronometragem.getRecursos();
                     if(cronometragem.getRecursos().contains(o) == false){
                         //Add o Tipo de Recurso no arrayList do Objeto Cronometragem e na ListView
                         cronometragem.getRecursos().add(o);
@@ -170,12 +168,7 @@ public class Cronometria4 extends Activity {
 
     public void cancelarCronometragem(View view){
         Intent returnBtn = new Intent("android.intent.action.MAIN");
-        //Intent returnBtn = new Intent(getApplicationContext(), Principal.class);
         startActivity(returnBtn);
-    }
-
-    public static Vector toArrayList(ArrayList al) {
-        return new Vector(al);
     }
 
 }
