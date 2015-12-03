@@ -46,6 +46,8 @@ public class CronometragemJDBCDao implements CronometragemDao {
                     pstmt.setInt(13, 0);
 
                     pstmt.execute();
+                    inserirArrayTipoRecurso(cronometragem);
+                    inserirArrayBatidas(cronometragem);
                     conexao.commit();
                 }catch (SQLException erro) {
                     try {
@@ -126,7 +128,6 @@ public class CronometragemJDBCDao implements CronometragemDao {
         for(int i = 0; i < cronometragem.getRecursos().size(); i++){
             inserirCronometragem_TipoRecurso(cronometragem, cronometragem.getRecursos().get(i));
         }
-
     }
 
     @Override
@@ -180,7 +181,7 @@ public class CronometragemJDBCDao implements CronometragemDao {
 
     @Override
     public void inserirArrayBatidas(Cronometragem cronometragem) throws SQLException {
-        for(int i = 0; i < cronometragem.getBatidas().size(); i++){
+        for(int i = 0; i < cronometragem.getBatidas().size(); i++) {
             cronometragem.getBatidas().get(i).setCronometragem(cronometragem);
             inserirBatida(cronometragem.getBatidas().get(i));
         }

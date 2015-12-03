@@ -168,8 +168,8 @@ public class Cronometria4 extends Activity {
     public void salvarCronometragem(View view){
         try {
             cronometragemDao.inserirCronometragem(cronometragem);
-            cronometragemDao.inserirArrayTipoRecurso(cronometragem);
-            cronometragemDao.inserirArrayBatidas(cronometragem);
+            //cronometragemDao.inserirArrayTipoRecurso(cronometragem);
+            //cronometragemDao.inserirArrayBatidas(cronometragem);
 
             Context contexto = getApplicationContext();
             int duracao = Toast.LENGTH_SHORT;
