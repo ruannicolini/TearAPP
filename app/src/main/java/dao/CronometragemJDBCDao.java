@@ -9,6 +9,7 @@ import java.util.Vector;
 
 import domain.Cronometragem;
 import domain.Grupo;
+import domain.TipoRecurso;
 import util.Conexao;
 
 /**
@@ -22,11 +23,11 @@ public class CronometragemJDBCDao implements CronometragemDao {
             public void run(){
                 Conexao conexao = FabricaConexao.obterConexao();
                 try{
+                    //Inseri Na tabela Cronometragem
                     conexao.setAutoCommit(false);
                     String sql = "INSERT INTO cronometragem (idCronometragem," +
                     "ritmo, num_pecas, tolerancia, comprimento_prod, num_ocorrencia," +
                             "idProduto, idCronometrista, idTecido, idOperacao, idOperador, tempo_original, tempo_ideal) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
                     cronometragem.setIdCronometragem(buscaIdParametro("seqCronometragem"));
                     PreparedStatement pstmt = conexao.prepareStatement(sql);
                     pstmt.setInt(1, cronometragem.getIdCronometragem());
@@ -45,8 +46,7 @@ public class CronometragemJDBCDao implements CronometragemDao {
 
                     pstmt.execute();
                     conexao.commit();
-                }
-                catch (SQLException erro) {
+                }catch (SQLException erro) {
                     try {
                         conexao.rollback();
                         throw erro;
@@ -54,8 +54,7 @@ public class CronometragemJDBCDao implements CronometragemDao {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
-                }
-                finally{
+                }finally{
                     try {
                         conexao.close();
                     } catch (SQLException e) {
@@ -73,6 +72,64 @@ public class CronometragemJDBCDao implements CronometragemDao {
             e.printStackTrace();
         }
 
+
+    }
+
+    @Override
+    public void inserirCronometragem_TipoRecurso(final Cronometragem cronometragem, final TipoRecurso recurso) throws SQLException {
+
+            Thread t1 = new Thread(){
+                public void run(){
+                    Conexao conexao = FabricaConexao.obterConexao();
+                    try{
+                        //Inseri Na tabela Cronometragem_has_Tipo_recurso
+                        conexao.setAutoCommit(false);
+                        String sql = "insert into cronometragem_has_tipo_recurso (idCronometragem, idTipoRecurso)values(?,?)";
+
+                        PreparedStatement pstmt = conexao.prepareStatement(sql);
+                        pstmt.setInt(1, cronometragem.getIdCronometragem());
+                        pstmt.setInt(2, recurso.getIdTipoRecurso());
+
+                        pstmt.execute();
+                        conexao.commit();
+                    }catch (SQLException erro) {
+                        try {
+                            conexao.rollback();
+                            throw erro;
+                        } catch (SQLException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }finally{
+                        try {
+                            conexao.close();
+                        } catch (SQLException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            };
+            t1.start();
+            try {
+                t1.join();
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+    }
+
+    @Override
+    public void inserirArrayTipoRecurso(Cronometragem cronometragem) throws SQLException {
+        for(int i = 0; i < cronometragem.getRecursos().size(); i++){
+            inserirCronometragem_TipoRecurso(cronometragem, cronometragem.getRecursos().get(i));
+        }
+
+    }
+
+    @Override
+    public void inserirBatidas(Cronometragem cronometragem) throws SQLException {
 
     }
 
@@ -102,13 +159,10 @@ public class CronometragemJDBCDao implements CronometragemDao {
                             " valor = ? " +
                             " WHERE parametro = ?";
                     PreparedStatement pstmtUpdate;
-
                     pstmtUpdate = conexao.prepareStatement(sqlUpdate);
                     pstmtUpdate.setInt(1, ((int) vetId.get(0))+1 );
                     pstmtUpdate.setString(2, parametroNome );
                     pstmtUpdate.executeUpdate();
-
-
                     conexao.close();
                 } catch (SQLException e) {
                     // TODO Auto-generated catch block
@@ -126,4 +180,5 @@ public class CronometragemJDBCDao implements CronometragemDao {
         }
         return (int) vetId.get(0);
     }
+
 }

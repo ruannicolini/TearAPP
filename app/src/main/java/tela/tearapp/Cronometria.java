@@ -403,7 +403,7 @@ public class Cronometria extends FragmentActivity {
     public void chamaCronometria2(View view) throws SQLException {
         CronometragemJDBCDao c = new CronometragemJDBCDao();
 
-       /* if((cronometragem.getCronometrista() == null)||(cronometragem.getGrupo() == null)||(cronometragem.getOperador() == null)||(cronometragem.getProduto() == null)||(cronometragem.getOperacao() == null)||(cronometragem.getTecido() == null)) {
+       if((cronometragem.getCronometrista() == null)||(cronometragem.getGrupo() == null)||(cronometragem.getOperador() == null)||(cronometragem.getProduto() == null)||(cronometragem.getOperacao() == null)||(cronometragem.getTecido() == null)) {
             Context contexto = getApplicationContext();
             String texto = "Preencha todos os campos.";
             int duracao = Toast.LENGTH_SHORT;
@@ -412,16 +412,14 @@ public class Cronometria extends FragmentActivity {
             toast.show();
 
         }else{
-        */
             //Passa Os dados obtidos pra Activity/tela Cronometria2
             Intent intent = new Intent(this, Cronometria2.class);
             Bundle args = new Bundle();
 
-            //Toast.makeText(this, "Cronometragem: " + cronometragem.getCronometrista().getNome(), Toast.LENGTH_LONG).show();
             args.putSerializable("cronometragem", cronometragem);
             intent.putExtras(args);
             startActivity(intent);
-        //}
+        }
 
 
     }
