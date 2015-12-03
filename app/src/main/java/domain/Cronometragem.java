@@ -9,6 +9,7 @@ import java.util.List;
  * Created by Ruan on 27/11/2015.
  */
 public class Cronometragem implements Serializable {
+    private int idCronometragem;
     private Cronometrista cronometrista;
     private Grupo grupo;
     private Operador operador;
@@ -147,5 +148,13 @@ public class Cronometragem implements Serializable {
 
     public void setDataCronometragem(Date dataCronometragem) {
         this.dataCronometragem = dataCronometragem;
+    }
+
+    public int getIdCronometragem() {
+        return idCronometragem;
+    }
+
+    public void setIdCronometragem(int idCronometragem) {
+        this.idCronometragem = idCronometragem;
     }
 }
