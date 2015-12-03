@@ -40,10 +40,10 @@ public class CronometragemJDBCDao implements CronometragemDao {
                     pstmt.setInt(9, cronometragem.getTecido().getIdTecido());
                     pstmt.setInt(10, cronometragem.getOperacao().getIdOperacao());
                     pstmt.setInt(11, cronometragem.getOperador().getIdOperador());
-                    //pstmt.setString(12, null);
-                    //pstmt.setString(13, null );
+                    pstmt.setInt(12, 0);
+                    pstmt.setInt(13, 0);
 
-                    pstmt.executeUpdate();
+                    pstmt.execute();
                     conexao.commit();
                 }
                 catch (SQLException erro) {
