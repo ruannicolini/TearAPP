@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
+import domain.Batida;
 import domain.Cronometragem;
 import domain.Grupo;
 import domain.TipoRecurso;
@@ -129,7 +130,60 @@ public class CronometragemJDBCDao implements CronometragemDao {
     }
 
     @Override
-    public void inserirBatidas(Cronometragem cronometragem) throws SQLException {
+    public void inserirBatida(final Batida batida) throws SQLException {
+        Thread t1 = new Thread(){
+            public void run(){
+                Conexao conexao = FabricaConexao.obterConexao();
+                try{
+                    //Inseri Na tabela Cronometragem_has_Tipo_recurso
+                    conexao.setAutoCommit(false);
+                    String sql = "insert into Batida (idbatida, idCronometragem, minutos, segundos, centezimos, utilizar)values(?,?,?,?,?,?);";
+
+                    PreparedStatement pstmt = conexao.prepareStatement(sql);
+                    batida.setIdBatida(buscaIdParametro("seqBatida"));
+                    pstmt.setInt(1, batida.getIdBatida());
+                    pstmt.setInt(2, batida.getCronometragem().getIdCronometragem());
+                    pstmt.setInt(3, batida.getMinutos());
+                    pstmt.setInt(4, batida.getSegundos());
+                    pstmt.setInt(5, batida.getCentezimos());
+                    pstmt.setBoolean(6, batida.isUtilizar());
+
+                    pstmt.execute();
+                    conexao.commit();
+                }catch (SQLException erro) {
+                    try {
+                        conexao.rollback();
+                        throw erro;
+                    } catch (SQLException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }finally{
+                    try {
+                        conexao.close();
+                    } catch (SQLException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        t1.start();
+        try {
+            t1.join();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void inserirArrayBatidas(Cronometragem cronometragem) throws SQLException {
+        for(int i = 0; i < cronometragem.getBatidas().size(); i++){
+            cronometragem.getBatidas().get(i).setCronometragem(cronometragem);
+            inserirBatida(cronometragem.getBatidas().get(i));
+        }
 
     }
 

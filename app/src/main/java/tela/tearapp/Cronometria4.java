@@ -169,12 +169,14 @@ public class Cronometria4 extends Activity {
         try {
             cronometragemDao.inserirCronometragem(cronometragem);
             cronometragemDao.inserirArrayTipoRecurso(cronometragem);
+            cronometragemDao.inserirArrayBatidas(cronometragem);
 
             Context contexto = getApplicationContext();
             int duracao = Toast.LENGTH_SHORT;
             Toast toast = Toast.makeText(contexto, "Cronometria Enviada com sucesso", duracao);
             toast.show();
-            Intent returnBtn = new Intent("android.intent.action.MAIN");
+
+            Intent returnBtn = new Intent(this, Principal.class);
             startActivity(returnBtn);
         }catch (Exception e){
             System.out.println(e.getMessage());
