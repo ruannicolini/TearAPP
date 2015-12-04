@@ -12,6 +12,11 @@ public class Grupo implements Serializable {
     public Grupo() {
     }
 
+    public Grupo(int idGrupo, String descricao) {
+        this.idGrupo = idGrupo;
+        this.descricao = descricao;
+    }
+
     public Grupo(String descricao, int idGrupo) {
         this.descricao = descricao;
         this.idGrupo = idGrupo;

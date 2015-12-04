@@ -32,10 +32,12 @@ import dao.CronometragemJDBCDao;
 import dao.CronometristaJDBCDao;
 import dao.CronometristaSQLite;
 import dao.GrupoJDBCDao;
+import dao.GrupoSQLite;
 import dao.OperacaoJDBCDao;
 import dao.OperadorJDBCDao;
 import dao.ProdutoJDBCDao;
 import dao.TecidoJDBCDao;
+import dao.TecidoSQLite;
 import domain.Cronometragem;
 import domain.Cronometrista;
 import domain.Grupo;
@@ -49,11 +51,15 @@ public class Cronometria extends FragmentActivity {
     CronometristaJDBCDao cronometristaJDBCDao;
     CronometristaSQLite cronometristaSQLite;
 
+    GrupoJDBCDao grupoJDBCDao;
+    GrupoSQLite grupoSQLite;
+
+    TecidoJDBCDao tecidoJDBCDao;
+    TecidoSQLite tecidoSQLite;
+
     OperadorJDBCDao operadorDao;
     OperacaoJDBCDao operacaoDao;
-    TecidoJDBCDao tecidoDao;
     ProdutoJDBCDao produtoDao;
-    GrupoJDBCDao grupoDao;
     Cronometragem cronometragem;
 
     @Override
@@ -65,11 +71,17 @@ public class Cronometria extends FragmentActivity {
         cronometristaJDBCDao = new CronometristaJDBCDao();
         cronometristaSQLite = new CronometristaSQLite(Principal.database);
 
+        //Dao Grupo
+        grupoJDBCDao = new GrupoJDBCDao();
+        grupoSQLite = new GrupoSQLite(Principal.database);
+
+        //Tecido
+        tecidoJDBCDao = new TecidoJDBCDao();
+        tecidoSQLite = new TecidoSQLite(Principal.database);
+
         operadorDao = new OperadorJDBCDao();
         operacaoDao = new OperacaoJDBCDao();
-        tecidoDao = new TecidoJDBCDao();
         produtoDao = new ProdutoJDBCDao();
-        grupoDao = new GrupoJDBCDao();
         cronometragem = new Cronometragem();
     }
 
@@ -149,7 +161,8 @@ public class Cronometria extends FragmentActivity {
     public void buscaTecido(View view) throws SQLException {
         final EditText editIdTecido = (EditText)findViewById(R.id.EditIdTecido), editTecido = (EditText)findViewById(R.id.EditTecido);
         Vector<Tecido> tecidos = new Vector();
-        tecidos = tecidoDao.obterTecidos();
+        //tecidos = tecidoJDBCDao.obterTecidos();
+        tecidos = tecidoSQLite.obterTecidos();
 
         if(tecidos != null){
             //Adapter
@@ -307,7 +320,8 @@ public class Cronometria extends FragmentActivity {
     public void buscaGrupo(View view) throws SQLException {
         final EditText editIdGrupo = (EditText)findViewById(R.id.EditIdGrupo), editGrupo = (EditText)findViewById(R.id.EditGrupo);
         Vector<Grupo> grupos = new Vector();
-        grupos = grupoDao.obterGrupos();
+        //grupos = grupoJDBCDao.obterGrupos();
+        grupos = grupoSQLite.obterGrupos();
 
         if(grupos != null){
             //Adapter

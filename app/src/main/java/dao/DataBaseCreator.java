@@ -5,13 +5,18 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import domain.Cronometrista;
+import domain.Grupo;
+import domain.Tecido;
 
 public class DataBaseCreator extends SQLiteOpenHelper {
 	CronometragemJDBCDao cronometragemDao;
 	CronometristaJDBCDao cronometristaDao;
+	GrupoJDBCDao grupoDao;
+	TecidoJDBCDao tecidoDao;
 
 	public DataBaseCreator(Context context) { super(context, "db_cronoanalise", null, 1); }
 
@@ -19,26 +24,42 @@ public class DataBaseCreator extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase database) {
 		cronometragemDao = new CronometragemJDBCDao();
 		cronometristaDao = new CronometristaJDBCDao();
+		grupoDao = new GrupoJDBCDao();
+		tecidoDao = new TecidoJDBCDao();
 
+
+		//Cronometrista
 		database.execSQL("CREATE TABLE cronometrista (idcronometrista integer primary key, nome text not null);");
-
-		//database.execSQL("insert into cronometrista(idcronometrista, nome) values (1,teste);");
-
-		//Insert Cronometristas
 		ArrayList<Cronometrista> cronometristas = new ArrayList(cronometristaDao.obterCronometristas());
 		for(int i =0; i< cronometristas.size(); i++){
 			//database.execSQL("insert into cronometrista(idcronometrista, nome) values ("+ cronometristas.get(i).getIdCronometrista() + ","+ cronometristas.get(i).getNome()+")");
 			ContentValues values = new ContentValues();
 			values.put("idcronometrista", cronometristas.get(i).getIdCronometrista());
 			values.put("nome", cronometristas.get(i).getNome());
-
 			database.insert("cronometrista", null, values);
-
 		}
 
+		//Grupo
 		database.execSQL("CREATE TABLE grupo (idgrupo integer not null primary key, descricao text);");
+		ArrayList<Grupo> grupos = null;
+		try {grupos = new ArrayList(grupoDao.obterGrupos()); } catch (SQLException e) { e.printStackTrace();	}
+		for(int i =0; i< grupos.size(); i++){
+			ContentValues values = new ContentValues();
+			values.put("idgrupo", grupos.get(i).getIdGrupo());
+			values.put("descricao", grupos.get(i).getDescricao());
+			database.insert("grupo", null, values);
+		}
 
+		//Tecido
 		database.execSQL("CREATE TABLE tecido (idtecido integer not null primary key, descricao text);");
+		ArrayList<Tecido> tecidos = null;
+		try {tecidos = new ArrayList(tecidoDao.obterTecidos()); } catch (SQLException e) { e.printStackTrace();	}
+		for(int i =0; i< tecidos.size(); i++){
+			ContentValues values = new ContentValues();
+			values.put("idTecido", tecidos.get(i).getIdTecido());
+			values.put("descricao", tecidos.get(i).getDescricao());
+			database.insert("tecido", null, values);
+		}
 
 		database.execSQL("CREATE TABLE tipo_Recurso (idtipo_recurso integer not null primary key, descricao text);");
 

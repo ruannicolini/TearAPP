@@ -12,6 +12,11 @@ public class Tecido implements Serializable {
     public Tecido() {
     }
 
+    public Tecido(int idTecido, String descricao) {
+        this.idTecido = idTecido;
+        this.descricao = descricao;
+    }
+
     public int getIdTecido() {
         return idTecido;
     }
