@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
@@ -29,6 +30,7 @@ import java.util.Vector;
 
 import dao.CronometragemJDBCDao;
 import dao.CronometristaJDBCDao;
+import dao.CronometristaSQLite;
 import dao.GrupoJDBCDao;
 import dao.OperacaoJDBCDao;
 import dao.OperadorJDBCDao;
@@ -44,7 +46,9 @@ import domain.Tecido;
 
 public class Cronometria extends FragmentActivity {
 
-    CronometristaJDBCDao cronometristaDao = new CronometristaJDBCDao();
+    CronometristaJDBCDao cronometristaJDBCDao;
+    CronometristaSQLite cronometristaSQLite;
+
     OperadorJDBCDao operadorDao;
     OperacaoJDBCDao operacaoDao;
     TecidoJDBCDao tecidoDao;
@@ -56,6 +60,10 @@ public class Cronometria extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cronometria);
+
+        //Dao Cronometrista
+        cronometristaJDBCDao = new CronometristaJDBCDao();
+        cronometristaSQLite = new CronometristaSQLite(Principal.database);
 
         operadorDao = new OperadorJDBCDao();
         operacaoDao = new OperacaoJDBCDao();
@@ -348,10 +356,11 @@ public class Cronometria extends FragmentActivity {
 
     }
 
-    public void buscaCronometrista(View view){
+    public void buscaCronometrista(View view) throws SQLException {
         final EditText editIdCronometrista = (EditText)findViewById(R.id.EditIdCronometria), editCronometrista = (EditText)findViewById(R.id.EditCronometria);
         Vector<Cronometrista> cronometristas = new Vector();
-        cronometristas = cronometristaDao.obterCronometristas();
+        //cronometristas = cronometristaJDBCDao.obterCronometristas();
+        cronometristas = cronometristaSQLite.obterCronometristas();
 
         if(cronometristas != null){
             //Adapter

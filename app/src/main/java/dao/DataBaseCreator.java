@@ -1,19 +1,40 @@
 package dao;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+
+import domain.Cronometrista;
+
 public class DataBaseCreator extends SQLiteOpenHelper {
 	CronometragemJDBCDao cronometragemDao;
+	CronometristaJDBCDao cronometristaDao;
 
-	public DataBaseCreator(Context context) { super(context, "db_Cronoanalise", null, 1); }
+	public DataBaseCreator(Context context) { super(context, "db_cronoanalise", null, 1); }
 
 	@Override
 	public void onCreate(SQLiteDatabase database) {
 		cronometragemDao = new CronometragemJDBCDao();
+		cronometristaDao = new CronometristaJDBCDao();
 
 		database.execSQL("CREATE TABLE cronometrista (idcronometrista integer primary key, nome text not null);");
+
+		//database.execSQL("insert into cronometrista(idcronometrista, nome) values (1,teste);");
+
+		//Insert Cronometristas
+		ArrayList<Cronometrista> cronometristas = new ArrayList(cronometristaDao.obterCronometristas());
+		for(int i =0; i< cronometristas.size(); i++){
+			//database.execSQL("insert into cronometrista(idcronometrista, nome) values ("+ cronometristas.get(i).getIdCronometrista() + ","+ cronometristas.get(i).getNome()+")");
+			ContentValues values = new ContentValues();
+			values.put("idcronometrista", cronometristas.get(i).getIdCronometrista());
+			values.put("nome", cronometristas.get(i).getNome());
+
+			database.insert("cronometrista", null, values);
+
+		}
 
 		database.execSQL("CREATE TABLE grupo (idgrupo integer not null primary key, descricao text);");
 
@@ -68,7 +89,7 @@ public class DataBaseCreator extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase database, int versaoAntiga, int versaoNova) {
-		database.execSQL("DROP TABLE IF EXISTS filme");
+		//database.execSQL("DROP TABLE IF EXISTS filme");
 		onCreate(database);
 	}
 

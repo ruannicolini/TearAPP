@@ -9,6 +9,11 @@ public class Cronometrista implements Serializable{
     private String nome;
     private int idCronometrista;
 
+    public Cronometrista(int idCronometrista, String nome) {
+        this.idCronometrista = idCronometrista;
+        this.nome = nome;
+    }
+
     public int getIdCronometrista() {
         return idCronometrista;
     }

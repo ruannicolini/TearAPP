@@ -10,7 +10,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import java.sql.SQLException;
+import java.util.Vector;
+
+import dao.CronometristaSQLite;
 import dao.DataBaseCreator;
+import domain.Cronometrista;
 
 public class Principal extends Activity {
     DataBaseCreator creator;
@@ -20,6 +25,11 @@ public class Principal extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
+
+        // Criando o banco se necessário
+        //DataBaseCreator creator = new DataBaseCreator(this);
+        //database = creator.getWritableDatabase();
+        this.deleteDatabase("db_cronoanalise");
     }
 
     @Override
@@ -56,12 +66,21 @@ public class Principal extends Activity {
         startActivity(intent);
     }
 
-    public void sincronizar(View view){
-        //Apaga o banco
-        this.deleteDatabase("db_cronoanalise");
-        // Criando o banco se necessário
-        DataBaseCreator creator = new DataBaseCreator(this);
-        database = creator.getWritableDatabase();
+    public void sincronizar(View view) throws SQLException {
+        try {
+            //Apaga o banco
+            this.deleteDatabase("db_cronoanalise");
+            // Criando o banco
+            DataBaseCreator creator = new DataBaseCreator(this);
+            database = creator.getWritableDatabase();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+
+        CronometristaSQLite cronometristaSQLite = new CronometristaSQLite(Principal.database);
+        Vector<Cronometrista> cronometristas = cronometristaSQLite.obterCronometristas();
+        //cronometristas = cronometristaJDBCDao.obterCronometristas();
 
         //Mensagem de Confirmação
         Toast toast = Toast.makeText(getApplicationContext(), "Sincronização Finalizada!", Toast.LENGTH_SHORT);
