@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import dao.CronometragemSQLite;
+
 public class Login extends Activity {
     private String login;
     private String senha;
@@ -82,8 +84,7 @@ public class Login extends Activity {
         builder.show();
     }
 
-    public void logar(View view){
-
+    public void logar(View view) {
         EditText etLogin = (EditText) findViewById(R.id.EditLogin);
         setLogin(etLogin.getText().toString());
 
@@ -97,7 +98,7 @@ public class Login extends Activity {
         startActivity(intent);
 
         //Chama Activity Principal
-        if(veirificaLogin(login, senha) == true){
+        if (veirificaLogin(login, senha) == true) {
             Context contexto = getApplicationContext();
             String texto = "Logou!!";
             int duracao = Toast.LENGTH_SHORT;
@@ -110,7 +111,7 @@ public class Login extends Activity {
 
             startActivity(inte);
 
-        }else{
+        } else {
             Context contexto = getApplicationContext();
             String texto = getString(R.string.erroLogin);
             int duracao = Toast.LENGTH_SHORT;

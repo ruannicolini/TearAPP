@@ -5,11 +5,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import domain.Batida;
 import domain.Cronometragem;
 import domain.TipoRecurso;
+import tela.tearapp.Principal;
 
 /**
  * Created by Ruan on 05/12/2015.
@@ -21,6 +23,7 @@ public class CronometragemSQLite implements CronometragemDao {
     OperacaoSQLite operacaoSQLite;
     TecidoSQLite tecidoSQLite;
     ProdutoSQLite produtoSQLite;
+    TipoRecursoSQLite tipoRecursoSQLite;
 
     public CronometragemSQLite(SQLiteDatabase database) {
         this.database = database;
@@ -29,6 +32,7 @@ public class CronometragemSQLite implements CronometragemDao {
         operacaoSQLite = new OperacaoSQLite(database);
         tecidoSQLite = new TecidoSQLite(database);
         produtoSQLite = new ProdutoSQLite(database);
+        tipoRecursoSQLite = new TipoRecursoSQLite(database);
     }
 
     @Override
@@ -54,7 +58,7 @@ public class CronometragemSQLite implements CronometragemDao {
     public void inserirCronometragem_TipoRecurso(Cronometragem cronometragem, TipoRecurso recurso) throws SQLException {
         ContentValues values = new ContentValues();
         values.put("idcronometragem", cronometragem.getIdCronometragem());
-        values.put("idtipo_recurso", recurso.getIdTipoRecurso());
+        values.put("idtiporecurso", recurso.getIdTipoRecurso());
         database.insert("cronometragem_has_tipo_Recurso", null, values);
     }
 
@@ -87,8 +91,7 @@ public class CronometragemSQLite implements CronometragemDao {
     public Vector<Cronometragem> obterCronometragens() throws SQLException {
         Vector<Cronometragem> cronometragens = new Vector<>();
         //LinkedList ls = new LinkedList();
-        String sql = "select idcronometragem, ritmo, num_pecas,tolerancia, comprimento_prod, num_ocorrencia," +
-                "idProduto, idCronometrista, idTecido,  idOperador, idOperacao, referencia from Cronometragem";
+        String sql = "select idcronometragem, ritmo, num_pecas, tolerancia, comprimento_prod, num_ocorrencia, idproduto, idcronometrista, idtecido,  idoperador, idoperacao, referencia from cronometragem";
         Cursor resultado = database.rawQuery(sql, null);
         resultado.moveToFirst();
         Cronometragem cro;
@@ -107,9 +110,10 @@ public class CronometragemSQLite implements CronometragemDao {
                     resultado.getString(11)
                     );
             //Atribui Batidas
+            cro.setBatidas(new ArrayList<Batida>(obterBatidas(cro)));
 
             //Atribui Recursos
-
+            cro.setRecursos(new ArrayList<TipoRecurso>(obterRecursos(cro)));
 
             cronometragens.add(cro);
             resultado.moveToNext();
@@ -135,5 +139,21 @@ public class CronometragemSQLite implements CronometragemDao {
             resultado.moveToNext();
         }
         return batidas;
+    }
+
+    public Vector<TipoRecurso> obterRecursos(Cronometragem cronometragem) throws SQLException {
+        Vector<TipoRecurso> recursos = new Vector<>();
+        String sql =
+                "select idcronometragem, idtiporecurso from cronometragem_has_tipo_Recurso where idCronometragem = " + cronometragem.getIdCronometragem();
+        Cursor resultado = database.rawQuery(sql, null);
+        resultado.moveToFirst();
+        TipoRecurso rec;
+
+        for(int i=0; i < resultado.getCount(); i++){
+            rec = tipoRecursoSQLite.obterTipoRecurso(resultado.getInt(resultado.getColumnIndex("idtiporecurso")));
+            recursos.add(rec);
+            resultado.moveToNext();
+        }
+        return recursos;
     }
 }

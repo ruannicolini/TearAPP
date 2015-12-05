@@ -138,14 +138,14 @@ public class DataBaseCreator extends SQLiteOpenHelper {
 				"tolerancia integer not null," +
 				"comprimento_prod real not null," +
 				"num_ocorrencia integer not null," +
-				"idProduto integer not null," +
-				"idCronometrista integer not null," +
-				"idTecido integer not null," +
-				"idOperador integer not null," +
-				"idOperacao integer not null," +
+				"idproduto integer not null," +
+				"idcronometrista integer not null," +
+				"idtecido integer not null," +
+				"idoperador integer not null," +
+				"idoperacao integer not null," +
 				"referencia text);");
 
-		database.execSQL("CREATE TABLE cronometragem_has_tipo_Recurso (idcronometragem integer not null, idtipo_recurso integer not null);");
+		database.execSQL("CREATE TABLE cronometragem_has_tipo_Recurso (idcronometragem integer not null, idtiporecurso integer not null);");
 		database.execSQL("CREATE TABLE batida (idbatida integer primary key autoincrement, " +
 				"minutos integer not null," +
 				"segundos integer not null," +

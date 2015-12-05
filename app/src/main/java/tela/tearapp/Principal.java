@@ -11,10 +11,13 @@ import android.view.View;
 import android.widget.Toast;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Vector;
 
+import dao.CronometragemSQLite;
 import dao.CronometristaSQLite;
 import dao.DataBaseCreator;
+import domain.Cronometragem;
 import domain.Cronometrista;
 
 public class Principal extends Activity {
@@ -31,7 +34,7 @@ public class Principal extends Activity {
         DataBaseCreator creator = new DataBaseCreator(this);
         database = creator.getWritableDatabase();
 
-        onOff = true;
+        onOff = false;
     }
 
     @Override
@@ -63,9 +66,16 @@ public class Principal extends Activity {
     }
 
     public void chamaConfiguracoes(View view){
+        CronometragemSQLite cronn = new CronometragemSQLite(database);
+        try {
+            ArrayList<Cronometragem> c = new ArrayList<>(cronn.obterCronometragens());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         Intent intent = new Intent(this, Configuracoes.class);
         startActivity(intent);
+
     }
 
     public void sincronizar(View view) throws SQLException {

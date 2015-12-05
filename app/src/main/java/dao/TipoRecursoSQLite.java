@@ -36,7 +36,7 @@ public class TipoRecursoSQLite implements TipoRecursoDao {
     @Override
     public TipoRecurso obterTipoRecurso(long id) throws SQLException {
         Vector<TipoRecurso> recursos = new Vector<>();
-        String sql = "select idtipo_recurso, descricao from tipo_Recurso where idtipo_recurso =" +id;
+        String sql = "select idtipo_recurso, descricao from tipo_recurso where idtipo_recurso =" +id;
         Cursor resultado = database.rawQuery(sql, null);
         resultado.moveToFirst();
         TipoRecurso rec;
