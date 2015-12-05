@@ -12,6 +12,11 @@ public class TipoRecurso implements Serializable {
     public TipoRecurso() {
     }
 
+    public TipoRecurso(int idTipoRecurso, String descricao) {
+        this.idTipoRecurso = idTipoRecurso;
+        Descricao = descricao;
+    }
+
     public int getIdTipoRecurso() {
         return idTipoRecurso;
     }

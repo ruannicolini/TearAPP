@@ -14,6 +14,7 @@ import domain.Operacao;
 import domain.Operador;
 import domain.Produto;
 import domain.Tecido;
+import domain.TipoRecurso;
 
 public class DataBaseCreator extends SQLiteOpenHelper {
 	CronometragemJDBCDao cronometragemDao;
@@ -23,6 +24,7 @@ public class DataBaseCreator extends SQLiteOpenHelper {
 	OperadorJDBCDao operadorDao;
 	ProdutoJDBCDao produtoDao;
 	OperacaoJDBCDao operacaoDao;
+	TipoRecursoJDBCDao tipoRecursoJDBCDao;
 
 	public DataBaseCreator(Context context) { super(context, "db_cronoanalise", null, 1); }
 
@@ -35,7 +37,7 @@ public class DataBaseCreator extends SQLiteOpenHelper {
 		operadorDao = new OperadorJDBCDao();
 		produtoDao = new ProdutoJDBCDao();
 		operacaoDao = new OperacaoJDBCDao();
-
+		tipoRecursoJDBCDao = new TipoRecursoJDBCDao();
 
 		//Cronometrista
 		database.execSQL("CREATE TABLE cronometrista (idcronometrista integer primary key, nome text not null);");
@@ -118,6 +120,17 @@ public class DataBaseCreator extends SQLiteOpenHelper {
 			database.insert("operacao", null, values);
 		}
 
+		database.execSQL("CREATE TABLE tipo_Recurso (idtipo_recurso integer not null primary key, descricao text);");
+		ArrayList<TipoRecurso> recursos = null;
+		try {recursos = new ArrayList(tipoRecursoJDBCDao.obterTiposRecurso());} catch (SQLException e) {e.printStackTrace();}
+		for(int i =0; i< recursos.size(); i++){
+			ContentValues values = new ContentValues();
+			values.put("idtipo_recurso", recursos.get(i).getIdTipoRecurso());
+			values.put("descricao", recursos.get(i).getDescricao());
+			database.insert("tipo_Recurso", null, values);
+		}
+
+
 		database.execSQL("CREATE TABLE cronometragem (idcronometragem integer primary key autoincrement, " +
 				"ritmo integer not null," +
 				"num_pecas integer not null," +
@@ -129,8 +142,6 @@ public class DataBaseCreator extends SQLiteOpenHelper {
 				"idTecido integer not null," +
 				"idOperador integer not null," +
 				"idOperacao integer not null);");
-
-		database.execSQL("CREATE TABLE tipo_Recurso (idtipo_recurso integer not null primary key, descricao text);");
 
 		database.execSQL("CREATE TABLE cronometragem_has_tipo_Recurso (idcronometragem integer not null, idtipo_recurso integer not null);");
 

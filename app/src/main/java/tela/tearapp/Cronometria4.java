@@ -28,13 +28,15 @@ import baseAdapter.TipoRecursoAdapter;
 import dao.CronometragemJDBCDao;
 import dao.TipoRecursoDao;
 import dao.TipoRecursoJDBCDao;
+import dao.TipoRecursoSQLite;
 import domain.Batida;
 import domain.Cronometragem;
 import domain.Grupo;
 import domain.TipoRecurso;
 
 public class Cronometria4 extends Activity {
-    TipoRecursoJDBCDao tipoRecursoDao;
+    TipoRecursoJDBCDao tipoRecursoJDBCDao;
+    TipoRecursoSQLite tipoRecursoSQLite;
     CronometragemJDBCDao cronometragemDao;
     Cronometragem cronometragem;
 
@@ -48,7 +50,9 @@ public class Cronometria4 extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cronometria4);
 
-        tipoRecursoDao = new TipoRecursoJDBCDao();
+        tipoRecursoJDBCDao = new TipoRecursoJDBCDao();
+        tipoRecursoSQLite = new TipoRecursoSQLite(Principal.database);
+
         cronometragem = new Cronometragem();
         cronometragemDao = new CronometragemJDBCDao();
 
@@ -104,7 +108,8 @@ public class Cronometria4 extends Activity {
     public void buscaRecurso(View view) throws SQLException {
 
         Vector<TipoRecurso> recursos = new Vector();
-        recursos = tipoRecursoDao.obterTiposRecurso();
+        //recursos = tipoRecursoJDBCDaoDao.obterTiposRecurso();
+        recursos = tipoRecursoSQLite.obterTiposRecurso();
 
         if(recursos != null){
             //Adapter
