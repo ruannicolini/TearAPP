@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import dao.CronometragemJDBCDao;
 import dao.CronometragemSQLite;
 import dao.CronometristaSQLite;
 import dao.DataBaseCreator;
@@ -34,7 +35,7 @@ public class Principal extends Activity {
         DataBaseCreator creator = new DataBaseCreator(this);
         database = creator.getWritableDatabase();
 
-        onOff = false;
+        onOff = true;
     }
 
     @Override
@@ -66,37 +67,52 @@ public class Principal extends Activity {
     }
 
     public void chamaConfiguracoes(View view){
-        CronometragemSQLite cronn = new CronometragemSQLite(database);
-        try {
-            ArrayList<Cronometragem> c = new ArrayList<>(cronn.obterCronometragens());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
         Intent intent = new Intent(this, Configuracoes.class);
         startActivity(intent);
 
     }
 
     public void sincronizar(View view) throws SQLException {
-        try {
-            //Apaga o banco
-            this.deleteDatabase("db_cronoanalise");
-            // Criando o banco
-            DataBaseCreator creator = new DataBaseCreator(this);
-            database = creator.getWritableDatabase();
-        }catch (Exception e){
-            System.out.println(e.getMessage());
+        CronometragemJDBCDao cronometragemJDBCDao = new CronometragemJDBCDao();
+        CronometragemSQLite cronn = new CronometragemSQLite(database);
+        ArrayList<Cronometragem> c = null;
+
+
+        if(Principal.onOff == true) {
+            //Recupera Cronometragens ainda não enviadas;
+            try {
+                c = new ArrayList<>(cronn.obterCronometragens());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            //Envia Cronometragens para Servidor
+            for (int i = 0; i < c.size(); i++) {
+                cronometragemJDBCDao.inserirCronometragem(c.get(i));
+            }
+
+            //Sincronização do Banco
+            try {
+                //Apaga o banco
+                this.deleteDatabase("db_cronoanalise");
+                // Criando o banco
+                DataBaseCreator creator = new DataBaseCreator(this);
+                database = creator.getWritableDatabase();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+
+            CronometristaSQLite cronometristaSQLite = new CronometristaSQLite(Principal.database);
+            Vector<Cronometrista> cronometristas = cronometristaSQLite.obterCronometristas();
+            //cronometristas = cronometristaJDBCDao.obterCronometristas();
+
+            //Mensagem de Confirmação
+            Toast toast = Toast.makeText(getApplicationContext(), "Sincronização Finalizada!", Toast.LENGTH_SHORT);
+            toast.show();
+        }else{
+            //Sincronização não será realizada no modo Off
+
         }
-
-
-        CronometristaSQLite cronometristaSQLite = new CronometristaSQLite(Principal.database);
-        Vector<Cronometrista> cronometristas = cronometristaSQLite.obterCronometristas();
-        //cronometristas = cronometristaJDBCDao.obterCronometristas();
-
-        //Mensagem de Confirmação
-        Toast toast = Toast.makeText(getApplicationContext(), "Sincronização Finalizada!", Toast.LENGTH_SHORT);
-        toast.show();
     }
 
     protected void onDestroy(){
