@@ -35,6 +35,7 @@ import dao.GrupoJDBCDao;
 import dao.GrupoSQLite;
 import dao.OperacaoJDBCDao;
 import dao.OperadorJDBCDao;
+import dao.OperadorSQLite;
 import dao.ProdutoJDBCDao;
 import dao.TecidoJDBCDao;
 import dao.TecidoSQLite;
@@ -57,7 +58,10 @@ public class Cronometria extends FragmentActivity {
     TecidoJDBCDao tecidoJDBCDao;
     TecidoSQLite tecidoSQLite;
 
-    OperadorJDBCDao operadorDao;
+    OperadorJDBCDao operadorJDBCDao;
+    OperadorSQLite operadorSQLite;
+
+
     OperacaoJDBCDao operacaoDao;
     ProdutoJDBCDao produtoDao;
     Cronometragem cronometragem;
@@ -79,7 +83,10 @@ public class Cronometria extends FragmentActivity {
         tecidoJDBCDao = new TecidoJDBCDao();
         tecidoSQLite = new TecidoSQLite(Principal.database);
 
-        operadorDao = new OperadorJDBCDao();
+        //Operador
+        operadorJDBCDao = new OperadorJDBCDao();
+        operadorSQLite = new OperadorSQLite(Principal.database);
+
         operacaoDao = new OperacaoJDBCDao();
         produtoDao = new ProdutoJDBCDao();
         cronometragem = new Cronometragem();
@@ -263,7 +270,8 @@ public class Cronometria extends FragmentActivity {
         final EditText editIdOperador = (EditText)findViewById(R.id.EditIdOperador), editOperador = (EditText)findViewById(R.id.EditOperador);
         Vector<Operador> operadores = new Vector();
         if(cronometragem.getGrupo() != null){
-            operadores = operadorDao.obterOperadoresGrupo(cronometragem.getGrupo());
+            //operadores = operadorJDBCDao.obterOperadoresGrupo(cronometragem.getGrupo());
+            operadores = operadorSQLite.obterOperadoresGrupo(cronometragem.getGrupo());
             if(operadores != null){
                 //Adapter
                 final ArrayAdapter<Operador> adapter = new ArrayAdapter<Operador>(this,R.layout.item_consulta,operadores);

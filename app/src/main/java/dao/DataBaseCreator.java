@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import domain.Cronometrista;
 import domain.Grupo;
+import domain.Operador;
 import domain.Tecido;
 
 public class DataBaseCreator extends SQLiteOpenHelper {
@@ -17,6 +18,7 @@ public class DataBaseCreator extends SQLiteOpenHelper {
 	CronometristaJDBCDao cronometristaDao;
 	GrupoJDBCDao grupoDao;
 	TecidoJDBCDao tecidoDao;
+	OperadorJDBCDao operadorDao;
 
 	public DataBaseCreator(Context context) { super(context, "db_cronoanalise", null, 1); }
 
@@ -26,6 +28,7 @@ public class DataBaseCreator extends SQLiteOpenHelper {
 		cronometristaDao = new CronometristaJDBCDao();
 		grupoDao = new GrupoJDBCDao();
 		tecidoDao = new TecidoJDBCDao();
+		operadorDao = new OperadorJDBCDao();
 
 
 		//Cronometrista
@@ -61,9 +64,20 @@ public class DataBaseCreator extends SQLiteOpenHelper {
 			database.insert("tecido", null, values);
 		}
 
+		//Operador
+		database.execSQL("CREATE TABLE operador (idoperador integer not null primary key, idgrupo integer not null, nome text not null);");
+		ArrayList<Operador> operadores = null;
+		try {operadores = new ArrayList(operadorDao.obterOperadores()); } catch (SQLException e) { e.printStackTrace();	}
+		for(int i =0; i< operadores.size(); i++){
+			ContentValues values = new ContentValues();
+			values.put("idOperador", operadores.get(i).getIdOperador());
+			values.put("nome", operadores.get(i).getNome());
+			values.put("idGrupo", operadores.get(i).getGrupo().getIdGrupo());
+			database.insert("operador", null, values);
+		}
+
 		database.execSQL("CREATE TABLE tipo_Recurso (idtipo_recurso integer not null primary key, descricao text);");
 
-		database.execSQL("CREATE TABLE operador (idoperador integer not null primary key, idgrupo integer not null, nome text not null);");
 
 		database.execSQL("CREATE TABLE produto (idproduto integer primary key, " +
 				"descricao text," +
@@ -100,11 +114,6 @@ public class DataBaseCreator extends SQLiteOpenHelper {
 				"utilizar numeric not null," +
 				"idCronometragem integer not null);");
 
-		//database.execSQL("insert into cronometragem(ritmo, num_pecas, tolerancia, comprimento_prod, num_ocorrencia," +
-		//		"idProduto, idCronometrista, idTecido, idOperador, idOperacao) values ('Jogos Mortais', 'Terror')");
-
-		//database.execSQL("insert into filme(nome, genero) values ('As Branquelas', 'Comédia')");
-		//database.execSQL("insert into filme(nome, genero) values ('As Branquelas', 'Comédia')");
 
 	}
 

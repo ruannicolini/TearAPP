@@ -35,6 +35,16 @@ public class GrupoSQLite implements GrupoDao {
 
     @Override
     public Grupo obterGrupo(long id) throws SQLException {
-        return null;
+        Vector<Grupo> grupos = new Vector<>();
+        String sql = "select idGrupo, descricao from grupo where idGrupo = " + id;
+        Cursor resultado = database.rawQuery(sql, null);
+        resultado.moveToFirst();
+        Grupo grupo;
+        for(int i=0; i < resultado.getCount(); i++){
+            grupo= new Grupo(resultado.getInt(0), resultado.getString(1));
+            grupos.add(grupo);
+            resultado.moveToNext();
+        }
+        return grupos.get(0);
     }
 }
