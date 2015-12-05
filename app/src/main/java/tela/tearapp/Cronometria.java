@@ -37,6 +37,7 @@ import dao.OperacaoJDBCDao;
 import dao.OperadorJDBCDao;
 import dao.OperadorSQLite;
 import dao.ProdutoJDBCDao;
+import dao.ProdutoSQLite;
 import dao.TecidoJDBCDao;
 import dao.TecidoSQLite;
 import domain.Cronometragem;
@@ -61,9 +62,11 @@ public class Cronometria extends FragmentActivity {
     OperadorJDBCDao operadorJDBCDao;
     OperadorSQLite operadorSQLite;
 
+    ProdutoJDBCDao produtoJDBCDao;
+    ProdutoSQLite produtoSQLite;
+
 
     OperacaoJDBCDao operacaoDao;
-    ProdutoJDBCDao produtoDao;
     Cronometragem cronometragem;
 
     @Override
@@ -87,8 +90,14 @@ public class Cronometria extends FragmentActivity {
         operadorJDBCDao = new OperadorJDBCDao();
         operadorSQLite = new OperadorSQLite(Principal.database);
 
+        //Produto
+        produtoJDBCDao = new ProdutoJDBCDao();
+        produtoSQLite = new ProdutoSQLite(Principal.database);
+
+        //Operacao
         operacaoDao = new OperacaoJDBCDao();
-        produtoDao = new ProdutoJDBCDao();
+
+        //Cronometragem
         cronometragem = new Cronometragem();
     }
 
@@ -219,8 +228,8 @@ public class Cronometria extends FragmentActivity {
     public void buscaProduto(View view) throws SQLException {
         final EditText editIdGrupo = (EditText)findViewById(R.id.EditIdProduto), editGrupo = (EditText)findViewById(R.id.EditProduto);
         Vector<Produto> produtos = new Vector();
-        produtos = produtoDao.obterProdutos();
-
+        //produtos = produtoJDBCDao.obterProdutos();
+        produtos = produtoSQLite.obterProdutos();
         if(produtos != null){
             //Adapter
             final ArrayAdapter<Produto> adapter = new ArrayAdapter<Produto>(this,R.layout.item_consulta,produtos);

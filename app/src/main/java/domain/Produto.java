@@ -9,9 +9,13 @@ import java.util.Date;
 public class Produto implements Serializable {
     private int idProduto;
     private String descricao;
-    private Date data;
 
     public Produto() {
+    }
+
+    public Produto(int idProduto, String descricao) {
+        this.idProduto = idProduto;
+        this.descricao = descricao;
     }
 
     public int getIdProduto() {
@@ -28,14 +32,6 @@ public class Produto implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }
-
-    public Date getData() {
-        return data;
-    }
-
-    public void setData(Date data) {
-        this.data = data;
     }
 
     @Override

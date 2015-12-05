@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import domain.Cronometrista;
 import domain.Grupo;
 import domain.Operador;
+import domain.Produto;
 import domain.Tecido;
 
 public class DataBaseCreator extends SQLiteOpenHelper {
@@ -19,6 +20,7 @@ public class DataBaseCreator extends SQLiteOpenHelper {
 	GrupoJDBCDao grupoDao;
 	TecidoJDBCDao tecidoDao;
 	OperadorJDBCDao operadorDao;
+	ProdutoJDBCDao produtoDao;
 
 	public DataBaseCreator(Context context) { super(context, "db_cronoanalise", null, 1); }
 
@@ -29,6 +31,7 @@ public class DataBaseCreator extends SQLiteOpenHelper {
 		grupoDao = new GrupoJDBCDao();
 		tecidoDao = new TecidoJDBCDao();
 		operadorDao = new OperadorJDBCDao();
+		produtoDao = new ProdutoJDBCDao();
 
 
 		//Cronometrista
@@ -76,13 +79,21 @@ public class DataBaseCreator extends SQLiteOpenHelper {
 			database.insert("operador", null, values);
 		}
 
-		database.execSQL("CREATE TABLE tipo_Recurso (idtipo_recurso integer not null primary key, descricao text);");
-
-
+		//Produto
 		database.execSQL("CREATE TABLE produto (idproduto integer primary key, " +
-				"descricao text," +
-				"data numeric," +
-				"idGrupo integer not null);");//Grupo de Produto
+				"descricao text);");
+		ArrayList<Produto> produtos = null;
+		produtos = new ArrayList(produtoDao.obterProdutos());
+		for(int i =0; i< produtos.size(); i++){
+			ContentValues values = new ContentValues();
+			values.put("idProduto", produtos.get(i).getIdProduto());
+			values.put("descricao", produtos.get(i).getDescricao());
+			database.insert("produto", null, values);
+		}
+
+
+
+
 
 		database.execSQL("CREATE TABLE operacao (idoperacao integer primary key, " +
 				"descricao text," +
@@ -104,6 +115,8 @@ public class DataBaseCreator extends SQLiteOpenHelper {
 				"idTecido integer not null," +
 				"idOperador integer not null," +
 				"idOperacao integer not null);");
+
+		database.execSQL("CREATE TABLE tipo_Recurso (idtipo_recurso integer not null primary key, descricao text);");
 
 		database.execSQL("CREATE TABLE cronometragem_has_tipo_Recurso (idcronometragem integer not null, idtipo_recurso integer not null);");
 
