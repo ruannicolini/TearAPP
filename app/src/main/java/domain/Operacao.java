@@ -17,6 +17,17 @@ public class Operacao implements Serializable {
 
     public Operacao() { }
 
+    public Operacao(int idOperacao, String descricao, int idAcao, String acao, int idParte, String parte, int idFase, String fase) {
+        this.idOperacao = idOperacao;
+        this.descricao = descricao;
+        this.idAcao = idAcao;
+        this.acao = acao;
+        this.idParte = idParte;
+        this.parte = parte;
+        this.idFase = idFase;
+        this.fase = fase;
+    }
+
     public String getDescricao() {
         return descricao;
     }

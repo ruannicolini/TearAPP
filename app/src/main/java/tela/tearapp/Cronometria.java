@@ -34,6 +34,7 @@ import dao.CronometristaSQLite;
 import dao.GrupoJDBCDao;
 import dao.GrupoSQLite;
 import dao.OperacaoJDBCDao;
+import dao.OperacaoSQLite;
 import dao.OperadorJDBCDao;
 import dao.OperadorSQLite;
 import dao.ProdutoJDBCDao;
@@ -66,7 +67,8 @@ public class Cronometria extends FragmentActivity {
     ProdutoSQLite produtoSQLite;
 
 
-    OperacaoJDBCDao operacaoDao;
+    OperacaoJDBCDao operacaoJDBCDao;
+    OperacaoSQLite operacaoSQLite;
     Cronometragem cronometragem;
 
     @Override
@@ -95,7 +97,8 @@ public class Cronometria extends FragmentActivity {
         produtoSQLite = new ProdutoSQLite(Principal.database);
 
         //Operacao
-        operacaoDao = new OperacaoJDBCDao();
+        operacaoJDBCDao = new OperacaoJDBCDao();
+        operacaoSQLite = new OperacaoSQLite(Principal.database);
 
         //Cronometragem
         cronometragem = new Cronometragem();
@@ -127,7 +130,8 @@ public class Cronometria extends FragmentActivity {
     public void buscaOperacao(View view) throws SQLException {
         final EditText editIdOperacao = (EditText)findViewById(R.id.EditIdOperacao), editOperacao = (EditText)findViewById(R.id.EditOperacao);
         Vector<Operacao> operacoes = new Vector();
-        operacoes = operacaoDao.obterOperacoes();
+        //operacoes = operacaoJDBCDao.obterOperacoes();
+        operacoes = operacaoSQLite.obterOperacoes();
 
         if(operacoes != null){
             //Adapter

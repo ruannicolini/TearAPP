@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import domain.Cronometrista;
 import domain.Grupo;
+import domain.Operacao;
 import domain.Operador;
 import domain.Produto;
 import domain.Tecido;
@@ -21,6 +22,7 @@ public class DataBaseCreator extends SQLiteOpenHelper {
 	TecidoJDBCDao tecidoDao;
 	OperadorJDBCDao operadorDao;
 	ProdutoJDBCDao produtoDao;
+	OperacaoJDBCDao operacaoDao;
 
 	public DataBaseCreator(Context context) { super(context, "db_cronoanalise", null, 1); }
 
@@ -32,6 +34,7 @@ public class DataBaseCreator extends SQLiteOpenHelper {
 		tecidoDao = new TecidoJDBCDao();
 		operadorDao = new OperadorJDBCDao();
 		produtoDao = new ProdutoJDBCDao();
+		operacaoDao = new OperacaoJDBCDao();
 
 
 		//Cronometrista
@@ -91,18 +94,29 @@ public class DataBaseCreator extends SQLiteOpenHelper {
 			database.insert("produto", null, values);
 		}
 
-
-
-
-
+		//Operacao
 		database.execSQL("CREATE TABLE operacao (idoperacao integer primary key, " +
 				"descricao text," +
 				"acao text," +
 				"parte text," +
 				"fase text," +
-				"idAcao integer not null," +
-				"idFase integer not null," +
-				"idParte integer not null);");
+				"idacao integer not null," +
+				"idfase integer not null," +
+				"idparte integer not null);");
+		ArrayList<Operacao> operacoes = null;
+		operacoes = new ArrayList(operacaoDao.obterOperacoes());
+		for(int i =0; i< operacoes.size(); i++){
+			ContentValues values = new ContentValues();
+			values.put("idoperacao", operacoes.get(i).getIdOperacao());
+			values.put("idacao", operacoes.get(i).getIdAcao());
+			values.put("acao", operacoes.get(i).getAcao());
+			values.put("idfase", operacoes.get(i).getIdFase());
+			values.put("fase", operacoes.get(i).getFase());
+			values.put("idparte", operacoes.get(i).getIdParte());
+			values.put("parte", operacoes.get(i).getParte());
+			values.put("descricao", operacoes.get(i).getDescricao());
+			database.insert("operacao", null, values);
+		}
 
 		database.execSQL("CREATE TABLE cronometragem (idcronometragem integer primary key autoincrement, " +
 				"ritmo integer not null," +
