@@ -38,7 +38,7 @@ import domain.TipoRecurso;
 public class Cronometria4 extends Activity {
     TipoRecursoJDBCDao tipoRecursoJDBCDao;
     TipoRecursoSQLite tipoRecursoSQLite;
-    CronometragemJDBCDao cronometragemDao;
+    CronometragemJDBCDao cronometragemJDBCDao;
     CronometragemSQLite cronometragemSQLite;
     Cronometragem cronometragem;
 
@@ -54,7 +54,7 @@ public class Cronometria4 extends Activity {
 
         if(Principal.onOff == true){
             tipoRecursoJDBCDao = new TipoRecursoJDBCDao();
-            cronometragemDao = new CronometragemJDBCDao();
+            cronometragemJDBCDao = new CronometragemJDBCDao();
         }else{
             tipoRecursoSQLite = new TipoRecursoSQLite(Principal.database);
             cronometragemSQLite = new CronometragemSQLite(Principal.database);
@@ -164,15 +164,44 @@ public class Cronometria4 extends Activity {
         }
     }
 
+    public void showDialog(Activity activity, String title, CharSequence message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+        if (title != null) builder.setTitle(title);
+        builder.setMessage(message);
+
+        //Botão1
+        builder.setPositiveButton("Servidor", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked OK button
+                try {cronometragemJDBCDao.inserirCronometragem(cronometragem);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        //Botão2
+        builder.setNegativeButton("Local", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancelled the dialog
+                try {cronometragemSQLite.inserirCronometragem(cronometragem);} catch (SQLException e) {e.printStackTrace(); }
+            }
+        });
+
+        builder.show();
+    }
+
     public void salvarCronometragem(View view){
         try {
             if(Principal.onOff == true){
-                cronometragemDao.inserirCronometragem(cronometragem);
+                //showDialog(this, "Finalizar Cronometragem", "Salvar Como?");
+                cronometragemJDBCDao.inserirCronometragem(cronometragem);
             }else{
                 cronometragemSQLite.inserirCronometragem(cronometragem);
             }
 
-            Toast toast = Toast.makeText(getApplicationContext(), "Cronometria Enviada com sucesso", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getApplicationContext(), "Cronometria Enviada!", Toast.LENGTH_SHORT);
             toast.show();
             Intent returnBtn = new Intent(this, Principal.class);
             startActivity(returnBtn);

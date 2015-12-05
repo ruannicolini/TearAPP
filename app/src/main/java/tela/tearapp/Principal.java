@@ -31,7 +31,7 @@ public class Principal extends Activity {
         DataBaseCreator creator = new DataBaseCreator(this);
         database = creator.getWritableDatabase();
 
-        onOff = false;
+        onOff = true;
     }
 
     @Override
