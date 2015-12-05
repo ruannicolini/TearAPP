@@ -36,7 +36,6 @@ public class CronometragemSQLite implements CronometragemDao {
         cronometragem.setIdCronometragem( (int) id);
         inserirArrayTipoRecurso(cronometragem);
         inserirArrayBatidas(cronometragem);
-
     }
 
     @Override

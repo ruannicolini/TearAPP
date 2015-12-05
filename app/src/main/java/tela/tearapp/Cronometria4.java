@@ -26,6 +26,7 @@ import java.util.Vector;
 
 import baseAdapter.TipoRecursoAdapter;
 import dao.CronometragemJDBCDao;
+import dao.CronometragemSQLite;
 import dao.TipoRecursoDao;
 import dao.TipoRecursoJDBCDao;
 import dao.TipoRecursoSQLite;
@@ -38,6 +39,7 @@ public class Cronometria4 extends Activity {
     TipoRecursoJDBCDao tipoRecursoJDBCDao;
     TipoRecursoSQLite tipoRecursoSQLite;
     CronometragemJDBCDao cronometragemDao;
+    CronometragemSQLite cronometragemSQLite;
     Cronometragem cronometragem;
 
     //VAR realacionadas a Lista de Recursos usados na cronometragem
@@ -50,11 +52,14 @@ public class Cronometria4 extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cronometria4);
 
-        tipoRecursoJDBCDao = new TipoRecursoJDBCDao();
-        tipoRecursoSQLite = new TipoRecursoSQLite(Principal.database);
-
+        if(Principal.onOff == true){
+            tipoRecursoJDBCDao = new TipoRecursoJDBCDao();
+            cronometragemDao = new CronometragemJDBCDao();
+        }else{
+            tipoRecursoSQLite = new TipoRecursoSQLite(Principal.database);
+            cronometragemSQLite = new CronometragemSQLite(Principal.database);
+        }
         cronometragem = new Cronometragem();
-        cronometragemDao = new CronometragemJDBCDao();
 
         // Recebe Parametros da Activity Cronometria
         Bundle params = getIntent().getExtras();
@@ -69,7 +74,6 @@ public class Cronometria4 extends Activity {
         lvRecurso = (ListView) findViewById(R.id.listViewRecurso);
         lvRecurso.setAdapter(adapterRecurso);
 
-
         //Comportamento do Click em um item da Lista
         lvRecurso.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -80,7 +84,6 @@ public class Cronometria4 extends Activity {
                 adapterRecurso.notifyDataSetChanged();
             }
         });
-
     }
 
     @Override
@@ -108,15 +111,17 @@ public class Cronometria4 extends Activity {
     public void buscaRecurso(View view) throws SQLException {
 
         Vector<TipoRecurso> recursos = new Vector();
-        //recursos = tipoRecursoJDBCDaoDao.obterTiposRecurso();
-        recursos = tipoRecursoSQLite.obterTiposRecurso();
+        if(Principal.onOff == true){
+            recursos = tipoRecursoJDBCDao.obterTiposRecurso();
+        }else{
+            recursos = tipoRecursoSQLite.obterTiposRecurso();
+        }
 
         if(recursos != null){
             //Adapter
             final ArrayAdapter<TipoRecurso> adapter = new ArrayAdapter<TipoRecurso>(this,R.layout.item_consulta,recursos);
             ListView lv = (ListView) findViewById(R.id.listViewCronometria);
             lv.setAdapter(adapter);
-
 
             //Comportamento do Click em um item da Lista
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -133,15 +138,9 @@ public class Cronometria4 extends Activity {
                         cronometragem.getRecursos().add(o);
                         adapterRecurso.notifyDataSetChanged();
                     }else{
-                        Context contexto = getApplicationContext();
-                        String texto = "Recurso já incluso.";
-                        int duracao = Toast.LENGTH_SHORT;
-                        Toast toast = Toast.makeText(contexto, texto, duracao);
+                        Toast toast = Toast.makeText(getApplicationContext(), "Recurso já incluso.", Toast.LENGTH_SHORT);
                         toast.show();
-
                     }
-
-
                 }
             });
 
@@ -160,29 +159,24 @@ public class Cronometria4 extends Activity {
                 }
             });
         }else {
-            Context contexto = getApplicationContext();
-            String texto = getString(R.string.ConsultaNull);
-            int duracao = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(contexto, texto, duracao);
+            Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.ConsultaNull), Toast.LENGTH_SHORT);
             toast.show();
         }
-
-
     }
 
     public void salvarCronometragem(View view){
         try {
-            cronometragemDao.inserirCronometragem(cronometragem);
-            //cronometragemDao.inserirArrayTipoRecurso(cronometragem);
-            //cronometragemDao.inserirArrayBatidas(cronometragem);
+            if(Principal.onOff == true){
+                cronometragemDao.inserirCronometragem(cronometragem);
+            }else{
+                cronometragemSQLite.inserirCronometragem(cronometragem);
+            }
 
-            Context contexto = getApplicationContext();
-            int duracao = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(contexto, "Cronometria Enviada com sucesso", duracao);
+            Toast toast = Toast.makeText(getApplicationContext(), "Cronometria Enviada com sucesso", Toast.LENGTH_SHORT);
             toast.show();
-
             Intent returnBtn = new Intent(this, Principal.class);
             startActivity(returnBtn);
+
         }catch (Exception e){
             System.out.println(e.getMessage());
         }

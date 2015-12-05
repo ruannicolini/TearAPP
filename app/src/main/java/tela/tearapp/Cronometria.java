@@ -53,20 +53,14 @@ public class Cronometria extends FragmentActivity {
 
     CronometristaJDBCDao cronometristaJDBCDao;
     CronometristaSQLite cronometristaSQLite;
-
     GrupoJDBCDao grupoJDBCDao;
     GrupoSQLite grupoSQLite;
-
     TecidoJDBCDao tecidoJDBCDao;
     TecidoSQLite tecidoSQLite;
-
     OperadorJDBCDao operadorJDBCDao;
     OperadorSQLite operadorSQLite;
-
     ProdutoJDBCDao produtoJDBCDao;
     ProdutoSQLite produtoSQLite;
-
-
     OperacaoJDBCDao operacaoJDBCDao;
     OperacaoSQLite operacaoSQLite;
     Cronometragem cronometragem;
@@ -76,34 +70,24 @@ public class Cronometria extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cronometria);
 
-        //Dao Cronometrista
-        cronometristaJDBCDao = new CronometristaJDBCDao();
-        cronometristaSQLite = new CronometristaSQLite(Principal.database);
-
-        //Dao Grupo
-        grupoJDBCDao = new GrupoJDBCDao();
-        grupoSQLite = new GrupoSQLite(Principal.database);
-
-        //Tecido
-        tecidoJDBCDao = new TecidoJDBCDao();
-        tecidoSQLite = new TecidoSQLite(Principal.database);
-
-        //Operador
-        operadorJDBCDao = new OperadorJDBCDao();
-        operadorSQLite = new OperadorSQLite(Principal.database);
-
-        //Produto
-        produtoJDBCDao = new ProdutoJDBCDao();
-        produtoSQLite = new ProdutoSQLite(Principal.database);
-
-        //Operacao
-        operacaoJDBCDao = new OperacaoJDBCDao();
-        operacaoSQLite = new OperacaoSQLite(Principal.database);
-
+        if(Principal.onOff == true){
+            cronometristaJDBCDao = new CronometristaJDBCDao();
+            grupoJDBCDao = new GrupoJDBCDao();
+            tecidoJDBCDao = new TecidoJDBCDao();
+            operadorJDBCDao = new OperadorJDBCDao();
+            produtoJDBCDao = new ProdutoJDBCDao();
+            operacaoJDBCDao = new OperacaoJDBCDao();
+        }else {
+            cronometristaSQLite = new CronometristaSQLite(Principal.database);
+            grupoSQLite = new GrupoSQLite(Principal.database);
+            tecidoSQLite = new TecidoSQLite(Principal.database);
+            operadorSQLite = new OperadorSQLite(Principal.database);
+            produtoSQLite = new ProdutoSQLite(Principal.database);
+            operacaoSQLite = new OperacaoSQLite(Principal.database);
+        }
         //Cronometragem
         cronometragem = new Cronometragem();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -123,15 +107,18 @@ public class Cronometria extends FragmentActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     public void buscaOperacao(View view) throws SQLException {
         final EditText editIdOperacao = (EditText)findViewById(R.id.EditIdOperacao), editOperacao = (EditText)findViewById(R.id.EditOperacao);
         Vector<Operacao> operacoes = new Vector();
-        //operacoes = operacaoJDBCDao.obterOperacoes();
-        operacoes = operacaoSQLite.obterOperacoes();
+
+        if(Principal.onOff == true) {
+            operacoes = operacaoJDBCDao.obterOperacoes();
+        }else {
+            operacoes = operacaoSQLite.obterOperacoes();
+        }
 
         if(operacoes != null){
             //Adapter
@@ -169,10 +156,7 @@ public class Cronometria extends FragmentActivity {
                 }
             });
         }else {
-            Context contexto = getApplicationContext();
-            String texto = getString(R.string.ConsultaNull);
-            int duracao = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(contexto, texto, duracao);
+            Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.ConsultaNull), Toast.LENGTH_SHORT);
             toast.show();
         }
 
@@ -181,8 +165,12 @@ public class Cronometria extends FragmentActivity {
     public void buscaTecido(View view) throws SQLException {
         final EditText editIdTecido = (EditText)findViewById(R.id.EditIdTecido), editTecido = (EditText)findViewById(R.id.EditTecido);
         Vector<Tecido> tecidos = new Vector();
-        //tecidos = tecidoJDBCDao.obterTecidos();
-        tecidos = tecidoSQLite.obterTecidos();
+
+        if(Principal.onOff == true) {
+            tecidos = tecidoJDBCDao.obterTecidos();
+        }else {
+            tecidos = tecidoSQLite.obterTecidos();
+        }
 
         if(tecidos != null){
             //Adapter
@@ -220,10 +208,7 @@ public class Cronometria extends FragmentActivity {
                 }
             });
         }else {
-            Context contexto = getApplicationContext();
-            String texto = getString(R.string.ConsultaNull);
-            int duracao = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(contexto, texto, duracao);
+            Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.ConsultaNull), Toast.LENGTH_SHORT);
             toast.show();
         }
 
@@ -232,8 +217,13 @@ public class Cronometria extends FragmentActivity {
     public void buscaProduto(View view) throws SQLException {
         final EditText editIdGrupo = (EditText)findViewById(R.id.EditIdProduto), editGrupo = (EditText)findViewById(R.id.EditProduto);
         Vector<Produto> produtos = new Vector();
-        //produtos = produtoJDBCDao.obterProdutos();
-        produtos = produtoSQLite.obterProdutos();
+
+        if(Principal.onOff == true) {
+            produtos = produtoJDBCDao.obterProdutos();
+        }else {
+            produtos = produtoSQLite.obterProdutos();
+        }
+
         if(produtos != null){
             //Adapter
             final ArrayAdapter<Produto> adapter = new ArrayAdapter<Produto>(this,R.layout.item_consulta,produtos);
@@ -270,10 +260,7 @@ public class Cronometria extends FragmentActivity {
                 }
             });
         }else {
-            Context contexto = getApplicationContext();
-            String texto = getString(R.string.ConsultaNull);
-            int duracao = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(contexto, texto, duracao);
+            Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.ConsultaNull), Toast.LENGTH_SHORT);
             toast.show();
         }
 
@@ -283,8 +270,13 @@ public class Cronometria extends FragmentActivity {
         final EditText editIdOperador = (EditText)findViewById(R.id.EditIdOperador), editOperador = (EditText)findViewById(R.id.EditOperador);
         Vector<Operador> operadores = new Vector();
         if(cronometragem.getGrupo() != null){
-            //operadores = operadorJDBCDao.obterOperadoresGrupo(cronometragem.getGrupo());
-            operadores = operadorSQLite.obterOperadoresGrupo(cronometragem.getGrupo());
+
+            if(Principal.onOff == true) {
+                operadores = operadorJDBCDao.obterOperadoresGrupo(cronometragem.getGrupo());
+            }else {
+                operadores = operadorSQLite.obterOperadoresGrupo(cronometragem.getGrupo());
+            }
+
             if(operadores != null){
                 //Adapter
                 final ArrayAdapter<Operador> adapter = new ArrayAdapter<Operador>(this,R.layout.item_consulta,operadores);
@@ -322,18 +314,12 @@ public class Cronometria extends FragmentActivity {
                     }
                 });
             }else {
-                Context contexto = getApplicationContext();
-                String texto = getString(R.string.ConsultaNull);
-                int duracao = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(contexto, texto, duracao);
+                Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.ConsultaNull), Toast.LENGTH_SHORT);
                 toast.show();
             }
 
         }else{
-            Context contexto = getApplicationContext();
-            String texto = getString(R.string.GrupoNull);
-            int duracao = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(contexto, texto, duracao);
+            Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.GrupoNull), Toast.LENGTH_SHORT);
             toast.show();
         }
     }
@@ -341,8 +327,12 @@ public class Cronometria extends FragmentActivity {
     public void buscaGrupo(View view) throws SQLException {
         final EditText editIdGrupo = (EditText)findViewById(R.id.EditIdGrupo), editGrupo = (EditText)findViewById(R.id.EditGrupo);
         Vector<Grupo> grupos = new Vector();
-        //grupos = grupoJDBCDao.obterGrupos();
-        grupos = grupoSQLite.obterGrupos();
+
+        if(Principal.onOff == true) {
+            grupos = grupoJDBCDao.obterGrupos();
+        }else {
+            grupos = grupoSQLite.obterGrupos();
+        }
 
         if(grupos != null){
             //Adapter
@@ -382,10 +372,7 @@ public class Cronometria extends FragmentActivity {
                 }
             });
         }else {
-            Context contexto = getApplicationContext();
-            String texto = getString(R.string.ConsultaNull);
-            int duracao = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(contexto, texto, duracao);
+            Toast toast = Toast.makeText( getApplicationContext(),getString(R.string.ConsultaNull), Toast.LENGTH_SHORT);
             toast.show();
         }
 
@@ -394,8 +381,12 @@ public class Cronometria extends FragmentActivity {
     public void buscaCronometrista(View view) throws SQLException {
         final EditText editIdCronometrista = (EditText)findViewById(R.id.EditIdCronometria), editCronometrista = (EditText)findViewById(R.id.EditCronometria);
         Vector<Cronometrista> cronometristas = new Vector();
-        //cronometristas = cronometristaJDBCDao.obterCronometristas();
-        cronometristas = cronometristaSQLite.obterCronometristas();
+
+        if(Principal.onOff == true) {
+            cronometristas = cronometristaJDBCDao.obterCronometristas();
+        }else {
+            cronometristas = cronometristaSQLite.obterCronometristas();
+        }
 
         if(cronometristas != null){
             //Adapter
@@ -435,10 +426,7 @@ public class Cronometria extends FragmentActivity {
                 }
             });
         }else {
-            Context contexto = getApplicationContext();
-            String texto = getString(R.string.ConsultaNull);
-            int duracao = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(contexto, texto, duracao);
+            Toast toast = Toast.makeText( getApplicationContext(),getString(R.string.ConsultaNull), Toast.LENGTH_SHORT);
             toast.show();
         }
 
@@ -448,12 +436,8 @@ public class Cronometria extends FragmentActivity {
         CronometragemJDBCDao c = new CronometragemJDBCDao();
 
        if((cronometragem.getCronometrista() == null)||(cronometragem.getGrupo() == null)||(cronometragem.getOperador() == null)||(cronometragem.getProduto() == null)||(cronometragem.getOperacao() == null)||(cronometragem.getTecido() == null)) {
-            Context contexto = getApplicationContext();
-            String texto = "Preencha todos os campos.";
-            int duracao = Toast.LENGTH_SHORT;
-
-            Toast toast = Toast.makeText(contexto, texto, duracao);
-            toast.show();
+           Toast toast = Toast.makeText( getApplicationContext(),"Preencha todos os campos.", Toast.LENGTH_SHORT);
+           toast.show();
 
         }else{
             //Passa Os dados obtidos pra Activity/tela Cronometria2

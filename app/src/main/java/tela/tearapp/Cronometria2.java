@@ -49,7 +49,6 @@ public class Cronometria2 extends Activity {
     private boolean Status_lap; // Verifica se ja teve Alguma Batida
     private boolean btnIniciarPressionado = false; //Verifica o Status do botão para Alterar o comportamento. BtnIniciar == btnParar   ----   BtnLap ==BtnReset
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -209,10 +208,8 @@ public class Cronometria2 extends Activity {
             Context contexto = getApplicationContext();
             String texto = "Nenhum  LAP realizado.";
             int duracao = Toast.LENGTH_SHORT;
-
             Toast toast = Toast.makeText(contexto, texto, duracao);
             toast.show();
-
         }
     }
 

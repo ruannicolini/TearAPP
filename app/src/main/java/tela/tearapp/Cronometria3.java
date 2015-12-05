@@ -36,7 +36,8 @@ public class Cronometria3 extends Activity {
             cronometragem = (Cronometragem) params.getSerializable("cronometragem");
             System.out.println("Chegou na Cronometria3");
         }
-        //calendario = Calendar.getInstance();
+
+        //Data não pode ser alterada, sempre a do dia.
         dataEscolhida = new Date();
         TextView editData = (TextView) findViewById(R.id.EditData);
         String currentDateTimeString = DateFormat.getDateInstance().format(new Date());
@@ -74,7 +75,7 @@ public class Cronometria3 extends Activity {
         TextView editNumOcorrencia = (TextView) findViewById(R.id.EditNumOcorrencia);
         TextView editData = (TextView) findViewById(R.id.EditData);
 
-
+        //Todos os campos devem estar preenchidos!
         if((!editRitmo.getText().toString().equals(""))
                 ||(!editNumPecas.getText().toString().equals(""))
                 ||(!editComprimento.getText().toString().equals(""))
@@ -97,37 +98,9 @@ public class Cronometria3 extends Activity {
             startActivity(intent);
 
         }else{
-            Context contexto = getApplicationContext();
-            String texto = "Informe todos os campos";
-            int duracao = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(contexto, texto, duracao);
+            Toast toast = Toast.makeText(getApplicationContext(), "Todos os campos devem estar  preenchidos!", Toast.LENGTH_SHORT);
             toast.show();
         }
-
     }
 
-
-
-    /*
-
-    //DATA
-    public void selecionarData(View v){
-        showDialog(v.getId());
-    }
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        if(R.id.btnData == id){
-            return new DatePickerDialog(this, listener, calendario.get(Calendar.YEAR), calendario.get(Calendar.MONTH), calendario.get(Calendar.DAY_OF_MONTH));
-        }
-        return null;
-    }
-    private DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth){
-
-            TextView textViewData = (TextView) findViewById(R.id.EditData);
-            textViewData.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-        }
-    };
-    */
 }

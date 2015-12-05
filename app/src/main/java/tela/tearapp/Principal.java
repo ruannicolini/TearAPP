@@ -20,6 +20,7 @@ import domain.Cronometrista;
 public class Principal extends Activity {
     DataBaseCreator creator;
     static SQLiteDatabase database;
+    static Boolean onOff; // Com Conexao Servidor = True;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +28,10 @@ public class Principal extends Activity {
         setContentView(R.layout.activity_principal);
 
         // Criando o banco se necessário
-        //DataBaseCreator creator = new DataBaseCreator(this);
-        //database = creator.getWritableDatabase();
-        this.deleteDatabase("db_cronoanalise");
+        DataBaseCreator creator = new DataBaseCreator(this);
+        database = creator.getWritableDatabase();
+
+        onOff = false;
     }
 
     @Override

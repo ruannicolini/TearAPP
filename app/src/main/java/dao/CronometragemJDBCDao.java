@@ -74,8 +74,6 @@ public class CronometragemJDBCDao implements CronometragemDao {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-
     }
 
     @Override
