@@ -20,5 +20,5 @@ public interface CronometragemDao {
     public void inserirArrayTipoRecurso(Cronometragem cronometragem) throws SQLException;
     public void inserirBatida(Batida batida) throws  SQLException;
     public void inserirArrayBatidas(Cronometragem cronometragem) throws  SQLException;
-    public int buscaIdParametro(String tipo) throws  SQLException;
+    //public int buscaIdParametro(String tipo) throws  SQLException;
 }

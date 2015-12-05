@@ -120,6 +120,7 @@ public class DataBaseCreator extends SQLiteOpenHelper {
 			database.insert("operacao", null, values);
 		}
 
+		//Tipo Recurso
 		database.execSQL("CREATE TABLE tipo_Recurso (idtipo_recurso integer not null primary key, descricao text);");
 		ArrayList<TipoRecurso> recursos = null;
 		try {recursos = new ArrayList(tipoRecursoJDBCDao.obterTiposRecurso());} catch (SQLException e) {e.printStackTrace();}
@@ -130,7 +131,7 @@ public class DataBaseCreator extends SQLiteOpenHelper {
 			database.insert("tipo_Recurso", null, values);
 		}
 
-
+		//Cronometragem
 		database.execSQL("CREATE TABLE cronometragem (idcronometragem integer primary key autoincrement, " +
 				"ritmo integer not null," +
 				"num_pecas integer not null," +
@@ -142,15 +143,13 @@ public class DataBaseCreator extends SQLiteOpenHelper {
 				"idTecido integer not null," +
 				"idOperador integer not null," +
 				"idOperacao integer not null);");
-
 		database.execSQL("CREATE TABLE cronometragem_has_tipo_Recurso (idcronometragem integer not null, idtipo_recurso integer not null);");
-
 		database.execSQL("CREATE TABLE batida (idbatida integer primary key autoincrement, " +
 				"minutos integer not null," +
 				"segundos integer not null," +
 				"centesimos integer not null," +
 				"utilizar numeric not null," +
-				"idCronometragem integer not null);");
+				"idcronometragem integer not null);");
 
 
 	}

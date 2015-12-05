@@ -188,7 +188,6 @@ public class CronometragemJDBCDao implements CronometragemDao {
 
     }
 
-    @Override
     public int buscaIdParametro(final String parametroNome) throws SQLException {
         final int id =0;
         final Vector vetId = new Vector();
