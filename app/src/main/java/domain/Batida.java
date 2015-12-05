@@ -16,6 +16,14 @@ public class Batida implements Serializable {
     public Batida() {
     }
 
+    public Batida(int idBatida, int minutos, int segundos, int centezimos, Cronometragem cronometragem) {
+        this.idBatida = idBatida;
+        this.cronometragem = cronometragem;
+        this.minutos = minutos;
+        this.segundos = segundos;
+        this.centezimos = centezimos;
+    }
+
     public boolean isUtilizar() {
         return utilizar;
     }

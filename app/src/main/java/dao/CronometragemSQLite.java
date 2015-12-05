@@ -118,5 +118,22 @@ public class CronometragemSQLite implements CronometragemDao {
         return cronometragens;
     }
 
-
+    public Vector<Batida> obterBatidas(Cronometragem cronometragem) throws SQLException {
+        Vector<Batida> batidas = new Vector<>();
+        String sql = "select idbatida, minutos, segundos, centesimos, utilizar, idcronometragem from batida where idcronometragem = " + cronometragem.getIdCronometragem();
+        Cursor resultado = database.rawQuery(sql, null);
+        resultado.moveToFirst();
+        Batida bat;
+        for(int i=0; i < resultado.getCount(); i++){
+            bat = new Batida(resultado.getInt(0),
+                    resultado.getInt(1),
+                    resultado.getInt(2),
+                    resultado.getInt(3),
+                    cronometragem);
+            bat.setUtilizar(true);
+            batidas.add(bat);
+            resultado.moveToNext();
+        }
+        return batidas;
+    }
 }
