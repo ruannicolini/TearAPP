@@ -1,9 +1,11 @@
 package dao;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.sql.SQLException;
+import java.util.Vector;
 
 import domain.Batida;
 import domain.Cronometragem;
@@ -14,9 +16,19 @@ import domain.TipoRecurso;
  */
 public class CronometragemSQLite implements CronometragemDao {
     SQLiteDatabase database;
+    CronometristaSQLite cronometristaSQLite;
+    OperadorSQLite operadorSQLite;
+    OperacaoSQLite operacaoSQLite;
+    TecidoSQLite tecidoSQLite;
+    ProdutoSQLite produtoSQLite;
 
     public CronometragemSQLite(SQLiteDatabase database) {
         this.database = database;
+        cronometristaSQLite = new CronometristaSQLite(database);
+        operadorSQLite = new OperadorSQLite(database);
+        operacaoSQLite = new OperacaoSQLite(database);
+        tecidoSQLite = new TecidoSQLite(database);
+        produtoSQLite = new ProdutoSQLite(database);
     }
 
     @Override
@@ -71,5 +83,40 @@ public class CronometragemSQLite implements CronometragemDao {
             inserirBatida(cronometragem.getBatidas().get(i));
         }
     }
+
+    public Vector<Cronometragem> obterCronometragens() throws SQLException {
+        Vector<Cronometragem> cronometragens = new Vector<>();
+        //LinkedList ls = new LinkedList();
+        String sql = "select idcronometragem, ritmo, num_pecas,tolerancia, comprimento_prod, num_ocorrencia," +
+                "idProduto, idCronometrista, idTecido,  idOperador, idOperacao, referencia from Cronometragem";
+        Cursor resultado = database.rawQuery(sql, null);
+        resultado.moveToFirst();
+        Cronometragem cro;
+        for(int i=0; i < resultado.getCount(); i++){
+            cro= new Cronometragem(resultado.getInt(0),
+                    resultado.getInt(1),
+                    resultado.getInt(2),
+                    resultado.getInt(3),
+                    resultado.getFloat(4),
+                    resultado.getInt(5),
+                    produtoSQLite.obterProduto(resultado.getInt(6)),
+                    cronometristaSQLite.obterCronometrista(resultado.getInt(7)),
+                    tecidoSQLite.obterTecido(resultado.getInt(8)),
+                    operadorSQLite.obterOperador(resultado.getInt(9)),
+                    operacaoSQLite.obterOperacao(resultado.getInt(10)),
+                    resultado.getString(11)
+                    );
+            //Atribui Batidas
+
+            //Atribui Recursos
+
+
+            cronometragens.add(cro);
+            resultado.moveToNext();
+        }
+
+        return cronometragens;
+    }
+
 
 }

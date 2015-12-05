@@ -43,6 +43,24 @@ public class OperacaoSQLite implements OperacaoDao {
 
     @Override
     public Operacao obterOperacao(long id) throws SQLException {
-        return null;
+        Vector<Operacao> operacoes = new Vector<>();
+        String sql = "select idoperacao, descricao, idacao, acao, idparte, parte, idfase, fase from operacao where idoperacao = "+id;
+        Cursor resultado = database.rawQuery(sql, null);
+        resultado.moveToFirst();
+        Operacao op;
+        for(int i=0; i < resultado.getCount(); i++){
+            op = new Operacao(  resultado.getInt(resultado.getColumnIndex("idoperacao")),
+                    resultado.getString(resultado.getColumnIndex("descricao")),
+                    resultado.getInt(resultado.getColumnIndex("idacao")),
+                    resultado.getString(resultado.getColumnIndex("acao")),
+                    resultado.getInt(resultado.getColumnIndex("idparte")),
+                    resultado.getString(resultado.getColumnIndex("parte")),
+                    resultado.getInt(resultado.getColumnIndex("idfase")),
+                    resultado.getString(resultado.getColumnIndex("fase"))
+            );
+            operacoes.add(op);
+            resultado.moveToNext();
+        }
+        return operacoes.get(0);
     }
 }

@@ -30,6 +30,21 @@ public class Cronometragem implements Serializable {
     public Cronometragem() {
     }
 
+    public Cronometragem(int idCronometragem, int ritmo, int numPecas,int tolerancia,float comprimentoProduto, int numOcorrencia,  Produto produto, Cronometrista cronometrista, Tecido tecido, Operador operador, Operacao operacao, String referencia) {
+        this.idCronometragem = idCronometragem;
+        this.cronometrista = cronometrista;
+        this.operador = operador;
+        this.produto = produto;
+        this.tecido = tecido;
+        this.operacao = operacao;
+        this.ritmo = ritmo;
+        this.tolerancia = tolerancia;
+        this.numPecas = numPecas;
+        this.numOcorrencia = numOcorrencia;
+        this.comprimentoProduto = comprimentoProduto;
+        this.referencia = referencia;
+    }
+
     public Operador getOperador() {
         return operador;
     }

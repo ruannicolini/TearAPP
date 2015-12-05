@@ -41,6 +41,19 @@ public class CronometristaSQLite implements CronometristaDao {
 
     @Override
     public Cronometrista obterCronometrista(long id) throws SQLException {
-        return null;
+        Vector<Cronometrista> cronometristas = new Vector<>();
+        //LinkedList ls = new LinkedList();
+        String sql = "select idcronometrista, nome from cronometrista where idcronometrista = " +id;
+        Cursor resultado = database.rawQuery(sql, null);
+        resultado.moveToFirst();
+        Cronometrista cro;
+        for(int i=0; i < resultado.getCount(); i++){
+            cro= new Cronometrista(resultado.getInt(0), resultado.getString(1));
+            //ls.add(cro);
+            cronometristas.add(cro);
+            resultado.moveToNext();
+        }
+
+        return cronometristas.get(0);
     }
 }

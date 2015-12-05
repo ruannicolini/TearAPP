@@ -38,7 +38,17 @@ public class OperadorSQLite implements OperadorDao {
 
     @Override
     public Operador obterOperador(long id) throws SQLException {
-        return null;
+        Vector<Operador> operadores = new Vector<>();
+        String sql = "select idOperador, nome, idGrupo from operador where idOperador =" +id;
+        Cursor resultado = database.rawQuery(sql, null);
+        resultado.moveToFirst();
+        Operador operador;
+        for(int i=0; i < resultado.getCount(); i++){
+            operador= new Operador(resultado.getInt(0), resultado.getString(1), grupoSQLite.obterGrupo(resultado.getInt(2)));
+            operadores.add(operador);
+            resultado.moveToNext();
+        }
+        return operadores.get(0);
     }
 
     @Override

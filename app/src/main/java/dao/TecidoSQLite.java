@@ -36,6 +36,16 @@ public class TecidoSQLite implements TecidoDao {
 
     @Override
     public Tecido obterTecido(long id) throws SQLException {
-        return null;
+        Vector<Tecido> tecidos = new Vector<>();
+        String sql = "select idTecido, descricao from tecido where idTecido = " + id;
+        Cursor resultado = database.rawQuery(sql, null);
+        resultado.moveToFirst();
+        Tecido tecido;
+        for(int i=0; i < resultado.getCount(); i++){
+            tecido= new Tecido(resultado.getInt(0), resultado.getString(1));
+            tecidos.add(tecido);
+            resultado.moveToNext();
+        }
+        return tecidos.get(0);
     }
 }

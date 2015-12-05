@@ -35,6 +35,16 @@ public class ProdutoSQLite implements ProdutoDao {
 
     @Override
     public Produto obterProduto(long id) throws SQLException {
-        return null;
+        Vector<Produto> produtos = new Vector<>();
+        String sql = "select idproduto, descricao from produto where idproduto =" +id;
+        Cursor resultado = database.rawQuery(sql, null);
+        resultado.moveToFirst();
+        Produto produto;
+        for(int i=0; i < resultado.getCount(); i++){
+            produto= new Produto(resultado.getInt(0), resultado.getString(1));
+            produtos.add(produto);
+            resultado.moveToNext();
+        }
+        return produtos.get(0);
     }
 }
