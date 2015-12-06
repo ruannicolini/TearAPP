@@ -25,6 +25,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.ConnectException;
+import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.Vector;
@@ -50,6 +52,7 @@ import domain.Operador;
 import domain.Produto;
 import domain.Tecido;
 import util.MyDialogFragment;
+import util.NullConnectionException;
 
 public class Cronometria extends FragmentActivity implements MyDialogFragment.MyDialogFragmentListener {
 
@@ -72,21 +75,21 @@ public class Cronometria extends FragmentActivity implements MyDialogFragment.My
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cronometria);
 
-        if(Principal.onOff == true){
+        //Principal.onOff == true
             cronometristaJDBCDao = new CronometristaJDBCDao();
             grupoJDBCDao = new GrupoJDBCDao();
             tecidoJDBCDao = new TecidoJDBCDao();
             operadorJDBCDao = new OperadorJDBCDao();
             produtoJDBCDao = new ProdutoJDBCDao();
             operacaoJDBCDao = new OperacaoJDBCDao();
-        }else {
+        //Principal.onOff == false
             cronometristaSQLite = new CronometristaSQLite(Principal.database);
             grupoSQLite = new GrupoSQLite(Principal.database);
             tecidoSQLite = new TecidoSQLite(Principal.database);
             operadorSQLite = new OperadorSQLite(Principal.database);
             produtoSQLite = new ProdutoSQLite(Principal.database);
             operacaoSQLite = new OperacaoSQLite(Principal.database);
-        }
+
         //Cronometragem
         cronometragem = new Cronometragem();
     }
@@ -115,11 +118,21 @@ public class Cronometria extends FragmentActivity implements MyDialogFragment.My
     public void buscaOperacao(View view) throws SQLException {
         final EditText editIdOperacao = (EditText)findViewById(R.id.EditIdOperacao), editOperacao = (EditText)findViewById(R.id.EditOperacao);
         Vector<Operacao> operacoes = new Vector();
-
-        if(Principal.onOff == true) {
-            operacoes = operacaoJDBCDao.obterOperacoes();
-        }else {
-            operacoes = operacaoSQLite.obterOperacoes();
+        Boolean status = false;
+        //Modo de operação do APP
+        while(status == false) {
+            if (Principal.onOff == true) {
+                try {
+                    operacoes = operacaoJDBCDao.obterOperacoes();
+                    status = true;
+                }catch (NullConnectionException ne){
+                    OpenDialog("\"Sem Conexão! APP operando em modo OFF.\"");
+                    Principal.onOff = false;
+                }
+            } else {
+                operacoes = operacaoSQLite.obterOperacoes();
+                status = true;
+            }
         }
 
         if(operacoes != null){
@@ -167,11 +180,21 @@ public class Cronometria extends FragmentActivity implements MyDialogFragment.My
     public void buscaTecido(View view) throws SQLException {
         final EditText editIdTecido = (EditText)findViewById(R.id.EditIdTecido), editTecido = (EditText)findViewById(R.id.EditTecido);
         Vector<Tecido> tecidos = new Vector();
-
-        if(Principal.onOff == true) {
-            tecidos = tecidoJDBCDao.obterTecidos();
-        }else {
-            tecidos = tecidoSQLite.obterTecidos();
+        Boolean status = false;
+        //Modo de operação do APP
+        while(status == false) {
+            if (Principal.onOff == true) {
+                try {
+                    tecidos = tecidoJDBCDao.obterTecidos();
+                    status = true;
+                }catch (NullConnectionException ne){
+                    OpenDialog("\"Sem Conexão! APP operando em modo OFF.\"");
+                    Principal.onOff = false;
+                }
+            } else {
+                tecidos = tecidoSQLite.obterTecidos();
+                status = true;
+            }
         }
 
         if(tecidos != null){
@@ -219,11 +242,21 @@ public class Cronometria extends FragmentActivity implements MyDialogFragment.My
     public void buscaProduto(View view) throws SQLException {
         final EditText editIdGrupo = (EditText)findViewById(R.id.EditIdProduto), editGrupo = (EditText)findViewById(R.id.EditProduto);
         Vector<Produto> produtos = new Vector();
-
-        if(Principal.onOff == true) {
-            produtos = produtoJDBCDao.obterProdutos();
-        }else {
-            produtos = produtoSQLite.obterProdutos();
+        Boolean status = false;
+        //Modo de operação do APP
+        while(status == false) {
+            if (Principal.onOff == true) {
+                try {
+                    produtos = produtoJDBCDao.obterProdutos();
+                    status = true;
+                }catch (NullConnectionException ne){
+                    OpenDialog("Sem Conexão! APP operando em modo OFF.");
+                    Principal.onOff = false;
+                }
+            } else {
+                produtos = produtoSQLite.obterProdutos();
+                status = true;
+            }
         }
 
         if(produtos != null){
@@ -272,11 +305,21 @@ public class Cronometria extends FragmentActivity implements MyDialogFragment.My
         final EditText editIdOperador = (EditText)findViewById(R.id.EditIdOperador), editOperador = (EditText)findViewById(R.id.EditOperador);
         Vector<Operador> operadores = new Vector();
         if(cronometragem.getGrupo() != null){
-
-            if(Principal.onOff == true) {
-                operadores = operadorJDBCDao.obterOperadoresGrupo(cronometragem.getGrupo());
-            }else {
-                operadores = operadorSQLite.obterOperadoresGrupo(cronometragem.getGrupo());
+            Boolean status = false;
+            //Modo de operação do APP
+            while(status == false) {
+                if (Principal.onOff == true) {
+                    try {
+                        operadores = operadorJDBCDao.obterOperadoresGrupo(cronometragem.getGrupo());
+                        status = true;
+                    }catch (NullConnectionException ne){
+                        OpenDialog("\"Sem Conexão! APP operando em modo OFF.\"");
+                        Principal.onOff = false;
+                    }
+                } else {
+                    operadores = operadorSQLite.obterOperadoresGrupo(cronometragem.getGrupo());
+                    status = true;
+                }
             }
 
             if(operadores != null){
@@ -327,13 +370,24 @@ public class Cronometria extends FragmentActivity implements MyDialogFragment.My
     }
 
     public void buscaGrupo(View view) throws SQLException {
+
         final EditText editIdGrupo = (EditText)findViewById(R.id.EditIdGrupo), editGrupo = (EditText)findViewById(R.id.EditGrupo);
         Vector<Grupo> grupos = new Vector();
-
-        if(Principal.onOff == true) {
-            grupos = grupoJDBCDao.obterGrupos();
-        }else {
-            grupos = grupoSQLite.obterGrupos();
+        Boolean status = false;
+        //Modo de operação do APP
+        while(status == false) {
+            if (Principal.onOff == true) {
+                try {
+                    grupos = grupoJDBCDao.obterGrupos();
+                    status = true;
+                }catch (NullConnectionException ne){
+                    OpenDialog("\"Sem Conexão! APP operando em modo OFF.\"");
+                    Principal.onOff = false;
+                }
+            } else {
+                grupos = grupoSQLite.obterGrupos();
+                status = true;
+            }
         }
 
         if(grupos != null){
@@ -381,14 +435,25 @@ public class Cronometria extends FragmentActivity implements MyDialogFragment.My
     }
 
     public void buscaCronometrista(View view) throws SQLException {
-        OpenDialog();
+
+        Boolean status = false;
         final EditText editIdCronometrista = (EditText)findViewById(R.id.EditIdCronometria), editCronometrista = (EditText)findViewById(R.id.EditCronometria);
         Vector<Cronometrista> cronometristas = new Vector();
 
-        if(Principal.onOff == true) {
-            cronometristas = cronometristaJDBCDao.obterCronometristas();
-        }else {
-            cronometristas = cronometristaSQLite.obterCronometristas();
+        //Modo de operação do APP
+        while(status == false) {
+            if (Principal.onOff == true) {
+                    try {
+                        cronometristas = cronometristaJDBCDao.obterCronometristas();
+                        status = true;
+                    }catch (NullConnectionException ne){
+                        OpenDialog("\"Sem Conexão! APP operando em modo OFF.\"");
+                        Principal.onOff = false;
+                    }
+            } else {
+                cronometristas = cronometristaSQLite.obterCronometristas();
+                status = true;
+            }
         }
 
         if(cronometristas != null){
@@ -421,8 +486,12 @@ public class Cronometria extends FragmentActivity implements MyDialogFragment.My
             // Adiciona um TextWatcher
             EditText filter = (EditText) findViewById(R.id.editPesq);
             filter.addTextChangedListener(new TextWatcher() {
-                public void afterTextChanged(Editable s) { }
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+                public void afterTextChanged(Editable s) {
+                }
+
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     // Aplica o filtro no Adapter
                     adapter.getFilter().filter(s.toString());
@@ -455,18 +524,12 @@ public class Cronometria extends FragmentActivity implements MyDialogFragment.My
 
     }
 
-    public void OpenDialog() {
-        MyDialogFragment myDialogFragment = MyDialogFragment.newInstance("Sem Conexao. Operar em modo OFF?");
+    public void OpenDialog(String msg) {
+        MyDialogFragment myDialogFragment = MyDialogFragment.newInstance(msg);
         myDialogFragment.show(getFragmentManager(), "myDialogFragment");
     }
 
     @Override
-    public void onDialogPositiveClick(DialogFragment dialog) {
-        Principal.onOff = false;
-    }
+    public void onDialogPositiveClick(DialogFragment dialog) { }
 
-    @Override
-    public void onDialogNegativeClick(DialogFragment dialog) {
-
-    }
 }

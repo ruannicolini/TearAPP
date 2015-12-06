@@ -16,44 +16,48 @@ import java.util.Vector;
 import domain.Grupo;
 import domain.TipoRecurso;
 import util.Conexao;
+import util.NullConnectionException;
 
 public class TipoRecursoJDBCDao implements TipoRecursoDao{
 
 
 	@Override
-	public Vector<TipoRecurso> obterTiposRecurso() throws SQLException {
+	public Vector<TipoRecurso> obterTiposRecurso() throws SQLException, NullConnectionException {
 		System.out.println("Entrou!");
 		final Vector vetGrupos = new Vector();
+		final int[] teste = {0};
 
 		Thread t1 = new Thread(){
 			public void run(){
 				String sql = "SELECT * FROM tipo_recurso";
-
 				Conexao conexao = FabricaConexao.obterConexao();
-				PreparedStatement pstmt;
-				try {
-					pstmt = conexao.prepareStatement(sql);
-					ResultSet res = pstmt.executeQuery();
+				if(conexao.getDatabaseConnection() == null) {
+					teste[0] = -1;
+				}else {
+					PreparedStatement pstmt;
+					try {
+						pstmt = conexao.prepareStatement(sql);
+						ResultSet res = pstmt.executeQuery();
 
-					while (res.next())
-					{
-						TipoRecurso tr = new TipoRecurso ();
-						tr.setIdTipoRecurso(res.getInt("idtipo_recurso"));
-						tr.setDescricao(res.getString("descricao"));
-						vetGrupos.addElement(tr);
+						while (res.next()) {
+							TipoRecurso tr = new TipoRecurso();
+							tr.setIdTipoRecurso(res.getInt("idtipo_recurso"));
+							tr.setDescricao(res.getString("descricao"));
+							vetGrupos.addElement(tr);
+						}
+						conexao.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-					conexao.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
-
 			}
 		};
 
 		t1.start();
 		try {
 			t1.join();
+			if(teste[0] == -1){throw new NullConnectionException("Sem Conexão","APP não consegue acessar servidor.");}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

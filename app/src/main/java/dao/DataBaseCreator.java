@@ -41,7 +41,9 @@ public class DataBaseCreator extends SQLiteOpenHelper {
 
 		//Cronometrista
 		database.execSQL("CREATE TABLE cronometrista (idcronometrista integer primary key, nome text not null);");
-		ArrayList<Cronometrista> cronometristas = new ArrayList(cronometristaDao.obterCronometristas());
+		ArrayList<Cronometrista> cronometristas = null;
+		try {cronometristas = new ArrayList(cronometristaDao.obterCronometristas());
+		} catch (Exception e) {e.printStackTrace();}
 		for(int i =0; i< cronometristas.size(); i++){
 			//database.execSQL("insert into cronometrista(idcronometrista, nome) values ("+ cronometristas.get(i).getIdCronometrista() + ","+ cronometristas.get(i).getNome()+")");
 			ContentValues values = new ContentValues();
@@ -53,7 +55,7 @@ public class DataBaseCreator extends SQLiteOpenHelper {
 		//Grupo
 		database.execSQL("CREATE TABLE grupo (idgrupo integer not null primary key, descricao text);");
 		ArrayList<Grupo> grupos = null;
-		try {grupos = new ArrayList(grupoDao.obterGrupos()); } catch (SQLException e) { e.printStackTrace();	}
+		try {grupos = new ArrayList(grupoDao.obterGrupos()); } catch (Exception e) { e.printStackTrace();	}
 		for(int i =0; i< grupos.size(); i++){
 			ContentValues values = new ContentValues();
 			values.put("idgrupo", grupos.get(i).getIdGrupo());
@@ -64,7 +66,7 @@ public class DataBaseCreator extends SQLiteOpenHelper {
 		//Tecido
 		database.execSQL("CREATE TABLE tecido (idtecido integer not null primary key, descricao text);");
 		ArrayList<Tecido> tecidos = null;
-		try {tecidos = new ArrayList(tecidoDao.obterTecidos()); } catch (SQLException e) { e.printStackTrace();	}
+		try {tecidos = new ArrayList(tecidoDao.obterTecidos()); } catch (Exception e) { e.printStackTrace();	}
 		for(int i =0; i< tecidos.size(); i++){
 			ContentValues values = new ContentValues();
 			values.put("idTecido", tecidos.get(i).getIdTecido());
@@ -75,7 +77,7 @@ public class DataBaseCreator extends SQLiteOpenHelper {
 		//Operador
 		database.execSQL("CREATE TABLE operador (idoperador integer not null primary key, idgrupo integer not null, nome text not null);");
 		ArrayList<Operador> operadores = null;
-		try {operadores = new ArrayList(operadorDao.obterOperadores()); } catch (SQLException e) { e.printStackTrace();	}
+		try {operadores = new ArrayList(operadorDao.obterOperadores()); } catch (Exception e) { e.printStackTrace();	}
 		for(int i =0; i< operadores.size(); i++){
 			ContentValues values = new ContentValues();
 			values.put("idOperador", operadores.get(i).getIdOperador());
@@ -88,7 +90,7 @@ public class DataBaseCreator extends SQLiteOpenHelper {
 		database.execSQL("CREATE TABLE produto (idproduto integer primary key, " +
 				"descricao text);");
 		ArrayList<Produto> produtos = null;
-		produtos = new ArrayList(produtoDao.obterProdutos());
+		try {produtos = new ArrayList(produtoDao.obterProdutos());}catch (Exception e){e.printStackTrace();}
 		for(int i =0; i< produtos.size(); i++){
 			ContentValues values = new ContentValues();
 			values.put("idProduto", produtos.get(i).getIdProduto());
@@ -106,7 +108,7 @@ public class DataBaseCreator extends SQLiteOpenHelper {
 				"idfase integer not null," +
 				"idparte integer not null);");
 		ArrayList<Operacao> operacoes = null;
-		operacoes = new ArrayList(operacaoDao.obterOperacoes());
+		try {operacoes = new ArrayList(operacaoDao.obterOperacoes());}catch (Exception e){e.printStackTrace();}
 		for(int i =0; i< operacoes.size(); i++){
 			ContentValues values = new ContentValues();
 			values.put("idoperacao", operacoes.get(i).getIdOperacao());
@@ -123,7 +125,7 @@ public class DataBaseCreator extends SQLiteOpenHelper {
 		//Tipo Recurso
 		database.execSQL("CREATE TABLE tipo_Recurso (idtipo_recurso integer not null primary key, descricao text);");
 		ArrayList<TipoRecurso> recursos = null;
-		try {recursos = new ArrayList(tipoRecursoJDBCDao.obterTiposRecurso());} catch (SQLException e) {e.printStackTrace();}
+		try {recursos = new ArrayList(tipoRecursoJDBCDao.obterTiposRecurso());} catch (Exception e) {e.printStackTrace();}
 		for(int i =0; i< recursos.size(); i++){
 			ContentValues values = new ContentValues();
 			values.put("idtipo_recurso", recursos.get(i).getIdTipoRecurso());

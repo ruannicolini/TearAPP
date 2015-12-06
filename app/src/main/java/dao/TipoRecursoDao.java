@@ -10,9 +10,10 @@ import java.util.Vector;
 
 import domain.Grupo;
 import domain.TipoRecurso;
+import util.NullConnectionException;
 
 
 public interface TipoRecursoDao {
-    public Vector<TipoRecurso> obterTiposRecurso() throws SQLException;
+    public Vector<TipoRecurso> obterTiposRecurso() throws SQLException, NullConnectionException;
     public TipoRecurso obterTipoRecurso(final long id) throws SQLException;
 }

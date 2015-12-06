@@ -16,13 +16,15 @@ import java.util.Vector;
 import domain.Cronometrista;
 import domain.Operacao;
 import util.Conexao;
+import util.NullConnectionException;
 
 public class OperacaoJDBCDao implements OperacaoDao {
 
 
-     public Vector<Operacao> obterOperacoes() {
+     public Vector<Operacao> obterOperacoes()throws SQLException, NullConnectionException {
 		 System.out.println("Entrou!");
 		 final Vector vetCronom = new Vector();
+		 final int[] teste = {0};
 		 Thread t1 = new Thread(){
 			 public void run(){
 				 String sql = " SELECT op.*, \n" +
@@ -35,42 +37,46 @@ public class OperacaoJDBCDao implements OperacaoDao {
 						 "left outer join fase fs on op.idFase = fs.idfase";
 
 				 Conexao conexao = FabricaConexao.obterConexao();
-				 PreparedStatement pstmt;
-				 try {
-					 pstmt = conexao.prepareStatement(sql);
-					 ResultSet res = pstmt.executeQuery();
+				 if(conexao.getDatabaseConnection() == null) {
+					 teste[0] = -1;
+				 }else {
+					 PreparedStatement pstmt;
+					 try {
+						 pstmt = conexao.prepareStatement(sql);
+						 ResultSet res = pstmt.executeQuery();
 
-					 while (res.next()) {
-						 Operacao o = new Operacao ();
-						 o.setIdOperacao(res.getInt("idOperacao"));
-						 o.setDescricao(res.getString("descricao"));
+						 while (res.next()) {
+							 Operacao o = new Operacao();
+							 o.setIdOperacao(res.getInt("idOperacao"));
+							 o.setDescricao(res.getString("descricao"));
 
-						 //Acao
-						 o.setIdAcao(res.getInt("idAcao"));
-						 o.setAcao(res.getString("descricaoAcao"));
+							 //Acao
+							 o.setIdAcao(res.getInt("idAcao"));
+							 o.setAcao(res.getString("descricaoAcao"));
 
-						 //Parte
-						 o.setIdParte(res.getInt("idParte"));
-						 o.setParte(res.getString("descricaoParte"));
+							 //Parte
+							 o.setIdParte(res.getInt("idParte"));
+							 o.setParte(res.getString("descricaoParte"));
 
-						 //Fase
-						 o.setIdFase(res.getInt("idFase"));
-						 o.setFase(res.getString("descricaoFase"));
+							 //Fase
+							 o.setIdFase(res.getInt("idFase"));
+							 o.setFase(res.getString("descricaoFase"));
 
-						 vetCronom.addElement(o);
+							 vetCronom.addElement(o);
+						 }
+						 conexao.close();
+					 } catch (SQLException e) {
+						 // TODO Auto-generated catch block
+						 e.printStackTrace();
 					 }
-					 conexao.close();
-				 } catch (SQLException e) {
-					 // TODO Auto-generated catch block
-					 e.printStackTrace();
 				 }
-
 			 }
 		 };
 
 		 t1.start();
 		 try {
 			 t1.join();
+			 if(teste[0] == -1){throw new NullConnectionException("Sem Conexão","APP não consegue acessar servidor.");}
 		 } catch (InterruptedException e) {
 			 // TODO Auto-generated catch block
 			 e.printStackTrace();

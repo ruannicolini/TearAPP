@@ -17,7 +17,7 @@ public class MyDialogFragment extends DialogFragment {
      */
     public interface MyDialogFragmentListener {
         public void onDialogPositiveClick(DialogFragment dialog);
-        public void onDialogNegativeClick(DialogFragment dialog);
+        //public void onDialogNegativeClick(DialogFragment dialog);
     }
 
     // Usa essa instância da interface para entregar eventos de ação
@@ -61,17 +61,22 @@ public class MyDialogFragment extends DialogFragment {
                         mListener.onDialogPositiveClick(MyDialogFragment.this);
                     }
                 })
+
+                /*
                 .setNegativeButton("Tentar Novamente",new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Dispara o evento onDialogNegativeClick para a
-                // activity que estiver escultando
-                mListener.onDialogNegativeClick(
-                        MyDialogFragment.this);
-            }
-        }).create();
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Dispara o evento onDialogNegativeClick para a
+                        // activity que estiver escultando
+                        mListener.onDialogNegativeClick(
+                                MyDialogFragment.this);
+                    }
+
+                })
+                */
+                .create();
+
         return myDialog;
     }
-
 
 }

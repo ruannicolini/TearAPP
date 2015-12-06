@@ -44,9 +44,9 @@ public class MySQLNativeDriver extends SQLDriver implements DriverInterface{
             Log.i("MYSQL", "Conectado."); 
             return conexao;
         }catch(ClassNotFoundException erro){
-            Log.e("MYSQL","Erro: "+erro); 
+            Log.e("MYSQL","Erro: "+erro);
         }catch(SQLException erro){
-        	Log.e("MYSQL","Erro: "+erro); 
+        	Log.e("MYSQL","Erro: "+erro);
         }
         return conexao;
     }

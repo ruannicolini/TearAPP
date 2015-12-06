@@ -6,6 +6,8 @@
 package util;
 
 
+import java.sql.SQLException;
+
 public interface DriverInterface {
-    public Conexao obterConexao() ;
+    public Conexao obterConexao();
 }

@@ -10,9 +10,10 @@ import java.util.Vector;
 
 import domain.Cronometrista;
 import domain.Grupo;
+import util.NullConnectionException;
 
 
 public interface GrupoDao {
-    public Vector<Grupo> obterGrupos() throws SQLException;
+    public Vector<Grupo> obterGrupos() throws SQLException, NullConnectionException;
     public Grupo obterGrupo(final long id) throws SQLException;
 }

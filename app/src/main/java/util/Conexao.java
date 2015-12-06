@@ -44,4 +44,8 @@ public class Conexao {
         if (this.databaseConnection != null)
             this.databaseConnection.close();
     }
+
+    public Connection getDatabaseConnection() {
+        return databaseConnection;
+    }
 }

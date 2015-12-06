@@ -16,30 +16,29 @@ import java.util.Vector;
 import domain.Grupo;
 import domain.Operador;
 import util.Conexao;
+import util.NullConnectionException;
 
 public class OperadorJDBCDao implements OperadorDao{
 	GrupoJDBCDao grupoJDBC = new GrupoJDBCDao();
 
 	@Override
-	public Vector<Operador> obterOperadores() throws SQLException {
+	public Vector<Operador> obterOperadores() throws SQLException, NullConnectionException {
 		final Vector vetGrupos = new Vector();
+		final int[] teste = {0};
 		Thread t1 = new Thread(){
 			public void run(){
 				String sql = "select * from Operador";
-
 				Conexao conexao = FabricaConexao.obterConexao();
+				if(conexao.getDatabaseConnection() == null){teste[0] = -1;}
 				PreparedStatement pstmt;
 				try {
 					pstmt = conexao.prepareStatement(sql);
 					ResultSet res = pstmt.executeQuery();
-
-					while (res.next())
-					{
+					while (res.next()) {
 						Operador o = new Operador ();
 						o.setIdOperador((res.getInt("idOperador")));
 						o.setNome(res.getString("nome"));
 						o.setGrupo(grupoJDBC.obterGrupo(res.getInt("idGrupo")));
-
 						vetGrupos.addElement(o);
 					}
 					conexao.close();
@@ -54,6 +53,7 @@ public class OperadorJDBCDao implements OperadorDao{
 		t1.start();
 		try {
 			t1.join();
+			if(teste[0] == -1){throw new NullConnectionException("Sem Conexão","APP não consegue acessar servidor.");}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -98,25 +98,23 @@ public class OperadorJDBCDao implements OperadorDao{
 	}
 
 	@Override
-	public Vector<Operador> obterOperadoresGrupo(final Grupo grupo) throws SQLException {
+	public Vector<Operador> obterOperadoresGrupo(final Grupo grupo) throws SQLException, NullConnectionException {
 		final Vector vetGrupos = new Vector();
+		final int[] teste = {0};
 		Thread t1 = new Thread(){
 			public void run(){
 				String sql = "select * from Operador where idGrupo = " + grupo.getIdGrupo();
-
 				Conexao conexao = FabricaConexao.obterConexao();
+				if(conexao.getDatabaseConnection() == null){teste[0] = -1;}
 				PreparedStatement pstmt;
 				try {
 					pstmt = conexao.prepareStatement(sql);
 					ResultSet res = pstmt.executeQuery();
-
-					while (res.next())
-					{
+					while (res.next()) {
 						Operador o = new Operador ();
 						o.setIdOperador(res.getInt("idOperador"));
 						o.setNome(res.getString("nome"));
 						o.setGrupo(grupoJDBC.obterGrupo(res.getInt("idGrupo")));
-
 						vetGrupos.addElement(o);
 					}
 					conexao.close();
@@ -130,6 +128,7 @@ public class OperadorJDBCDao implements OperadorDao{
 		t1.start();
 		try {
 			t1.join();
+			if(teste[0] == -1){throw new NullConnectionException("Sem Conexão","APP não consegue acessar servidor.");}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

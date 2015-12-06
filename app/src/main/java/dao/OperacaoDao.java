@@ -10,9 +10,10 @@ import java.util.Vector;
 
 import domain.Grupo;
 import domain.Operacao;
+import util.NullConnectionException;
 
 
 public interface OperacaoDao {
-    public Vector<Operacao> obterOperacoes() throws SQLException;
+    public Vector<Operacao> obterOperacoes() throws SQLException, NullConnectionException;
     public Operacao obterOperacao(final long id) throws SQLException;
 }

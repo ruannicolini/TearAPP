@@ -2,6 +2,7 @@ package tela.tearapp;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,8 +35,10 @@ import domain.Batida;
 import domain.Cronometragem;
 import domain.Grupo;
 import domain.TipoRecurso;
+import util.MyDialogFragment;
+import util.NullConnectionException;
 
-public class Cronometria4 extends Activity {
+public class Cronometria4 extends Activity implements MyDialogFragment.MyDialogFragmentListener{
     TipoRecursoJDBCDao tipoRecursoJDBCDao;
     TipoRecursoSQLite tipoRecursoSQLite;
     CronometragemJDBCDao cronometragemJDBCDao;
@@ -52,13 +55,13 @@ public class Cronometria4 extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cronometria4);
 
-        if(Principal.onOff == true){
+        //Principal.onOff == true
             tipoRecursoJDBCDao = new TipoRecursoJDBCDao();
             cronometragemJDBCDao = new CronometragemJDBCDao();
-        }else{
+        //Principal.onOff == false
             tipoRecursoSQLite = new TipoRecursoSQLite(Principal.database);
             cronometragemSQLite = new CronometragemSQLite(Principal.database);
-        }
+
         cronometragem = new Cronometragem();
 
         // Recebe Parametros da Activity Cronometria
@@ -111,10 +114,21 @@ public class Cronometria4 extends Activity {
     public void buscaRecurso(View view) throws SQLException {
 
         Vector<TipoRecurso> recursos = new Vector();
-        if(Principal.onOff == true){
-            recursos = tipoRecursoJDBCDao.obterTiposRecurso();
-        }else{
-            recursos = tipoRecursoSQLite.obterTiposRecurso();
+        Boolean status = false;
+        //Modo de operação do APP
+        while(status == false) {
+            if (Principal.onOff == true) {
+                try {
+                    recursos = tipoRecursoJDBCDao.obterTiposRecurso();
+                    status = true;
+                }catch (NullConnectionException ne){
+                    OpenDialog("\"Sem Conexão! APP operando em modo OFF.\"");
+                    Principal.onOff = false;
+                }
+            } else {
+                recursos = tipoRecursoSQLite.obterTiposRecurso();
+                status = true;
+            }
         }
 
         if(recursos != null){
@@ -164,38 +178,9 @@ public class Cronometria4 extends Activity {
         }
     }
 
-    public void showDialog(Activity activity, String title, CharSequence message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-
-        if (title != null) builder.setTitle(title);
-        builder.setMessage(message);
-
-        //Botão1
-        builder.setPositiveButton("Servidor", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // User clicked OK button
-                try {cronometragemJDBCDao.inserirCronometragem(cronometragem);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        //Botão2
-        builder.setNegativeButton("Local", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // User cancelled the dialog
-                try {cronometragemSQLite.inserirCronometragem(cronometragem);} catch (SQLException e) {e.printStackTrace(); }
-            }
-        });
-
-        builder.show();
-    }
-
     public void salvarCronometragem(View view){
         try {
             if(Principal.onOff == true){
-                //showDialog(this, "Finalizar Cronometragem", "Salvar Como?");
                 cronometragemJDBCDao.inserirCronometragem(cronometragem);
             }else{
                 cronometragemSQLite.inserirCronometragem(cronometragem);
@@ -217,4 +202,11 @@ public class Cronometria4 extends Activity {
         startActivity(returnBtn);
     }
 
+    public void OpenDialog(String msg) {
+        MyDialogFragment myDialogFragment = MyDialogFragment.newInstance(msg);
+        myDialogFragment.show(getFragmentManager(), "myDialogFragment");
+    }
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) { }
 }

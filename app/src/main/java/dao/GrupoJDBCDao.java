@@ -16,44 +16,48 @@ import java.util.Vector;
 import domain.Cronometrista;
 import domain.Grupo;
 import util.Conexao;
+import util.NullConnectionException;
 
 public class GrupoJDBCDao implements GrupoDao{
 
 
 	@Override
-	public Vector<Grupo> obterGrupos() throws SQLException {
+	public Vector<Grupo> obterGrupos() throws SQLException, NullConnectionException {
 		System.out.println("Entrou!");
 		final Vector vetGrupos = new Vector();
+		final int[] teste = {0};
 
 		Thread t1 = new Thread(){
 			public void run(){
 				String sql = "select * from Grupo";
-
 				Conexao conexao = FabricaConexao.obterConexao();
-				PreparedStatement pstmt;
-				try {
-					pstmt = conexao.prepareStatement(sql);
-					ResultSet res = pstmt.executeQuery();
+				if(conexao.getDatabaseConnection() == null) {
+					teste[0] = -1;
+				}else {
+					PreparedStatement pstmt;
+					try {
+						pstmt = conexao.prepareStatement(sql);
+						ResultSet res = pstmt.executeQuery();
 
-					while (res.next())
-					{
-						Grupo g = new Grupo ();
-						g.setCod(res.getInt("idGrupo"));
-						g.setDescricao(res.getString("descricao"));
-						vetGrupos.addElement(g);
+						while (res.next()) {
+							Grupo g = new Grupo();
+							g.setCod(res.getInt("idGrupo"));
+							g.setDescricao(res.getString("descricao"));
+							vetGrupos.addElement(g);
+						}
+						conexao.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-					conexao.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
-
 			}
 		};
 
 		t1.start();
 		try {
 			t1.join();
+			if(teste[0] == -1){throw new NullConnectionException("Sem Conexão","APP não consegue acessar servidor.");}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
