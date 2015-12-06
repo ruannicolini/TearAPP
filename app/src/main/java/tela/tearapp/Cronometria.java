@@ -1,6 +1,7 @@
 package tela.tearapp;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -48,8 +49,9 @@ import domain.Operacao;
 import domain.Operador;
 import domain.Produto;
 import domain.Tecido;
+import util.MyDialogFragment;
 
-public class Cronometria extends FragmentActivity {
+public class Cronometria extends FragmentActivity implements MyDialogFragment.MyDialogFragmentListener {
 
     CronometristaJDBCDao cronometristaJDBCDao;
     CronometristaSQLite cronometristaSQLite;
@@ -379,6 +381,7 @@ public class Cronometria extends FragmentActivity {
     }
 
     public void buscaCronometrista(View view) throws SQLException {
+        OpenDialog();
         final EditText editIdCronometrista = (EditText)findViewById(R.id.EditIdCronometria), editCronometrista = (EditText)findViewById(R.id.EditCronometria);
         Vector<Cronometrista> cronometristas = new Vector();
 
@@ -449,6 +452,21 @@ public class Cronometria extends FragmentActivity {
             startActivity(intent);
         }
 
+
+    }
+
+    public void OpenDialog() {
+        MyDialogFragment myDialogFragment = MyDialogFragment.newInstance("wcabralti.blogspot.com.br");
+        myDialogFragment.show(getFragmentManager(), "myDialogFragment");
+    }
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
 
     }
 }
