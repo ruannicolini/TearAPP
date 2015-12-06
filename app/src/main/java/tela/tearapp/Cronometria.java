@@ -456,13 +456,13 @@ public class Cronometria extends FragmentActivity implements MyDialogFragment.My
     }
 
     public void OpenDialog() {
-        MyDialogFragment myDialogFragment = MyDialogFragment.newInstance("wcabralti.blogspot.com.br");
+        MyDialogFragment myDialogFragment = MyDialogFragment.newInstance("Sem Conexao. Operar em modo OFF?");
         myDialogFragment.show(getFragmentManager(), "myDialogFragment");
     }
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
-
+        Principal.onOff = false;
     }
 
     @Override

@@ -44,7 +44,6 @@ public class MyDialogFragment extends DialogFragment {
             // Essa activity não implementa a interface, levanta exceção
             throw new ClassCastException(activity.toString()
                             + " deve implementar MyDialogFragmentListener");
-
         }
     }
 
@@ -62,7 +61,7 @@ public class MyDialogFragment extends DialogFragment {
                         mListener.onDialogPositiveClick(MyDialogFragment.this);
                     }
                 })
-                .setNegativeButton("Cancelar",new DialogInterface.OnClickListener() {
+                .setNegativeButton("Tentar Novamente",new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Dispara o evento onDialogNegativeClick para a
