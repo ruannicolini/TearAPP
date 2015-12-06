@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import java.sql.SQLException;
@@ -22,6 +25,7 @@ import domain.Cronometragem;
 import domain.Cronometrista;
 
 public class Principal extends Activity {
+    Switch switchAB;
     DataBaseCreator creator;
     static SQLiteDatabase database;
     static Boolean onOff; // Com Conexao Servidor = True;
@@ -42,6 +46,23 @@ public class Principal extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_principal, menu);
+
+        switchAB = (Switch)menu.findItem(R.id.switchId)
+                .getActionView().findViewById(R.id.switchAB);
+
+        switchAB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+                if (isChecked) {
+                    Toast.makeText(getApplication(), "ON", Toast.LENGTH_SHORT)
+                            .show();
+                } else {
+                    Toast.makeText(getApplication(), "OFF", Toast.LENGTH_SHORT)
+                            .show();
+                }
+            }
+        });
         return true;
     }
 

@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     tools:context="tela.tearapp.Principal"
     android:orientation="vertical"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:background="#ececec">
 
     <Button
         android:id="@+id/btnCronometria"
@@ -35,8 +36,16 @@
         android:layout_height="80dp"
         android:text="CONFIGURAÇOES"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
         android:textSize="18sp"
         android:onClick="chamaConfiguracoes"
         />
+
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New ToggleButton"
+        android:id="@+id/toggleButton"
+        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>
