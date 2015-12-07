@@ -165,6 +165,8 @@ public class Cronometria2 extends Activity {
     public void iniciarCronometro(View view) {
         if (btnIniciarPressionado == true) {
             pararCronometro();
+            Button btnNext = (Button) findViewById(R.id.btnNext);
+            btnNext.setEnabled(true);
         } else {
 
             btnIniciarPressionado = true;
@@ -191,7 +193,11 @@ public class Cronometria2 extends Activity {
                     });
                 }
             }, 0, 100);
+
+            Button btnNext = (Button) findViewById(R.id.btnNext);
+            btnNext.setEnabled(false);
         }
+
     }
 
     public void chamaCronometria3(View view){
@@ -212,7 +218,5 @@ public class Cronometria2 extends Activity {
             toast.show();
         }
     }
-
-
 
 }

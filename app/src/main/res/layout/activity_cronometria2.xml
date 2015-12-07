@@ -28,13 +28,6 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </ListView>
-
         </LinearLayout>
 
     </ScrollView>
@@ -86,6 +79,7 @@
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
         <Button
+            android:id="@+id/btnNext"
             android:layout_width="287dp"
             android:layout_height="60dp"
             android:text=">>"

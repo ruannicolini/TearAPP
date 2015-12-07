@@ -26,24 +26,12 @@ public class FabricaConexao {
 
         public static Conexao obterConexao(){
            DriverInterface driver = new MySQLNativeDriver("balay", "root", "root", "10.0.2.2", "3306");
-            //ArrayList<String> conf = confDao.LerConfiguracoes(this);
-            //DriverInterface driver = new MySQLNativeDriver(conf.get(1), conf.get(2), conf.get(3), conf.get(0), conf.get(4));
            return driver.obterConexao();
         }
 
-/*
-    public static Conexao obterConexao(){
-        DriverInterface driver = null;
-        ArrayList<String> conf = null;
-        try {
-            conf = confDao.LerConfiguracoes(context);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        public static Conexao obterConexao(String nomeBD, String userBD, String senhaBD, String ipServidor, String porta){
+            DriverInterface driver = new MySQLNativeDriver(nomeBD, userBD, senhaBD, ipServidor, porta);
+            //DriverInterface driver = new MySQLNativeDriver(conf.get(1), conf.get(2), conf.get(3), conf.get(0), conf.get(4));
+            return driver.obterConexao();
         }
-        driver = new MySQLNativeDriver(conf.get(1), conf.get(2), conf.get(3), conf.get(0), conf.get(4));
-        return driver.obterConexao();
-    }
- */
 }
