@@ -18,6 +18,9 @@ import java.util.LinkedList;
  * Created by Ruan on 29/11/2015.
  */
 public class ConfiguracoesFileDao implements ConfiguracoesDao {
+    public ConfiguracoesFileDao() {
+    }
+
     @Override
     public ArrayList<String> LerConfiguracoes(Context context) throws SQLException, IOException {
         AssetManager assetManager = context.getResources().getAssets();

@@ -67,7 +67,7 @@ public class OperadorJDBCDao implements OperadorDao{
 		final Operador o = new Operador ();
 		Thread t1 = new Thread(){
 			public void run(){
-				String sql = " SELECT * FROM Operador WHERE idOperador  = " + id;
+				String sql = "SELECT * FROM Operador WHERE idOperador  = " + id;
 				Log.i("SQL", sql);
 				Conexao conexao = FabricaConexao.obterConexao();
 

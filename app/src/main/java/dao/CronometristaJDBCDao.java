@@ -74,14 +74,11 @@ public class CronometristaJDBCDao implements CronometristaDao {
 				 String sql = " SELECT * FROM Cronometrista WHERE idCronometrista = " + id;
 		         Log.i("SQL", sql); 
 		         Conexao conexao = FabricaConexao.obterConexao();
-		         
-		         
 		         PreparedStatement pstmt;
 				try {
 					pstmt = conexao.prepareStatement(sql);
 					ResultSet res = pstmt.executeQuery();
 
-			         
 			        if (res.next())
 			        {
 			            c.setIdCronometrista(res.getInt("idCronometrista"));
