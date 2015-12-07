@@ -70,7 +70,8 @@ public class ConfiguracoesFileDao implements ConfiguracoesDao {
 
         try {
             File file = new File(context.getExternalFilesDir(null),"TearAPPconfiguracoes.txt");
-            FileOutputStream out = new FileOutputStream(file, true);
+            //FileOutputStream out = new FileOutputStream(file, true); //Texto antigo + texto novo
+            FileOutputStream out = new FileOutputStream(file); //Apenas Texto novo
             String text = ip +";" + nomeBanco +";"+usuarioBanco+";"+senhaUsuario+";"+porta+";";
 
             out.write(text.getBytes());
