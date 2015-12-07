@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import domain.Cronometrista;
 import domain.Grupo;
@@ -154,7 +155,6 @@ public class DataBaseCreator extends SQLiteOpenHelper {
 				"centesimos integer not null," +
 				"utilizar numeric not null," +
 				"idcronometragem integer not null);");
-
 
 	}
 

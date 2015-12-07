@@ -103,6 +103,7 @@ public class Login extends Activity {
             e.printStackTrace();
         } catch (NullConnectionException e) {
             e.printStackTrace();
+            //Chamar Metodo de login pra conexão OFF
         }
 
         return status;

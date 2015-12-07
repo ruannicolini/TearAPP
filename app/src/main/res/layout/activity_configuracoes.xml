@@ -29,6 +29,8 @@
             android:editable="true"
             android:background="#e4e4e4"
             android:textSize="16sp"
+            android:inputType="text"
+            android:enabled="false"
             />
 
         <!-- BD NAME-->
@@ -48,6 +50,7 @@
             android:background="#e4e4e4"
             android:textSize="16sp"
             android:inputType="text"
+            android:enabled="false"
             />
 
         <!-- BD USER-->
@@ -67,6 +70,7 @@
             android:background="#e4e4e4"
             android:textSize="16sp"
             android:inputType="text"
+            android:enabled="false"
             />
 
         <!-- BD Senha -->
@@ -86,6 +90,7 @@
             android:background="#e4e4e4"
             android:textSize="16sp"
             android:inputType="textPassword"
+            android:enabled="false"
             />
 
         <!-- PORTA-->
@@ -105,6 +110,7 @@
             android:background="#e4e4e4"
             android:textSize="16sp"
             android:inputType="text"
+            android:enabled="false"
             />
 
         <LinearLayout
@@ -119,9 +125,10 @@
                 android:text="CANCELAR"
                 android:onClick="cancelar"/>
             <Button
+                android:id="@+id/btnSalvar"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="SALVAR"
+                android:text="ALTERAR"
                 android:onClick="salvar"/>
 
 

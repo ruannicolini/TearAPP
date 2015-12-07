@@ -17,5 +17,5 @@ import domain.Grupo;
 
 public interface ConfiguracoesDao {
     public ArrayList<String> LerConfiguracoes(Context context) throws SQLException, IOException ;
-    public void gravarConfiguracoes(Context context, String ip, String NomeBanco, String usuarioBanco, String senhaUsuario, String porta) throws SQLException, IOException;
+    public Boolean gravarConfiguracoes(Context context, String ip, String NomeBanco, String usuarioBanco, String senhaUsuario, String porta) throws SQLException, IOException;
 }
